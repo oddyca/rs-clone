@@ -1,0 +1,20 @@
+.workspace {
+    background: gray;
+    height: 100px;
+    width: 200px;
+    border: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.workspace:hover {
+    cursor: pointer;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+}
+
+

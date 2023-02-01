@@ -6,6 +6,13 @@ export class Controller {
     this.workspace = workspace;
   }
 
+  createTask(data: string) {
+    console.log("data = ", data);
+  }
+
+
+
+
   loadData() {
     return this.workspace;
   }
