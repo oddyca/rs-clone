@@ -6,7 +6,7 @@ function Workspace(props: any) {
   return (
     <div className="workspace-window">
       <Header
-        props={title}
+        title={title}
       />
     </div>
   );
