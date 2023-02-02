@@ -18,7 +18,7 @@ function Header(props: any) {
                 {userWorkSpace.map((d: any, index: number) => {
                   return (
                     <li onClick={() => setOpenDropDown(false)}>
-                      <Link className="link" to={`/workspace-${index}`}>
+                      <Link className="link" to={`/workspace-${d.WORKSPACE_ID}`}>
                         {d.WORKSPACE_TITLE}
                       </Link>
                     </li>

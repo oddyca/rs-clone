@@ -9,7 +9,7 @@ function Workspace(props: any) {
   const getBoards = () => {
     return WORKSPACE_BOARDS.map((board: any, index: number) => {
       return (
-        <Link className="link" to={`/workspace-${workIndex}/board-${index}/`}>
+        <Link className="link" to={`/workspace-${WORKSPACE.WORKSPACE_ID}/board-${board.BOARD_ID}/`}>
           <div
             id={board.BOARD_ID}
             className="board"
