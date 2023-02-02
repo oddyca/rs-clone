@@ -1,19 +1,14 @@
-import { DEF_USER } from "./config";
+import { USERS_DATA } from "./config";
 
-export class Controller {
+export default class Controller {
   public workspace: any;
-  constructor(workspace = JSON.parse(JSON.stringify(DEF_USER))) {
+
+  constructor(workspace = JSON.parse(JSON.stringify(USERS_DATA))) {
     this.workspace = workspace;
   }
 
-  createTask(data: string) {
-    console.log("data = ", data);
-  }
-
-
-
-
   loadData() {
-    return this.workspace;
+    return this.workspace[0];
   }
+
 }

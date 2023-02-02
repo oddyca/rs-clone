@@ -1,0 +1,4 @@
+.board-window {
+    display: flex;
+    flex-direction: row;
+}

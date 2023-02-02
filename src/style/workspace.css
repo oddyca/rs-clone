@@ -1,4 +1,4 @@
-.workspace {
+.board {
     background: gray;
     height: 100px;
     width: 200px;
@@ -8,7 +8,7 @@
     justify-content: center;
 }
 
-.workspace:hover {
+.board:hover {
     cursor: pointer;
 }
 

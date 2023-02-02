@@ -1,34 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Header from "../widgets/header/Header";
 
 function Workspace(props: any) {
-  const { USER_NAME } = props.appView;
-  const { USER_WORKSPACES } = props.appView;
+  const { WORKSPACE } = props;
 
-  const getWorkspaces = () => {
-    return USER_WORKSPACES.map((workspace: any) => {
+  const WORKSPACE_BOARDS = WORKSPACE.WORKSPACE_BOARDS;
+
+  const getBoards = () => {
+    return WORKSPACE_BOARDS.map((board: any, index: number) => {
       return (
-        <div
-          id={workspace.WORKSPACE_ID}
-          className="workspace"
-        >
-          <Link className="link" to={`/workspace/${workspace.WORKSPACE_ID}`}>
-            {workspace.WORKSPACE_TITLE}
-          </Link>
-        </div>
+        <Link className="link" to={`/workspace-${WORKSPACE.WORKSPACE_ID}/board-${board.BOARD_ID}/`}>
+          <div
+            id={board.BOARD_ID}
+            className="board"
+          >
+            {board.BOARD_TITLE}
+          </div>
+        </Link>
       );
     });
   };
 
   return (
     <div className="workspace-window">
-      <>
-        <Header
-          title={USER_NAME}
-        />
-        {getWorkspaces()}
-      </>
+        {getBoards()}
     </div>
   );
 };
