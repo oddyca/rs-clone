@@ -1,0 +1,25 @@
+.auth-window {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-modal {
+    width: 900px;
+    height: 722px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    display: flex;
+    overflow: hidden;
+}
+
+.hero-shot {
+    flex: 1;
+    height: 100%;
+    background-color: grey;
+}
+
+.auth-block {
+    flex: 1;
+}

@@ -7,6 +7,8 @@ import Workspace from "./components/pages/Workspace";
 import Page404 from "./components/pages/Page404";
 import Header from "./components/widgets/header/Header";
 import Controller from "./lib/Controller";
+import SignIn from "./components/pages/authorization/Signin";
+import SignUp from "./components/pages/authorization/Signup";
 
 
 const APP_CONTROLLER = new Controller();
@@ -65,9 +67,12 @@ function App() {
         <Route path="/" element={<Navigate replace to={`/workspace-${viewData.workspace}/`} />}></Route>
         {getWorkspaces()}
         {getBoards()}
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
         <Route path="/404" element={<Page404 />}></Route>
         <Route path="*" element={<Navigate replace to="/404" />}></Route>
       </Routes>
+      <Link to="/signin">AUTH-MODAL</Link>
     </div>
   );
 }
