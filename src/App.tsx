@@ -23,6 +23,7 @@ function App() {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
       return (
         <Route path={`/workspace-${index}/`} element={<Workspace
+          workIndex={index}
           WORKSPACE={userData.USER_WORKSPACES[index]}
         />}></Route>
       )
@@ -34,7 +35,7 @@ function App() {
     return workspace.WORKSPACE_BOARDS.map((board: any, ind: number) => {
       return (
         <Route
-          path={`/workspace-${workspace.WORKSPACE_ID}/board-${board.BOARD_ID}/`}
+          path={`/workspace-${index}/board-${ind}/`}
           element={
             <Board
               BOARD={workspace.WORKSPACE_BOARDS[ind]

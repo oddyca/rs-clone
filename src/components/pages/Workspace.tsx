@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Workspace(props: any) {
-  const { WORKSPACE } = props;
+  const { WORKSPACE, workIndex } = props;
 
   const WORKSPACE_BOARDS = WORKSPACE.WORKSPACE_BOARDS;
 
   const getBoards = () => {
     return WORKSPACE_BOARDS.map((board: any, index: number) => {
       return (
-        <Link className="link" to={`/workspace-${WORKSPACE.WORKSPACE_ID}/board-${board.BOARD_ID}/`}>
+        <Link className="link" to={`/workspace-${workIndex}/board-${index}/`}>
           <div
             id={board.BOARD_ID}
             className="board"
