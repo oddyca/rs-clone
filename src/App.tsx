@@ -11,8 +11,8 @@ import Controller from "./lib/Controller";
 const APP_CONTROLLER = new Controller();
 
 function App() {
-  const [userData, setUserData] = useState(APP_CONTROLLER.loadData());
-  const [viewData, setViewData] = useState({
+  const [userData /* setUserData */] = useState(APP_CONTROLLER.loadData());
+  const [viewData /* setViewData */] = useState({
     user: "",
     workspace: 0,
     board: 0,
@@ -23,24 +23,24 @@ function App() {
       return (
         <Route path={`/workspace-${workspace.WORKSPACE_ID}/`} element={<Workspace
           WORKSPACE={userData.USER_WORKSPACES[index]}
-        />}></Route>
+        />} />
       )
     })
   }
 
   const getBoards = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
-    return workspace.WORKSPACE_BOARDS.map((board: any, ind: number) => {
-      return (
-        <Route
-          path={`/workspace-${workspace.WORKSPACE_ID}/board-${board.BOARD_ID}/`}
-          element={
-            <Board
-              BOARD={workspace.WORKSPACE_BOARDS[ind]
-              }
-            />
-          }
-        ></Route>
+      return workspace.WORKSPACE_BOARDS.map((board: any, ind: number) => {
+        return (
+          <Route
+            path={`/workspace-${workspace.WORKSPACE_ID}/board-${board.BOARD_ID}/`}
+            element={
+              <Board
+                BOARD={workspace.WORKSPACE_BOARDS[ind]
+                }
+              />
+            }
+          ></Route>
       )
     })})
   }
