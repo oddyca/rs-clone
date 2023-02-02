@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Routes, Route, Navigate, useSearchParams, Link } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Board from "./components/pages/Board";
 import Workspace from "./components/pages/Workspace";
 import Page404 from "./components/pages/Page404";
 import Header from "./components/widgets/header/Header";
 import Controller from "./lib/Controller";
-
 
 const APP_CONTROLLER = new Controller();
 

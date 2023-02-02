@@ -1,21 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./index.css"
 
 function Header(props: any) {
   const { title, userWorkSpace } = props;
+  const [openDropDown, setOpenDropDown] = useState(false)
 
   return (
     <header className="header">
-      {userWorkSpace.map((d: any, index: number) => {
-        /* console.log(d) */
-        return (
-          <Link className="link" to={`/workspace-${index}`}>
-            {d.WORKSPACE_TITLE}
-          </Link>
-        );
-      })}
-      <div>{title}</div>
+      <div className="header__inner">
+        <div className="header__left">
+          <div className="header__dropdown">
+            <p onClick={() => setOpenDropDown(!openDropDown)} className="header__dropdownTitle">My workspaces</p>
+            {
+              openDropDown && (
+              <ul>
+                {userWorkSpace.map((d: any, index: number) => {
+                  return (
+                    <li onClick={() => setOpenDropDown(false)}>
+                      <Link className="link" to={`/workspace-${index}`}>
+                        {d.WORKSPACE_TITLE}
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+              )
+            }
+          </div>
+
+        </div>
+        <div className="header__right  user">
+          <div>{title}</div>
+        </div>
+      </div>
     </header>
   );
 }
