@@ -17,7 +17,7 @@ function App() {
     user: "",
     workspace: 0,
     board: 0,
-    });
+  });
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
@@ -48,17 +48,8 @@ function App() {
 
   return (
     <div className="App">
-      <Link
-        onClick={() => {
-          viewData.workspace = 0;
-        }}
-        className="link" to={"/workspace-0/"}>Workspace-1</Link>
-      <Link
-        onClick={() => {
-          viewData.workspace = 1;
-        }}
-        className="link" to={"/workspace-1/"}>Workspace-2</Link>
       <Header
+        userWorkSpace={userData.USER_WORKSPACES}
         title={userData.USER_NAME}
       />
       <Routes>
