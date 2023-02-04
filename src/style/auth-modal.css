@@ -1,0 +1,87 @@
+:root {
+    --highilight: #FF6E4F;
+    --hints: #CFCFCF;
+}
+
+h3 {
+    font-size: 36px;
+    line-height: 130%;
+}
+
+.auth-window {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-modal {
+    width: 900px;
+    height: 722px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    display: flex;
+    overflow: hidden;
+}
+
+.hero-shot {
+    flex: 1;
+    height: 100%;
+    background-color: grey;
+}
+
+.auth-block {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 31px;
+}
+
+.auth-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 30px;
+}
+
+.form-input {
+    width: 100%;
+}
+
+.forgot-password {
+    color: var(--hints);
+    text-decoration-line: underline;
+}
+
+.auth-button {
+    position: relative; 
+    margin-left: auto; 
+    right: 0;
+    width: fit-content !important;
+    padding: 10px 24px;
+    cursor: pointer;
+    background-color: var(--highilight);
+    color: white;
+}
+
+.signup-link {
+    display: block;
+    width: fit-content;
+    cursor: pointer;
+    color: var(--highilight);
+    text-decoration-line: underline;
+    display: inline;
+}
+
+.auth-wrapper > p {
+    margin: 0 auto;
+}
