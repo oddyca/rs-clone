@@ -1,4 +1,58 @@
+:root {
+    --stroke: #F2F2F2;
+    --background: #FBFBFB;
+    --shadow: rgba(0, 0, 0, 0.05);
+}
+
 .board-window {
     display: flex;
     flex-direction: row;
+    gap: 36px;
+}
+
+.list {
+    width: 284px;
+    height: fit-content;
+    background-color: var(--background);
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.list-title {
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 100%;
+}
+
+.list_work-area {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 8px;
+    gap: 4px;
+    width: 100%;
+}
+
+.list-cover {
+    width: 252px;
+    height: 119px;
+    border: solid 1px var(--stroke);
+}
+
+.list_card {
+    width: 100%;
+    height: 36px;
+    border: solid 1px var(--stroke);
+    box-shadow: 0px 0px 25px var(--shadow);
+    padding: 11px 8px;
+    border-radius: 4px;
+    flex: none;
+    order: 1;
+    flex-grow: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
 }
