@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, Link } from "react-router-dom";
 
 import Board from "./components/pages/Board";
 import Workspace from "./components/pages/Workspace";
