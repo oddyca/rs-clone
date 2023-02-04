@@ -10,4 +10,8 @@ export default class Controller {
   loadData() {
     return this.workspace[0];
   }
+
+  static expandTask() {
+    
+  }
 }

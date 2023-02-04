@@ -23,12 +23,13 @@ function App() {
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
       return (
-        <Route path={`/workspace-${workspace.WORKSPACE_ID}/`} element={<Workspace
-          WORKSPACE={userData.USER_WORKSPACES[index]}
-        />} />
-      )
-    })
-  }
+        <Route
+          path={`/workspace-${workspace.WORKSPACE_ID}/`}
+          element={<Workspace WORKSPACE={userData.USER_WORKSPACES[index]} />}
+        />
+      );
+    });
+  };
 
   const getBoards = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
@@ -36,31 +37,26 @@ function App() {
         return (
           <Route
             path={`/workspace-${workspace.WORKSPACE_ID}/board-${board.BOARD_ID}/`}
-            element={
-              <Board
-                BOARD={workspace.WORKSPACE_BOARDS[ind]
-                }
-              />
-            }
-          ></Route>
-      )
-    })})
-  }
+            element={<Board BOARD={workspace.WORKSPACE_BOARDS[ind]} />}
+          />
+        );
+      });
+    });
+  };
 
   return (
     <div className="App">
-      <Header
-        userWorkSpace={userData.USER_WORKSPACES}
-        title={userData.USER_NAME}
-      />
+      <Header userWorkSpace={userData.USER_WORKSPACES} title={userData.USER_NAME} />
       <Routes>
-        <Route path="/" element={<Navigate replace to={`/workspace-${viewData.workspace}/`} />}></Route>
+        <Route 
+          path="/"
+          element={<Navigate replace to={`/workspace-${viewData.workspace}/`} />} />
         {getWorkspaces()}
         {getBoards()}
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/404" element={<Page404 />}></Route>
-        <Route path="*" element={<Navigate replace to="/404" />}></Route>
+        <Route path="/404" element={<Page404 />} />
+        <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>
       <Link to="/signin">AUTH-MODAL</Link>
     </div>
