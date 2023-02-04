@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Workspace(props: any) {
-  const { WORKSPACE } = props;
+  const { WORKSPACE, workIndex } = props;
 
   const WORKSPACE_BOARDS = WORKSPACE.WORKSPACE_BOARDS;
 

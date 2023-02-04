@@ -22,7 +22,6 @@ function Board(props: any) {
   return (
     <div className="board-window">
       <>
-        <Header title={USER_NAME} />
         {getLists()}
       </>
     </div>

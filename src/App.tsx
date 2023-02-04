@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Routes, Route, Navigate, useSearchParams, Link } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
 import Board from "./components/pages/Board";
 import Workspace from "./components/pages/Workspace";
@@ -10,57 +10,47 @@ import Controller from "./lib/Controller";
 import SignIn from "./components/pages/authorization/Signin";
 import SignUp from "./components/pages/authorization/Signup";
 
-
 const APP_CONTROLLER = new Controller();
 
 function App() {
-  const [userData, setUserData] = useState(APP_CONTROLLER.loadData());
-  const [viewData, setViewData] = useState({
+  const [userData /* setUserData */] = useState(APP_CONTROLLER.loadData());
+  const [viewData /* setViewData */] = useState({
     user: "",
     workspace: 0,
     board: 0,
-    });
+  });
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
       return (
-        <Route path={`/workspace-${index}/`} element={<Workspace
+        <Route path={`/workspace-${workspace.WORKSPACE_ID}/`} element={<Workspace
           WORKSPACE={userData.USER_WORKSPACES[index]}
-        />}></Route>
+        />} />
       )
     })
   }
 
   const getBoards = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
-    return workspace.WORKSPACE_BOARDS.map((board: any, ind: number) => {
-      return (
-        <Route
-          path={`/workspace-${workspace.WORKSPACE_ID}/board-${board.BOARD_ID}/`}
-          element={
-            <Board
-              BOARD={workspace.WORKSPACE_BOARDS[ind]
-              }
-            />
-          }
-        ></Route>
+      return workspace.WORKSPACE_BOARDS.map((board: any, ind: number) => {
+        return (
+          <Route
+            path={`/workspace-${workspace.WORKSPACE_ID}/board-${board.BOARD_ID}/`}
+            element={
+              <Board
+                BOARD={workspace.WORKSPACE_BOARDS[ind]
+                }
+              />
+            }
+          ></Route>
       )
     })})
   }
 
   return (
     <div className="App">
-      <Link
-        onClick={() => {
-          viewData.workspace = 0;
-        }}
-        className="link" to={"/workspace-0/"}>Workspace-1</Link>
-      <Link
-        onClick={() => {
-          viewData.workspace = 1;
-        }}
-        className="link" to={"/workspace-1/"}>Workspace-2</Link>
       <Header
+        userWorkSpace={userData.USER_WORKSPACES}
         title={userData.USER_NAME}
       />
       <Routes>
