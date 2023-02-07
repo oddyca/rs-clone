@@ -42,8 +42,8 @@ export default class Controller {
       });
   }
 
-  // async getUserData(id) {
-  //
+  // async getUserData(id: string) {
+    
   // }
 
   // async setUserData(id) {
@@ -53,6 +53,5 @@ export default class Controller {
   static expandTask() {
 
   }
-
 }
 

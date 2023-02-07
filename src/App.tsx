@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import { Routes, Route, Navigate, Link } from "react-router-dom";
+import { Routes, Route, Navigate, Link, useNavigate } from "react-router-dom";
 
 import Board from "./components/pages/Board";
 import Workspace from "./components/pages/Workspace";
@@ -19,22 +19,13 @@ function App() {
     workspace: 0,
     board: 0
   });
+  const navigate = useNavigate();
 
-  async function login(username: string, password: string)  {
-    const response = await APP_CONTROLLER.userLogin(username, password);
-    if (response.ok) { // если HTTP-статус в диапазоне 200-299
-      // получаем тело ответа
-      return  response.json();
-    } else { // если HTTP-статус в диапазоне 200-299
-      // получаем ошибку
-      return `Ошибка:  ${response.status}`;
-    }
-  }
-
-  login("user", "12345").then(
-    result => console.log(result), // обработает успешное выполнение
-    error => console.log(error) // обработает ошибку
-  );
+  useEffect(() => {
+    console.log("LOADED, CHECKING isLogged")
+    localStorage.getItem('isLogged') ? navigate('/') : navigate('/signin')
+  }, [])
+  //localStorage.removeItem('isLogged')
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {

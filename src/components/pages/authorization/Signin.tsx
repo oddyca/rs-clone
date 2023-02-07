@@ -4,29 +4,22 @@ import { useNavigate } from "react-router-dom";
 import "../../../style/auth-modal.css";
 import Controller from "../../../lib/Controller";
 
-interface UsernamePassword {
-    [username: string]: string
-}
-
 export default function SignIn() {
     const APP_CONTROLLER = new Controller();
-    const fetchedData = APP_CONTROLLER.loadData(); // only first user. Must be an array of users
 
-    const [userEmail, setEmail] = useState('');
+    const [userName, setName] = useState('');
     const [userPassword, setPassword] = useState('');
     const navigate = useNavigate();
 
-    const  signInVerification = () => {
-        const userNamePass: UsernamePassword = {
-            'username': fetchedData.USER_NAME,
-            'password': fetchedData.USER_PASSWORD
-        }
-
-        if (userEmail === userNamePass['username'] && userPassword === userNamePass['password']) {
+    async function signInVerification(username: string, password: string) {
+        try {
+            const response = await APP_CONTROLLER.userLogin(username, password);
+            console.log('LOG IN SUCCESSFUL')
+            localStorage.setItem('isLogged', 'true');
             navigate('/');
-        } else {
-            alert('wrong user-password');
-            return undefined
+            console.log(await response.json())
+        } catch(e) {
+            throw e
         }
     }
 
@@ -37,15 +30,15 @@ export default function SignIn() {
                 <div className="auth-block">
                     <div className="auth-wrapper">
                         <h3>Sign in</h3>
-                        <form className="auth-form" onSubmit={(e) => {
+                        <form className="auth-form" onSubmit={async (e) => {
                             e.preventDefault()
-                            signInVerification()}}>
+                            await signInVerification(userName, userPassword)}}>
                             <input
                                 type="text"
                                 placeholder="Username"
                                 className="form-input"
                                 required
-                                onChange={(e) => setEmail(e.target.value)}>
+                                onChange={(e) => setName(e.target.value)}>
                             </input>
                             <input
                                 type="password"
