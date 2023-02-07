@@ -17,8 +17,24 @@ function App() {
   const [viewData /* setViewData */] = useState({
     user: "",
     workspace: 0,
-    board: 0,
+    board: 0
   });
+
+  async function login(username: string, password: string)  {
+    const response = await APP_CONTROLLER.userLogin(username, password);
+    if (response.ok) { // если HTTP-статус в диапазоне 200-299
+      // получаем тело ответа
+      return  response.json();
+    } else { // если HTTP-статус в диапазоне 200-299
+      // получаем ошибку
+      return `Ошибка:  ${response.status}`;
+    }
+  }
+
+  login("user", "12345").then(
+    result => console.log(result), // обработает успешное выполнение
+    error => console.log(error) // обработает ошибку
+  );
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
@@ -48,7 +64,7 @@ function App() {
     <div className="App">
       <Header userWorkSpace={userData.USER_WORKSPACES} title={userData.USER_NAME} />
       <Routes>
-        <Route 
+        <Route
           path="/"
           element={<Navigate replace to={`/workspace-${viewData.workspace}/`} />} />
         {getWorkspaces()}

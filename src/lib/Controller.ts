@@ -1,17 +1,58 @@
-import { USERS_DATA } from "./config";
+import USER_DEFAULT_DATA from "./config";
 
 export default class Controller {
-  public workspace: any;
+  public currentUser: any;
 
-  constructor(workspace = JSON.parse(JSON.stringify(USERS_DATA))) {
-    this.workspace = workspace;
+  constructor(defaultUser = JSON.parse(JSON.stringify(USER_DEFAULT_DATA))) {
+    this.currentUser = defaultUser;
   }
 
   loadData() {
-    return this.workspace[0];
+    return this.currentUser;
   }
 
-  static expandTask() {
-    
+  async userRegistration(username: string, password: string) {
+    const newUser = {
+      username: username,
+      password: password,
+      workspaces: USER_DEFAULT_DATA.USER_WORKSPACES
+    };
+    return await fetch("http://localhost:3008/api/registration/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify(newUser)
+    });
   }
+
+  async userLogin(username: string, password: string) {
+      const newUser = {
+        username: username,
+        password: password,
+      };
+      return await fetch("http://localhost:3008/api/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          "Access-Control-Allow-Origin": "*"
+        },
+        body: JSON.stringify(newUser)
+      });
+  }
+
+  // async getUserData(id) {
+  //
+  // }
+
+  // async setUserData(id) {
+  //
+  // }
+
+  static expandTask() {
+
+  }
+
 }
+
