@@ -21,7 +21,7 @@ export default class Controller {
     this.currentUser.USER_WORKSPACES[indexWorkspace].WORKSPACE_BOARDS.splice(indexBoard, 1);
   }
 
-  sortList(userData: any) {
+/*   sortList(userData: any) {
     const workspaceId = userData.WORKSPACE_ID;
     const boardId = userData.BOARD_ID;
     const listOrder = userData.LIST_ORDER;
@@ -32,7 +32,7 @@ export default class Controller {
     const currentListArray = this.currentUser.USER_WORKSPACES[indexWorkspace].WORKSPACE_BOARDS[indexBoard].BOARD_LISTS;
 
     console.log(currentListArray)
-  }
+  } */
 
   async userRegistration(username: string, password: string) {
     const newUser = {
