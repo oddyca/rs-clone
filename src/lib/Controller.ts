@@ -7,6 +7,14 @@ export default class Controller {
     this.currentUser = defaultUser;
   }
 
+  indexWorkspace(workspaceId: string) : number {
+    return this.currentUser.USER_WORKSPACES.findIndex((elem: string) => elem.WORKSPACE_ID === workspaceId)
+  }
+
+  indexBoard(workspaceId: string, boardId: string) : number {
+    return this.currentUser.USER_WORKSPACES[this.indexWorkspace(workspaceId)].WORKSPACE_BOARDS.findIndex((elem: string) => elem.BOARD_ID === boardId);
+  }
+  
   loadData() {
     return this.currentUser;
   }
@@ -15,10 +23,9 @@ export default class Controller {
     const workspaceId = userData.WORKSPACE_ID;
     const boardId = userData.BOARD_ID;
 
-    const indexWorkspace = this.currentUser.USER_WORKSPACES.findIndex((elem: string) => elem.WORKSPACE_ID === workspaceId);
-    const indexBoard = this.currentUser.USER_WORKSPACES[indexWorkspace].WORKSPACE_BOARDS.findIndex((elem: string) => elem.BOARD_ID === boardId);
-
-    this.currentUser.USER_WORKSPACES[indexWorkspace].WORKSPACE_BOARDS.splice(indexBoard, 1);
+    this.indexWorkspace(workspaceId);
+    this.indexBoard(workspaceId, boardId);
+    this.currentUser.USER_WORKSPACES[this.indexWorkspace(workspaceId)].WORKSPACE_BOARDS.splice(this.indexBoard(workspaceId, boardId), 1);
   }
 
 /*   sortList(userData: any) {

@@ -19,7 +19,7 @@ function Board(props: any) {
           })
           }} */>
           <div className="list-title">{list.LIST_TITLE}</div>
-{/*           <button onClick={() => {
+          <button onClick={() => {
             APP_CONTROLLER.deleteBoard({
             WORKSPACE_ID: WORKSPACE_ID,
             BOARD_ID: BOARD.BOARD_ID
@@ -28,7 +28,7 @@ function Board(props: any) {
             setUserData(newData);
           }}>
             del
-          </button> */}
+          </button>
           <div className="list_work-area">
             <div className="list-cover"></div>
             {cards}
