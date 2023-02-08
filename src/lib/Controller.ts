@@ -11,6 +11,29 @@ export default class Controller {
     return this.currentUser;
   }
 
+  deleteBoard(userData: any) {
+    const workspaceId = userData.WORKSPACE_ID;
+    const boardId = userData.BOARD_ID;
+
+    const indexWorkspace = this.currentUser.USER_WORKSPACES.findIndex((elem: string) => elem.WORKSPACE_ID === workspaceId);
+    const indexBoard = this.currentUser.USER_WORKSPACES[indexWorkspace].WORKSPACE_BOARDS.findIndex((elem: string) => elem.BOARD_ID === boardId);
+
+    this.currentUser.USER_WORKSPACES[indexWorkspace].WORKSPACE_BOARDS.splice(indexBoard, 1);
+  }
+
+  sortList(userData: any) {
+    const workspaceId = userData.WORKSPACE_ID;
+    const boardId = userData.BOARD_ID;
+    const listOrder = userData.LIST_ORDER;
+
+    const indexWorkspace = this.currentUser.USER_WORKSPACES.findIndex((elem: string) => elem.WORKSPACE_ID === workspaceId);
+    const indexBoard = this.currentUser.USER_WORKSPACES[indexWorkspace].WORKSPACE_BOARDS.findIndex((elem: string) => elem.BOARD_ID === boardId);
+
+    const currentListArray = this.currentUser.USER_WORKSPACES[indexWorkspace].WORKSPACE_BOARDS[indexBoard].BOARD_LISTS;
+
+    console.log(currentListArray)
+  }
+
   async userRegistration(username: string, password: string) {
     const newUser = {
       username: username,
