@@ -11,18 +11,6 @@ export default function SignIn() {
     const [userPassword, setPassword] = useState('');
     const navigate = useNavigate();
 
-    async function signInVerification(username: string, password: string) {
-        try {
-            const response = await APP_CONTROLLER.userLogin(username, password);
-            console.log('LOG IN SUCCESSFUL')
-            localStorage.setItem('isLogged', 'true');
-            navigate('/');
-            console.log(await response.json())
-        } catch(e) {
-            throw e
-        }
-    }
-
     return (
         <div className="auth-window">
             <div className="auth-modal">
@@ -32,7 +20,10 @@ export default function SignIn() {
                         <h3>Sign in</h3>
                         <form className="auth-form" onSubmit={async (e) => {
                             e.preventDefault()
-                            await signInVerification(userName, userPassword)}}>
+                            const response = await APP_CONTROLLER.signInVerification(userName, userPassword);
+                            typeof response === 'string' && navigate('/')
+                            console.log(response)
+                        }}>
                             <input
                                 type="text"
                                 placeholder="Username"

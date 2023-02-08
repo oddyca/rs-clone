@@ -73,6 +73,11 @@ h3 {
     color: white;
 }
 
+.sign-up:disabled {
+    background-color: grey;
+    cursor: default;
+}
+
 .signup-link {
     display: block;
     width: fit-content;

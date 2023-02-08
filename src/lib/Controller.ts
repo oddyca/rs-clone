@@ -42,16 +42,50 @@ export default class Controller {
       });
   }
 
-  // async getUserData(id: string) {
-    
-  // }
+  async getUserData(id: string) {
+    return await fetch(`http://localhost:3008/api/userdata?id=${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  }
 
   // async setUserData(id) {
   //
   // }
 
-  static expandTask() {
+  async signInVerification(username: string, password: string): Promise<Response> {
+    try {
+      const response = await this.userLogin(username, password);
+      const parsedResponse = await response.json();
+      if (!response.ok) {
+        console.log('LOG IN _NOT_ SUCCESSFUL')
+      } else {
+        console.log('LOG IN SUCCESSFUL', parsedResponse);
+        localStorage.setItem('isLoggedIn', 'true');
+        this.currentUser = await this.getUserData(parsedResponse);
+      }
+      return parsedResponse;
+    } catch(e) {
+      throw e;
+    }
+  }
 
+  async signUpVerification(username: string, password: string) {
+    try {
+      const response = await this.userRegistration(username, password);
+      if (!response.ok) {
+        console.log('SIGN UP _NOT_ SUCCESSFUL')
+      } else {
+        console.log('Sign Up SUCCESSFUL', response.json());
+        // this.currentUser = await this.getUserData(await response.json());
+      }
+      return response.json();
+    } catch(e) {
+      throw e;
+    }
   }
 }
 

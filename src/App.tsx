@@ -9,6 +9,7 @@ import Header from "./components/widgets/header/Header";
 import Controller from "./lib/Controller";
 import SignIn from "./components/pages/authorization/Signin";
 import SignUp from "./components/pages/authorization/Signup";
+import AllWorkspaces from "./components/pages/AllWorkspaces";
 
 const APP_CONTROLLER = new Controller();
 
@@ -21,11 +22,13 @@ function App() {
   });
   const navigate = useNavigate();
 
+  const isLoggedIn = localStorage.getItem("isLoggedIn")
+
   useEffect(() => {
-    console.log("LOADED, CHECKING isLogged")
-    localStorage.getItem('isLogged') ? navigate('/') : navigate('/signin')
+    console.log("LOADED, CHECKING isLoggedIn")
+    isLoggedIn === 'true' ? navigate('/') : navigate('/signin')
   }, [])
-  //localStorage.removeItem('isLogged')
+  // localStorage.removeItem('isLoggedIn')
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
@@ -53,11 +56,11 @@ function App() {
 
   return (
     <div className="App">
-      <Header userWorkSpace={userData.USER_WORKSPACES} title={userData.USER_NAME} />
+      {isLoggedIn === "true" && (<Header userWorkSpace={userData.USER_WORKSPACES} title={userData.USER_NAME} />)}
       <Routes>
         <Route
           path="/"
-          element={<Navigate replace to={`/workspace-${viewData.workspace}/`} />} />
+          element={<AllWorkspaces allWorkSpaces={userData.USER_WORKSPACES}/>} />
         {getWorkspaces()}
         {getBoards()}
         <Route path="/signin" element={<SignIn />} />
@@ -65,7 +68,6 @@ function App() {
         <Route path="/404" element={<Page404 />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>
-      <Link to="/signin">AUTH-MODAL</Link>
     </div>
   );
 }

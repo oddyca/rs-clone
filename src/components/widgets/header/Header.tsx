@@ -28,7 +28,6 @@ function Header(props: any) {
               )
             }
           </div>
-
         </div>
         <div className="header__right  user">
           <div>{title}</div>
