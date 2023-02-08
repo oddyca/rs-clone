@@ -7,12 +7,12 @@ export default class Controller {
     this.currentUser = defaultUser;
   }
 
-  indexWorkspace(workspaceId: string) : number {
-    return this.currentUser.USER_WORKSPACES.findIndex((elem: string) => elem.WORKSPACE_ID === workspaceId)
+  getIndexWorkspace(workspaceId: string) : number {
+    return this.currentUser.USER_WORKSPACES.findIndex((elem: Object) => elem.WORKSPACE_ID === workspaceId)
   }
 
-  indexBoard(workspaceId: string, boardId: string) : number {
-    return this.currentUser.USER_WORKSPACES[this.indexWorkspace(workspaceId)].WORKSPACE_BOARDS.findIndex((elem: string) => elem.BOARD_ID === boardId);
+  getIndexBoard(workspaceId: string, boardId: string) : number {
+    return this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS.findIndex((elem: Object) => elem.BOARD_ID === boardId);
   }
   
   loadData() {
@@ -23,9 +23,9 @@ export default class Controller {
     const workspaceId = userData.WORKSPACE_ID;
     const boardId = userData.BOARD_ID;
 
-    this.indexWorkspace(workspaceId);
-    this.indexBoard(workspaceId, boardId);
-    this.currentUser.USER_WORKSPACES[this.indexWorkspace(workspaceId)].WORKSPACE_BOARDS.splice(this.indexBoard(workspaceId, boardId), 1);
+    this.getIndexWorkspace(workspaceId);
+    this.getIndexBoard(workspaceId, boardId);
+    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS.splice(this.getIndexBoard(workspaceId, boardId), 1);
   }
 
 /*   sortList(userData: any) {
