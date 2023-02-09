@@ -6,7 +6,6 @@ function Board(props: any) {
   const [dragList, setDragList] = useState(null);
 
   function dragStartHandlerList(e: any, list: any) {
-    /* console.log('drag', list); */
     setDragList(list);
   }
 
@@ -23,14 +22,13 @@ function Board(props: any) {
 
   function dropHandlerList(e: any, list: any) {
     e.preventDefault();
-    console.log('drop', list);
+    e.target.style.background = 'white';
     APP_CONTROLLER.sortList({
       WORKSPACE_ID: WORKSPACE_ID,
       BOARD_ID: BOARD.BOARD_ID,
       dropList: list,
       dragList: dragList,
     })
-    e.target.style.background = 'white';
     const newData = structuredClone(APP_CONTROLLER.loadData());
     setUserData(newData);
   }

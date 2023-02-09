@@ -33,9 +33,10 @@ export default class Controller {
     const boardId = userData.BOARD_ID;
     const dragList = userData.dragList;
     const dropList = userData.dropList;
-    const indexWorkspace = this.getIndexWorkspace(workspaceId);
-    const indexBoard = this.getIndexBoard(workspaceId, boardId);
-    const currentListArr = this.currentUser.USER_WORKSPACES[indexWorkspace].WORKSPACE_BOARDS[indexBoard].BOARD_LISTS;
+
+    this.getIndexWorkspace(workspaceId);
+    this.getIndexBoard(workspaceId, boardId);
+    const currentListArr = this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS;
     const newListArr = currentListArr.map((el: any) => {
       if (el.LIST_ID === dropList.LIST_ID) {
         return { ...el, LIST_ORDER: dragList.LIST_ORDER };
@@ -45,7 +46,7 @@ export default class Controller {
       }
       return el;
     });
-    this.currentUser.USER_WORKSPACES[indexWorkspace].WORKSPACE_BOARDS[indexBoard].BOARD_LISTS = structuredClone(newListArr);
+    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS = structuredClone(newListArr);
   }
 
   async userRegistration(username: string, password: string) {
