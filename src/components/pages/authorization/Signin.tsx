@@ -9,6 +9,11 @@ export default function SignIn() {
 
     const [userName, setName] = useState('');
     const [userPassword, setPassword] = useState('');
+    const [responseMessages, setResponseMessages] = useState({
+        errorType: '',
+        errorMessage: '',
+        isValid: false
+    });
     const navigate = useNavigate();
 
     return (
@@ -21,8 +26,9 @@ export default function SignIn() {
                         <form className="auth-form" onSubmit={async (e) => {
                             e.preventDefault()
                             const response = await APP_CONTROLLER.signInVerification(userName, userPassword);
-                            typeof response === 'string' && navigate('/')
-                            console.log(response)
+                            setResponseMessages(APP_CONTROLLER.returnResponseCheck());
+                            console.log("responseMessages", responseMessages)
+                            responseMessages.isValid && navigate('/');
                         }}>
                             <input
                                 type="text"
@@ -31,6 +37,10 @@ export default function SignIn() {
                                 required
                                 onChange={(e) => setName(e.target.value)}>
                             </input>
+                            {
+                                (responseMessages.errorMessage && responseMessages.errorType === 'username') 
+                                && <span className="error-message">{responseMessages.errorMessage}</span>
+                            }
                             <input
                                 type="password"
                                 placeholder="Password"
@@ -38,6 +48,10 @@ export default function SignIn() {
                                 required
                                 onChange={(e) => setPassword(e.target.value)}>
                             </input>
+                            {
+                                (responseMessages.errorMessage && responseMessages.errorType === 'password') 
+                                && <span className="error-message">{responseMessages.errorMessage}</span>
+                            }
                             <a className="forgot-password">Forgot password?</a>
                             <button className="button auth-button">Sign in</button>
                         </form>

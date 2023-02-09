@@ -10,18 +10,20 @@ interface UsernamePassword {
 
 export default function SignUp() {
     const APP_CONTROLLER = new Controller();
-    const fetchedData = APP_CONTROLLER.loadData();
+    const [responseMessages, setResponseMessages] = useState({
+        errorType: '',
+        errorMessage: '',
+        isValid: false
+    });
     const [userInput, setUserInput] = useState({
         username: '',
         password: '',
         repeatPassword: ''
     });
-    const [passwordsMatch, setPasswordsMatch] = useState(false)
     const navigate = useNavigate();
 
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        console.log(name, value)
         setUserInput(prev => ({
           ...prev,
           [name]: value
@@ -37,9 +39,9 @@ export default function SignUp() {
                         <h3 className="h3-heading">Sign up</h3>
                         <form className="auth-form" onSubmit={async (e) => {
                             e.preventDefault();
-                            const response = await APP_CONTROLLER.signUpVerification(userInput.username, userInput.password);
-                            typeof response === 'string' && navigate('/signin')
-                            console.log(response)
+                            await APP_CONTROLLER.signUpVerification(userInput.username, userInput.password);
+                            setResponseMessages(APP_CONTROLLER.returnResponseCheck());
+                            responseMessages.isValid && navigate('/signin', {replace: true}); 
                         }}>
                             <input
                                 type="text"
@@ -50,6 +52,10 @@ export default function SignUp() {
                                 required
                                 onChange={(e) => onInputChange(e)}>
                             </input>
+                            {
+                                (responseMessages.errorMessage && responseMessages.errorType === 'userSignUp') 
+                                && <span className="error-message">{responseMessages.errorMessage}</span>
+                            }
                             <input
                                 type="password"
                                 placeholder="Password"
@@ -68,9 +74,7 @@ export default function SignUp() {
                                 className="form-input"
                                 min={4}
                                 required
-                                onChange={(e) => {
-                                    onInputChange(e);
-                                }}>
+                                onChange={(e) => onInputChange(e)}>
                             </input>
                             <label htmlFor="privacy">
                                 <input
@@ -82,7 +86,7 @@ export default function SignUp() {
                             </label>
                             <button 
                                 className="button auth-button sign-up"
-                                disabled={userInput.password === userInput.repeatPassword ? false : true}
+                                disabled={!userInput.password || userInput.password !== userInput.repeatPassword ? true : false}
                             >Sign up</button>
                         </form>
                     </div>

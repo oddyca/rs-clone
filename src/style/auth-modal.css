@@ -90,3 +90,7 @@ h3 {
 .auth-wrapper > p {
     margin: 0 auto;
 }
+
+.error-message {
+    color: red;
+}

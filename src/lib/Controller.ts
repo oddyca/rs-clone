@@ -61,10 +61,13 @@ export default class Controller {
       const response = await this.userLogin(username, password);
       const parsedResponse = await response.json();
       if (!response.ok) {
-        console.log('LOG IN _NOT_ SUCCESSFUL')
+        const responseMessaage = Object.values(parsedResponse)[0] as string;
+        this.responseMessageHandler(responseMessaage);
       } else {
         console.log('LOG IN SUCCESSFUL', parsedResponse);
+        this.responseCheck.isValid = true;
         localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userID', `${parsedResponse}`); // When session is reloaded laod data of this user from the server
         this.currentUser = await this.getUserData(parsedResponse);
       }
       return parsedResponse;
@@ -76,16 +79,50 @@ export default class Controller {
   async signUpVerification(username: string, password: string) {
     try {
       const response = await this.userRegistration(username, password);
+      const parsedResponse = await response.json();
       if (!response.ok) {
-        console.log('SIGN UP _NOT_ SUCCESSFUL')
+        const responseMessaage = Object.values(parsedResponse)[0] as string;
+        this.responseMessageHandler(responseMessaage);
       } else {
-        console.log('Sign Up SUCCESSFUL', response.json());
-        // this.currentUser = await this.getUserData(await response.json());
+        console.log('Sign Up SUCCESSFUL');
+        this.responseCheck.isValid = true;
       }
-      return response.json();
+      return response;
     } catch(e) {
       throw e;
     }
+  }
+
+  responseCheck = {
+    errorType: '',
+    errorMessage: '',
+    isValid: false
+  }
+
+  responseMessageHandler(data: string) {
+    if (data.includes('not found')) {
+      this.responseCheck = {
+        ...this.responseCheck,
+        errorType: 'username',
+        errorMessage: 'User not found!'
+      }
+    } else if (data.includes('Password')) {
+      this.responseCheck = {
+        ...this.responseCheck,
+        errorType: 'password',
+        errorMessage: 'Password incorrect!'
+      }
+    } else if (data.includes('exists')) {
+      this.responseCheck = {
+        ...this.responseCheck,
+        errorType: 'userSignUp',
+        errorMessage: 'User already exists!'
+      }
+    }
+  }
+
+  returnResponseCheck() {
+    return this.responseCheck;
   }
 }
 

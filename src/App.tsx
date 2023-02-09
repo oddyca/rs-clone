@@ -22,12 +22,12 @@ function App() {
   });
   const navigate = useNavigate();
 
-  const isLoggedIn = localStorage.getItem("isLoggedIn")
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
 
   useEffect(() => {
-    console.log("LOADED, CHECKING isLoggedIn")
-    isLoggedIn === 'true' ? navigate('/') : navigate('/signin')
-  }, [])
+    console.log("LOADED, CHECKING isLoggedIn");
+    isLoggedIn === 'true' ? navigate('/') : navigate('/signin', {replace: true})
+  }, []);
   // localStorage.removeItem('isLoggedIn')
 
   const getWorkspaces = () => {
