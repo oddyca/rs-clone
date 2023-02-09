@@ -5,23 +5,23 @@ function Board(props: any) {
   const { BOARD, setUserData, WORKSPACE_ID, APP_CONTROLLER } = props;
   const [dragList, setDragList] = useState(null);
 
-  function dragStartHandler(e: any, list: any) {
+  function dragStartHandlerList(e: any, list: any) {
     /* console.log('drag', list); */
     setDragList(list);
   }
 
-  function dragEndHandler(e: any) {
+  function dragEndHandlerList(e: any) {
     e.target.style.background = 'white';
   }
 
-  function dragOverHandler(e: any) {
+  function dragOverHandlerList(e: any) {
     e.preventDefault();
     if(e.target.className == 'list') {
       e.target.style.background = 'lightgray';
     }
   }
 
-  function dropHandler(e: any, list: any) {
+  function dropHandlerList(e: any, list: any) {
     e.preventDefault();
     console.log('drop', list);
     APP_CONTROLLER.sortList({
@@ -51,11 +51,11 @@ function Board(props: any) {
       return (
         <div
           className="list"
-          onDragStart={(e) => dragStartHandler(e, list)}
-          onDragLeave={(e) => dragEndHandler(e)}
-          onDragEnd={(e) => dragEndHandler(e)}
-          onDragOver={(e) => dragOverHandler(e)}
-          onDrop={(e) => dropHandler(e, list)}
+          onDragStart={(e) => dragStartHandlerList(e, list)}
+          onDragLeave={(e) => dragEndHandlerList(e)}
+          onDragEnd={(e) => dragEndHandlerList(e)}
+          onDragOver={(e) => dragOverHandlerList(e)}
+          onDrop={(e) => dropHandlerList(e, list)}
           draggable={true}
           id={list.LIST_ID}
           /* onClick={() => {
