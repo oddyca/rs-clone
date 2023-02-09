@@ -28,18 +28,27 @@ export default class Controller {
     this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS.splice(this.getIndexBoard(workspaceId, boardId), 1);
   }
 
-/*   sortList(userData: any) {
+  stateList(userData: any) {
     const workspaceId = userData.WORKSPACE_ID;
     const boardId = userData.BOARD_ID;
     const listOrder = userData.LIST_ORDER;
+    const listId = userData.LIST_ID;
 
     const indexWorkspace = this.currentUser.USER_WORKSPACES.findIndex((elem: string) => elem.WORKSPACE_ID === workspaceId);
     const indexBoard = this.currentUser.USER_WORKSPACES[indexWorkspace].WORKSPACE_BOARDS.findIndex((elem: string) => elem.BOARD_ID === boardId);
 
     const currentListArray = this.currentUser.USER_WORKSPACES[indexWorkspace].WORKSPACE_BOARDS[indexBoard].BOARD_LISTS;
+    const currentListId = currentListArray
+        .map((elem: string) => {
+        return (elem)
+      })
+    const currentListIndex = currentListId.map((elem: string) => elem.LIST_ID === listId)
+    console.log(currentListIndex)
 
-    console.log(currentListArray)
-  } */
+    if(currentListId === listId) {
+      console.log('1')
+    }
+  }
 
   async userRegistration(username: string, password: string) {
     const newUser = {

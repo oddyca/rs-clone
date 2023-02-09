@@ -3,7 +3,6 @@ import { useState } from "react";
 function Board(props: any) {
   const { USER_NAME } = props;
   const { BOARD, setUserData, WORKSPACE_ID, APP_CONTROLLER } = props;
-  const [listState, setListState] = useState(BOARD.BOARD_LISTS);
   const [currentList, setCurrentList] = useState(null);
 
   function dragStartHandler(e: any, list: any) {
@@ -22,17 +21,18 @@ function Board(props: any) {
 
   function dropHandler(e: any, list: any) {
     e.preventDefault();
-    /* console.log('drop', list); */
-    setListState(listState.map((c: any) => {
-      if(c.LIST_ID === list.LIST_ID) {
-        return {...c, LIST_ORDER: currentList.LIST_ORDER}
-      }
-      if(c.LIST_ID === currentList.LIST_ID) {
-        return {...c, LIST_ORDER: list.LIST_ORDER}
-      }
-      return c;
-    }))
+    console.log('drop', list);
+    APP_CONTROLLER.stateList({
+      WORKSPACE_ID: WORKSPACE_ID,
+      BOARD_ID: BOARD.BOARD_ID,
+      list: list,
+      LIST_ORDER: list.LIST_ORDER,
+      currentList: currentList,
+      LIST_ID: list.LIST_ID
+    })
     e.target.style.background = 'white';
+    const newData = structuredClone(APP_CONTROLLER.loadData());
+    setUserData(newData);
   }
 
   const sortCards = (a: any, b: any) => {
@@ -44,7 +44,7 @@ function Board(props: any) {
   }
 
   const getLists = () => {
-    return listState.sort(sortCards).map((list: any) => {
+    return BOARD.BOARD_LISTS.sort(sortCards).map((list: any) => {
       const cards = list.LIST_CARDS.map((card: any) => {
         return <div id={card.CARD_ID} className="list_card">{card.CARD_DATA}</div>;
       });
