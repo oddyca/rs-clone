@@ -16,7 +16,9 @@ function Board(props: any) {
 
   function dragOverHandler(e: any) {
     e.preventDefault();
-    e.target.style.background = 'lightgray';
+    if(e.target.className == 'list') {
+      e.target.style.background = 'lightgray';
+    }
   }
 
   function dropHandler(e: any, list: any) {
