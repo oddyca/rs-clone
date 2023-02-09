@@ -11,21 +11,22 @@ interface UsernamePassword {
 export default function SignUp() {
     const APP_CONTROLLER = new Controller();
     const fetchedData = APP_CONTROLLER.loadData();
-
-    const [userName, setUsername] = useState('');
-    const [userPassword, setPassword] = useState('');
-    const [userRepeatPassword, setRepeatPassword] = useState('');
+    const [userInput, setUserInput] = useState({
+        username: '',
+        password: '',
+        repeatPassword: ''
+    });
     const [passwordsMatch, setPasswordsMatch] = useState(false)
     const navigate = useNavigate();
 
-    function isTheSame(repeatedPassword: string) {
-        setRepeatPassword(repeatedPassword);
-        if (userPassword !== userRepeatPassword) {
-            setPasswordsMatch(false)
-        } else {
-            setPasswordsMatch(true);
-        }   
-    }
+    const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        console.log(name, value)
+        setUserInput(prev => ({
+          ...prev,
+          [name]: value
+        }));
+      }
 
     return (
         <div className="auth-window">
@@ -36,32 +37,40 @@ export default function SignUp() {
                         <h3 className="h3-heading">Sign up</h3>
                         <form className="auth-form" onSubmit={async (e) => {
                             e.preventDefault();
-                            const response = await APP_CONTROLLER.signUpVerification(userName, userPassword);
+                            const response = await APP_CONTROLLER.signUpVerification(userInput.username, userInput.password);
                             typeof response === 'string' && navigate('/signin')
                             console.log(response)
                         }}>
                             <input
                                 type="text"
                                 placeholder="Username"
+                                value={userInput.username}
+                                name="username"
                                 className="form-input"
                                 required
-                                onChange={(e) => setUsername(e.target.value)}>
+                                onChange={(e) => onInputChange(e)}>
                             </input>
                             <input
                                 type="password"
                                 placeholder="Password"
+                                name="password"
+                                value={userInput.password}
                                 className="form-input"
                                 min={4}
                                 required
-                                onChange={(e) => setPassword(e.target.value)}>
+                                onChange={(e) => onInputChange(e)}>
                             </input>
                             <input
                                 type="password"
                                 placeholder="Repeat password"
+                                name="repeatPassword"
+                                value={userInput.repeatPassword}
                                 className="form-input"
                                 min={4}
                                 required
-                                onChange={(e) => isTheSame(e.target.value)}>
+                                onChange={(e) => {
+                                    onInputChange(e);
+                                }}>
                             </input>
                             <label htmlFor="privacy">
                                 <input
@@ -73,7 +82,7 @@ export default function SignUp() {
                             </label>
                             <button 
                                 className="button auth-button sign-up"
-                                disabled={!passwordsMatch}
+                                disabled={userInput.password === userInput.repeatPassword ? false : true}
                             >Sign up</button>
                         </form>
                     </div>
