@@ -3,11 +3,11 @@ import { useState } from "react";
 function Board(props: any) {
   const { USER_NAME } = props;
   const { BOARD, setUserData, WORKSPACE_ID, APP_CONTROLLER } = props;
-  const [currentList, setCurrentList] = useState(null);
+  const [dragList, setDragList] = useState(null);
 
   function dragStartHandler(e: any, list: any) {
     /* console.log('drag', list); */
-    setCurrentList(list);
+    setDragList(list);
   }
 
   function dragEndHandler(e: any) {
@@ -22,13 +22,11 @@ function Board(props: any) {
   function dropHandler(e: any, list: any) {
     e.preventDefault();
     console.log('drop', list);
-    APP_CONTROLLER.stateList({
+    APP_CONTROLLER.sortList({
       WORKSPACE_ID: WORKSPACE_ID,
       BOARD_ID: BOARD.BOARD_ID,
-      list: list,
-      LIST_ORDER: list.LIST_ORDER,
-      currentList: currentList,
-      LIST_ID: list.LIST_ID
+      dropList: list,
+      dragList: dragList,
     })
     e.target.style.background = 'white';
     const newData = structuredClone(APP_CONTROLLER.loadData());
@@ -50,7 +48,7 @@ function Board(props: any) {
       });
       return (
         <div
-          className="list" 
+          className="list"
           onDragStart={(e) => dragStartHandler(e, list)}
           onDragLeave={(e) => dragEndHandler(e)}
           onDragEnd={(e) => dragEndHandler(e)}
