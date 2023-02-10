@@ -13,7 +13,7 @@ import SignUp from "./components/pages/authorization/Signup";
 const APP_CONTROLLER = new Controller();
 
 function App() {
-  const [userData /* setUserData */] = useState(APP_CONTROLLER.loadData());
+  const [userData, setUserData] = useState(APP_CONTROLLER.loadData());
   const [viewData /* setViewData */] = useState({
     user: "",
     workspace: 0,
@@ -38,10 +38,15 @@ function App() {
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
+      const getIndexBoard = workspace.WORKSPACE_BOARDS.map((index: number) => {
+        return (
+          workspace.WORKSPACE_BOARDS[index]
+        )
+      });
       return (
         <Route
           path={`/workspace-${workspace.WORKSPACE_ID}/`}
-          element={<Workspace WORKSPACE={userData.USER_WORKSPACES[index]} />}
+          element={<Workspace setUserData={setUserData} WORKSPACE_ID={workspace.WORKSPACE_ID} BOARD={getIndexBoard} APP_CONTROLLER={APP_CONTROLLER} WORKSPACE={userData.USER_WORKSPACES[index]} />}
         />
       );
     });
@@ -53,7 +58,7 @@ function App() {
         return (
           <Route
             path={`/workspace-${workspace.WORKSPACE_ID}/board-${board.BOARD_ID}/`}
-            element={<Board BOARD={workspace.WORKSPACE_BOARDS[ind]} />}
+            element={<Board setUserData={setUserData} WORKSPACE_ID={workspace.WORKSPACE_ID} APP_CONTROLLER={APP_CONTROLLER} BOARD={workspace.WORKSPACE_BOARDS[ind]} />}
           />
         );
       });

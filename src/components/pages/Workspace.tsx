@@ -2,21 +2,34 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Workspace(props: any) {
-  const { WORKSPACE, workIndex } = props;
+  const { WORKSPACE, workIndex, APP_CONTROLLER, BOARD, WORKSPACE_ID, setUserData } = props;
 
   const WORKSPACE_BOARDS = WORKSPACE.WORKSPACE_BOARDS;
 
   const getBoards = () => {
     return WORKSPACE_BOARDS.map((board: any, index: number) => {
       return (
-        <Link className="link" to={`/workspace-${WORKSPACE.WORKSPACE_ID}/board-${board.BOARD_ID}/`}>
-          <div
-            id={board.BOARD_ID}
-            className="board"
-          >
-            {board.BOARD_TITLE}
-          </div>
-        </Link>
+        <>
+          <Link className="link" to={`/workspace-${WORKSPACE.WORKSPACE_ID}/board-${board.BOARD_ID}/`}>
+            <div
+              id={board.BOARD_ID}
+              className="board"
+            >
+              {board.BOARD_TITLE}
+            </div>
+          </Link>
+          <button onClick={() => {
+              APP_CONTROLLER.deleteBoard({
+              WORKSPACE_ID: WORKSPACE_ID,
+              BOARD_ID: BOARD.BOARD_ID
+            });
+              const newData = structuredClone(APP_CONTROLLER.loadData());
+              setUserData(newData);
+            }}>
+              del
+          </button>
+        </>
+
       );
     });
   };
