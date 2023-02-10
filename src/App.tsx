@@ -15,11 +15,11 @@ const APP_CONTROLLER = new Controller();
 
 function App() {
   const [userData /* setUserData */] = useState(APP_CONTROLLER.loadData());
-  const [viewData /* setViewData */] = useState({
-    user: "",
-    workspace: 0,
-    board: 0
-  });
+  // const [viewData /* setViewData */] = useState({
+  //   user: "",
+  //   workspace: 0,
+  //   board: 0
+  // });
   const navigate = useNavigate();
 
   const isLoggedIn = localStorage.getItem("isLoggedIn");

@@ -27,31 +27,35 @@ export default function SignIn() {
                             e.preventDefault()
                             const response = await APP_CONTROLLER.signInVerification(userName, userPassword);
                             setResponseMessages(APP_CONTROLLER.returnResponseCheck());
-                            console.log("responseMessages", responseMessages)
+                            // console.log("responseMessages", responseMessages)
                             responseMessages.isValid && navigate('/');
                         }}>
-                            <input
-                                type="text"
-                                placeholder="Username"
-                                className="form-input"
-                                required
-                                onChange={(e) => setName(e.target.value)}>
-                            </input>
-                            {
-                                (responseMessages.errorMessage && responseMessages.errorType === 'username') 
-                                && <span className="error-message">{responseMessages.errorMessage}</span>
-                            }
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                className="form-input"
-                                required
-                                onChange={(e) => setPassword(e.target.value)}>
-                            </input>
-                            {
-                                (responseMessages.errorMessage && responseMessages.errorType === 'password') 
-                                && <span className="error-message">{responseMessages.errorMessage}</span>
-                            }
+                            <div className="input-wrapper">
+                                <input
+                                    type="text"
+                                    placeholder="Username"
+                                    className="form-input"
+                                    required
+                                    onChange={(e) => setName(e.target.value)}>
+                                </input>
+                                {
+                                    (responseMessages.errorMessage && responseMessages.errorType === 'username') 
+                                    && <span className="error-message">{responseMessages.errorMessage}</span>
+                                }
+                            </div>
+                            <div className="input-wrapper">
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    className="form-input"
+                                    required
+                                    onChange={(e) => setPassword(e.target.value)}>
+                                </input>
+                                {
+                                    (responseMessages.errorMessage && responseMessages.errorType === 'password') 
+                                    && <span className="error-message">{responseMessages.errorMessage}</span>
+                                }
+                            </div>
                             <a className="forgot-password">Forgot password?</a>
                             <button className="button auth-button">Sign in</button>
                         </form>

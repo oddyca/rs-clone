@@ -28,7 +28,7 @@ export default function SignUp() {
           ...prev,
           [name]: value
         }));
-      }
+    }
 
     return (
         <div className="auth-window">
@@ -43,39 +43,49 @@ export default function SignUp() {
                             setResponseMessages(APP_CONTROLLER.returnResponseCheck());
                             responseMessages.isValid && navigate('/signin', {replace: true}); 
                         }}>
-                            <input
-                                type="text"
-                                placeholder="Username"
-                                value={userInput.username}
-                                name="username"
-                                className="form-input"
-                                required
-                                onChange={(e) => onInputChange(e)}>
-                            </input>
-                            {
-                                (responseMessages.errorMessage && responseMessages.errorType === 'userSignUp') 
-                                && <span className="error-message">{responseMessages.errorMessage}</span>
-                            }
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                name="password"
-                                value={userInput.password}
-                                className="form-input"
-                                min={4}
-                                required
-                                onChange={(e) => onInputChange(e)}>
-                            </input>
-                            <input
-                                type="password"
-                                placeholder="Repeat password"
-                                name="repeatPassword"
-                                value={userInput.repeatPassword}
-                                className="form-input"
-                                min={4}
-                                required
-                                onChange={(e) => onInputChange(e)}>
-                            </input>
+                            <div className="input-wrapper">
+                                <input
+                                    type="text"
+                                    placeholder="Username"
+                                    value={userInput.username}
+                                    name="username"
+                                    className="form-input"
+                                    required
+                                    onChange={(e) => onInputChange(e)}>
+                                </input>
+                                {
+                                    (responseMessages.errorMessage && responseMessages.errorType === 'userSignUp') 
+                                    && <span className="error-message">{responseMessages.errorMessage}</span>
+                                }
+                            </div>
+                            <div className="input-wrapper">
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    name="password"
+                                    value={userInput.password}
+                                    className="form-input"
+                                    min={4}
+                                    required
+                                    onChange={(e) => onInputChange(e)}>
+                                </input>
+                            </div>
+                            <div className="input-wrapper">
+                                <input
+                                    type="password"
+                                    placeholder="Repeat password"
+                                    name="repeatPassword"
+                                    value={userInput.repeatPassword}
+                                    className="form-input"
+                                    min={4}
+                                    required
+                                    onChange={(e) => onInputChange(e)}>
+                                </input>
+                                {
+                                    (userInput.repeatPassword && userInput.password !== userInput.repeatPassword) 
+                                    && <span className="error-message">Passwords don't match</span>
+                                }
+                            </div>
                             <label htmlFor="privacy">
                                 <input
                                     type="checkbox"

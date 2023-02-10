@@ -91,6 +91,19 @@ h3 {
     margin: 0 auto;
 }
 
+#privacy {
+    margin-right: 4px;
+}
+
+.input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
 .error-message {
+    position: absolute;
+    bottom: -18px;
+    left: 0;
     color: red;
+    font-size: 12px;
 }
