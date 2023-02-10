@@ -14,7 +14,7 @@ import AllWorkspaces from "./components/pages/AllWorkspaces";
 const APP_CONTROLLER = new Controller();
 
 function App() {
-  const [userData /* setUserData */] = useState(APP_CONTROLLER.loadData());
+  const [userData, setUserData] = useState(APP_CONTROLLER.loadData());
   // const [viewData /* setViewData */] = useState({
   //   user: "",
   //   workspace: 0,
@@ -23,10 +23,23 @@ function App() {
   const navigate = useNavigate();
 
   const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const loggedUserID = localStorage.getItem("userID") as string;
 
   useEffect(() => {
-    console.log("LOADED, CHECKING isLoggedIn");
-    isLoggedIn === 'true' ? navigate('/') : navigate('/signin', {replace: true})
+    async function getUser() {
+      const userDATA = await (await APP_CONTROLLER.getUserData(loggedUserID)).json()
+      const freshUsername = userDATA.username;
+      const freshUserPass = userDATA.password;
+      const freshUserWorkspaces = userDATA.workspaces;
+      setUserData({
+        USER_ID: loggedUserID,
+        USER_NAME: freshUsername,
+        USER_PASSWORD: freshUserPass,
+        USER_WORKSPACES: freshUserWorkspaces
+      });
+    }
+    loggedUserID && getUser();
+    isLoggedIn === 'true' ? navigate('/') : navigate('/signin', {replace: true});
   }, []);
   // localStorage.removeItem('isLoggedIn')
 

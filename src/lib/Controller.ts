@@ -68,8 +68,8 @@ export default class Controller {
         this.responseCheck.isValid = true;
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('userID', `${parsedResponse}`); // When session is reloaded laod data of this user from the server
-        this.currentUser = await this.getUserData(parsedResponse);
-        console.log(this.currentUser);
+        //this.currentUser = await this.getUserData(parsedResponse);
+        //console.log(this.currentUser);
       }
       return parsedResponse;
     } catch(e) {
