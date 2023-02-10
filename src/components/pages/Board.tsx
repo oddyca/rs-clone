@@ -22,15 +22,17 @@ function Board(props: any) {
 
   function dropHandlerList(e: any, list: any) {
     e.preventDefault();
-    e.target.style.background = 'white';
-    APP_CONTROLLER.sortList({
-      WORKSPACE_ID: WORKSPACE_ID,
-      BOARD_ID: BOARD.BOARD_ID,
-      dropList: list,
-      dragList: dragList,
-    })
-    const newData = structuredClone(APP_CONTROLLER.loadData());
-    setUserData(newData);
+    if(e.target.className === 'list') {
+      e.target.style.background = 'white';
+      APP_CONTROLLER.sortList({
+        WORKSPACE_ID: WORKSPACE_ID,
+        BOARD_ID: BOARD.BOARD_ID,
+        dropList: list,
+        dragList: dragList,
+      })
+      const newData = structuredClone(APP_CONTROLLER.loadData());
+      setUserData(newData);
+    }
   }
 
   const sortCards = (a: any, b: any) => {
@@ -44,7 +46,20 @@ function Board(props: any) {
   const getLists = () => {
     return BOARD.BOARD_LISTS.sort(sortCards).map((list: any) => {
       const cards = list.LIST_CARDS.map((card: any) => {
-        return <div id={card.CARD_ID} className="list_card">{card.CARD_DATA}</div>;
+        return (
+          <div
+            onDragOver={(e) => dragOverHandlerTask(e, list, card)}
+            onDragLeave={(e) => dragLeaveHandlerTask(e)}
+            onDragStart={(e) => dragStarthandlerTask(e)}
+            onDragEnd={(e) => dragEndHandlerTask(e)}
+            onDrop={(e) => dropHandlerTask(e, list, card)}
+            id={card.CARD_ID}
+            className="list_card"
+            draggable={true}
+          >
+            {card.CARD_DATA}
+          </div>
+        );
       });
       return (
         <div
@@ -56,13 +71,6 @@ function Board(props: any) {
           onDrop={(e) => dropHandlerList(e, list)}
           draggable={true}
           id={list.LIST_ID}
-          /* onClick={() => {
-          APP_CONTROLLER.sortList({
-            WORKSPACE_ID: WORKSPACE_ID,
-            BOARD_ID: BOARD.BOARD_ID,
-            LIST_ORDER: list.LIST_ORDER
-          })
-          }} */
           >
           <div className="list-title">{list.LIST_TITLE}</div>
           <button onClick={() => {
