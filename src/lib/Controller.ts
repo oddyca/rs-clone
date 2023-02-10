@@ -36,6 +36,7 @@ export default class Controller {
     const workspaceId = userData.WORKSPACE_ID;
     const boardId = userData.BOARD_ID;
     const dragList = userData.dragList;
+    const dragTask = userData.dragTask;
     const dropList = userData.dropList;
 
     const currentListArr = this.getBoards(workspaceId, boardId);
@@ -49,6 +50,20 @@ export default class Controller {
       return elem;
     });
     this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS = structuredClone(newListArr);
+
+    dropList.LIST_CARDS.push(dragTask);
+    const currentIndexList = dragList.LIST_CARDS.indexOf(dragTask);
+    dragList.LIST_CARDS.splice(currentIndexList, 1);
+    const newListEmpty = currentListArr.map((elem: any) => {
+      if(elem.LIST_ID === dropList.LIST_ID) {
+        return dropList;
+      }
+      if(elem.LIST_ID === dragList.LIST_ID) {
+        return dragList;
+      }
+      return elem;
+    });
+    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS = structuredClone(newListEmpty);
   }
 
   sortCard(userData: any) {

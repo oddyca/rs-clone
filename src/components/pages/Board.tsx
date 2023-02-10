@@ -30,6 +30,7 @@ function Board(props: any) {
         BOARD_ID: BOARD.BOARD_ID,
         dropList: list,
         dragList: dragList,
+        dragTask: dragTask,
       })
       const newData = structuredClone(APP_CONTROLLER.loadData());
       setUserData(newData);
@@ -44,7 +45,9 @@ function Board(props: any) {
   }
 
   function dragLeaveHandlerTask(e: any) {
-    e.target.style.boxShadow = 'none';
+    if(e.target.className === 'list_card') {
+      e.target.style.boxShadow = 'none';
+    }
   }
 
   function dragStartHandlerTask(e: any, list: any, card: any) {
@@ -53,7 +56,9 @@ function Board(props: any) {
   }
 
   function dragEndHandlerTask(e: any) {
-    e.target.style.boxShadow = 'none';
+    if(e.target.className === 'list_card') {
+      e.target.style.boxShadow = 'none';
+    }
   }
 
   function dropHandlerTask(e: any, list: any, card: any) {
