@@ -38,10 +38,15 @@ function App() {
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
+      const getIndexBoard = workspace.WORKSPACE_BOARDS.map((index: number) => {
+        return (
+          workspace.WORKSPACE_BOARDS[index]
+        )
+      });
       return (
         <Route
           path={`/workspace-${workspace.WORKSPACE_ID}/`}
-          element={<Workspace setUserData={setUserData} WORKSPACE_ID={workspace.WORKSPACE_ID} BOARD={workspace.WORKSPACE_BOARDS[index]} APP_CONTROLLER={APP_CONTROLLER} WORKSPACE={userData.USER_WORKSPACES[index]} />}
+          element={<Workspace setUserData={setUserData} WORKSPACE_ID={workspace.WORKSPACE_ID} BOARD={getIndexBoard} APP_CONTROLLER={APP_CONTROLLER} WORKSPACE={userData.USER_WORKSPACES[index]} />}
         />
       );
     });
