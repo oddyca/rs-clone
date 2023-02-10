@@ -26,9 +26,9 @@ export default function SignIn() {
                         <form className="auth-form" onSubmit={async (e) => {
                             e.preventDefault()
                             const response = await APP_CONTROLLER.signInVerification(userName, userPassword);
-                            setResponseMessages(APP_CONTROLLER.returnResponseCheck());
-                            // console.log("responseMessages", responseMessages)
-                            responseMessages.isValid && navigate('/');
+                            const returnResponseCheck = APP_CONTROLLER.returnResponseCheck();
+                            setResponseMessages(returnResponseCheck);
+                            returnResponseCheck.isValid && navigate('/');
                         }}>
                             <div className="input-wrapper">
                                 <input
