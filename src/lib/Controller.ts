@@ -15,7 +15,7 @@ export default class Controller {
     return this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS.findIndex((elem: any) => elem.BOARD_ID === boardId);
   }
 
-  getBoards(workspaceId: string, boardId: string) : object {
+  getBoards(workspaceId: string, boardId: string) : object[] {
     return this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS;
   }
 
@@ -64,6 +64,7 @@ export default class Controller {
     const dropIndexList = dropList.LIST_CARDS.indexOf(dropCard);
     dropList.LIST_CARDS.splice(dropIndexList + 1, 0, dragTask);
     const currentListArr = this.getBoards(workspaceId, boardId)
+    /* console.log(this.getBoards(workspaceId, boardId)) */
     const newListArr = currentListArr.map((elem: any) => {
       if(elem.LIST_ID === dropList.LIST_ID) {
         return dropList;
