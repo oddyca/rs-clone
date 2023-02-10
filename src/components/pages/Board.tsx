@@ -4,6 +4,7 @@ function Board(props: any) {
   const { USER_NAME } = props;
   const { BOARD, setUserData, WORKSPACE_ID, APP_CONTROLLER } = props;
   const [dragList, setDragList] = useState(null);
+  const [dragTask, setDragTask] = useState(null);
 
   function dragStartHandlerList(e: any, list: any) {
     setDragList(list);
@@ -35,6 +36,42 @@ function Board(props: any) {
     }
   }
 
+  function dragOverHandlerTask(e: any) {
+    e.preventDefault()
+    if(e.target.className === 'list_card') {
+      e.target.style.boxShadow = '0 2px 3px gray';
+    }
+  }
+
+  function dragLeaveHandlerTask(e: any) {
+    e.target.style.boxShadow = 'none';
+  }
+
+  function dragStartHandlerTask(e: any, list: any, card: any) {
+    setDragList(list);
+    setDragTask(card);
+  }
+
+  function dragEndHandlerTask(e: any) {
+    e.target.style.boxShadow = 'none';
+  }
+
+  function dropHandlerTask(e: any, list: any, card: any) {
+    e.preventDefault()
+    if(e.target.className === 'list_card') {
+      APP_CONTROLLER.sortCard({
+        WORKSPACE_ID: WORKSPACE_ID,
+        BOARD_ID: BOARD.BOARD_ID,
+        dropList: list,
+        dropCard: card,
+        dragList: dragList,
+        dragTask: dragTask,
+      })
+      const newData = structuredClone(APP_CONTROLLER.loadData());
+      setUserData(newData);
+    }
+  }
+
   const sortCards = (a: any, b: any) => {
     if(a.LIST_ORDER > b.LIST_ORDER) {
       return 1
@@ -48,9 +85,9 @@ function Board(props: any) {
       const cards = list.LIST_CARDS.map((card: any) => {
         return (
           <div
-            onDragOver={(e) => dragOverHandlerTask(e, list, card)}
+            onDragOver={(e) => dragOverHandlerTask(e)}
             onDragLeave={(e) => dragLeaveHandlerTask(e)}
-            onDragStart={(e) => dragStarthandlerTask(e)}
+            onDragStart={(e) => dragStartHandlerTask(e, list, card)}
             onDragEnd={(e) => dragEndHandlerTask(e)}
             onDrop={(e) => dropHandlerTask(e, list, card)}
             id={card.CARD_ID}
