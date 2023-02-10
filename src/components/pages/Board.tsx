@@ -115,16 +115,6 @@ function Board(props: any) {
           id={list.LIST_ID}
           >
           <div className="list-title">{list.LIST_TITLE}</div>
-          <button onClick={() => {
-            APP_CONTROLLER.deleteBoard({
-            WORKSPACE_ID: WORKSPACE_ID,
-            BOARD_ID: BOARD.BOARD_ID
-          });
-            const newData = structuredClone(APP_CONTROLLER.loadData());
-            setUserData(newData);
-          }}>
-            del
-          </button>
           <div className="list_work-area">
             <div className="list-cover"></div>
             {cards}

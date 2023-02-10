@@ -41,7 +41,7 @@ function App() {
       return (
         <Route
           path={`/workspace-${workspace.WORKSPACE_ID}/`}
-          element={<Workspace WORKSPACE={userData.USER_WORKSPACES[index]} />}
+          element={<Workspace setUserData={setUserData} WORKSPACE_ID={workspace.WORKSPACE_ID} BOARD={workspace.WORKSPACE_BOARDS[index]} APP_CONTROLLER={APP_CONTROLLER} WORKSPACE={userData.USER_WORKSPACES[index]} />}
         />
       );
     });
