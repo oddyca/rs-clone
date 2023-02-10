@@ -21,13 +21,19 @@ export default function SignUp() {
         repeatPassword: ''
     });
     const navigate = useNavigate();
-
+    const allowed = /^[a-zA-Z0-9_]+$/;
+    
     const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        setUserInput(prev => ({
-          ...prev,
-          [name]: value
-        }));
+        
+        if (event.target.name === "username" && value && !allowed.test(event.target.value)) {
+            event.preventDefault();
+        } else {
+            setUserInput(prev => ({
+                ...prev,
+                [name]: value
+            }));
+        }
     }
 
     return (
@@ -41,6 +47,7 @@ export default function SignUp() {
                             e.preventDefault();
                             await APP_CONTROLLER.signUpVerification(userInput.username, userInput.password);
                             setResponseMessages(APP_CONTROLLER.returnResponseCheck());
+                            console.log('responseMessages', responseMessages);
                             responseMessages.isValid && navigate('/signin', {replace: true}); 
                         }}>
                             <div className="input-wrapper">

@@ -69,6 +69,7 @@ export default class Controller {
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('userID', `${parsedResponse}`); // When session is reloaded laod data of this user from the server
         this.currentUser = await this.getUserData(parsedResponse);
+        console.log(this.currentUser);
       }
       return parsedResponse;
     } catch(e) {
@@ -86,6 +87,7 @@ export default class Controller {
       } else {
         console.log('Sign Up SUCCESSFUL');
         this.responseCheck.isValid = true;
+        console.log('this.responseCheck', this.responseCheck)
       }
       return response;
     } catch(e) {
