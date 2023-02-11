@@ -15,7 +15,7 @@ export default function AllWorkspaces(props: any) {
             <div className="workspace_cover">
               <div className="workspaces_info">
                 <p>Boards: {space.WORKSPACE_BOARDS.length}</p>
-                <p>Participants: {}</p>
+                <p>Participants: {space.WORKSPACE_PS.join(" ")}</p>
               </div>
             </div>
           </div>
@@ -27,7 +27,6 @@ export default function AllWorkspaces(props: any) {
   return (
     <div className='workspaces-container'>
       <h3 className="h3-heading">Workspaces ({allWorkSpaces.length})</h3>
-      <Participants />
       <div className="workspaces-list">
         {renderWorkspaces()}
       </div>

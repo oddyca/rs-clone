@@ -21,14 +21,14 @@ function App() {
     board: 0
   });
 
-const navigate = useNavigate();
-
+  const navigate = useNavigate();
+  // localStorage.clear();
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const loggedUserID = localStorage.getItem("userID") as string;
 
   useEffect(() => {
     async function getUser() {
-      const userDATA = await (await APP_CONTROLLER.getUserData(loggedUserID)).json()
+      const userDATA = await (await APP_CONTROLLER.getUserData(loggedUserID)).json();
       const freshUsername = userDATA.username;
       const freshUserPass = userDATA.password;
       const freshUserWorkspaces = userDATA.workspaces;
@@ -39,8 +39,9 @@ const navigate = useNavigate();
         USER_WORKSPACES: freshUserWorkspaces
       });
     }
+
     loggedUserID && getUser();
-    isLoggedIn === 'true' ? navigate('/') : navigate('/signin', {replace: true});
+    isLoggedIn === "true" ? navigate("/") : navigate("/signin", { replace: true });
   }, []);
   // localStorage.removeItem('isLoggedIn')
 
@@ -49,12 +50,13 @@ const navigate = useNavigate();
       const getIndexBoard = workspace.WORKSPACE_BOARDS.map((index: number) => {
         return (
           workspace.WORKSPACE_BOARDS[index]
-        )
+        );
       });
       return (
         <Route
           path={`/workspace-${workspace.WORKSPACE_ID}/`}
-          element={<Workspace setUserData={setUserData} WORKSPACE_ID={workspace.WORKSPACE_ID} BOARD={getIndexBoard} APP_CONTROLLER={APP_CONTROLLER} WORKSPACE={userData.USER_WORKSPACES[index]} />}
+          element={<Workspace setUserData={setUserData} WORKSPACE_ID={workspace.WORKSPACE_ID} BOARD={getIndexBoard}
+                              APP_CONTROLLER={APP_CONTROLLER} WORKSPACE={userData.USER_WORKSPACES[index]} />}
         />
       );
     });
@@ -66,7 +68,8 @@ const navigate = useNavigate();
         return (
           <Route
             path={`/workspace-${workspace.WORKSPACE_ID}/board-${board.BOARD_ID}/`}
-            element={<Board setUserData={setUserData} WORKSPACE_ID={workspace.WORKSPACE_ID} APP_CONTROLLER={APP_CONTROLLER} BOARD={workspace.WORKSPACE_BOARDS[ind]} />}
+            element={<Board setUserData={setUserData} WORKSPACE_ID={workspace.WORKSPACE_ID}
+                            APP_CONTROLLER={APP_CONTROLLER} BOARD={workspace.WORKSPACE_BOARDS[ind]} />}
           />
         );
       });
@@ -79,7 +82,7 @@ const navigate = useNavigate();
       <Routes>
         <Route
           path="/"
-          element={<AllWorkspaces allWorkSpaces={userData.USER_WORKSPACES}/>} />
+          element={<AllWorkspaces allWorkSpaces={userData.USER_WORKSPACES} />} />
         {getWorkspaces()}
         {getBoards()}
         <Route path="/signin" element={<SignIn />} />

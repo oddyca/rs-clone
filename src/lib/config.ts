@@ -6,6 +6,7 @@ export default {
     {
       WORKSPACE_ID: "1",
       WORKSPACE_TITLE: "workspace-1",
+      WORKSPACE_PS: ["user"],
       WORKSPACE_BOARDS: [
         {
           BOARD_ID: "1",
@@ -22,7 +23,7 @@ export default {
                 },
                 {
                   CARD_ID: "2",
-                  CARD_DATA: "some text about task-1",
+                  CARD_DATA: "some text about task-2",
                 },
               ],
             },
@@ -37,11 +38,11 @@ export default {
                 },
                 {
                   CARD_ID: "2",
-                  CARD_DATA: "some text about task-1",
+                  CARD_DATA: "some text about task-2",
                 },
                 {
                   CARD_ID: "3",
-                  CARD_DATA: "some text about task-1",
+                  CARD_DATA: "some text about task-3",
                 },
               ],
             },
@@ -96,6 +97,7 @@ export default {
     {
       WORKSPACE_ID: "2",
       WORKSPACE_TITLE: "workspace-2",
+      WORKSPACE_PS: ["user"],
       WORKSPACE_BOARDS: [
         {
           BOARD_ID: "1",

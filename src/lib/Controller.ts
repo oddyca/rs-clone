@@ -201,6 +201,10 @@ export default class Controller {
     }
   }
 
+  addParticipant() {
+
+  }
+
   returnResponseCheck() {
     return this.responseCheck;
   }
