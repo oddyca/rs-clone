@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import '../../style/all-workspaces.css'
+import Participants from "../widgets/Participants";
 
 export default function AllWorkspaces(props: any) {
   const { allWorkSpaces } = props;
@@ -26,6 +27,7 @@ export default function AllWorkspaces(props: any) {
   return (
     <div className='workspaces-container'>
       <h3 className="h3-heading">Workspaces ({allWorkSpaces.length})</h3>
+      <Participants />
       <div className="workspaces-list">
         {renderWorkspaces()}
       </div>
