@@ -4,31 +4,17 @@ import { useNavigate } from "react-router-dom";
 import "../../../style/auth-modal.css";
 import Controller from "../../../lib/Controller";
 
-interface UsernamePassword {
-    [username: string]: string
-}
-
 export default function SignIn() {
     const APP_CONTROLLER = new Controller();
-    const fetchedData = APP_CONTROLLER.loadData(); // only first user. Must be an array of users
 
-    const [userEmail, setEmail] = useState('');
+    const [userName, setName] = useState('');
     const [userPassword, setPassword] = useState('');
+    const [responseMessages, setResponseMessages] = useState({
+        errorType: '',
+        errorMessage: '',
+        isValid: false
+    });
     const navigate = useNavigate();
-
-    const  signInVerification = () => {
-        const userNamePass: UsernamePassword = {
-            'username': fetchedData.USER_NAME,
-            'password': fetchedData.USER_PASSWORD
-        }
-
-        if (userEmail === userNamePass['username'] && userPassword === userNamePass['password']) {
-            navigate('/');
-        } else {
-            alert('wrong user-password');
-            return undefined
-        }
-    }
 
     return (
         <div className="auth-window">
@@ -37,23 +23,39 @@ export default function SignIn() {
                 <div className="auth-block">
                     <div className="auth-wrapper">
                         <h3>Sign in</h3>
-                        <form className="auth-form" onSubmit={(e) => {
+                        <form className="auth-form" onSubmit={async (e) => {
                             e.preventDefault()
-                            signInVerification()}}>
-                            <input
-                                type="text"
-                                placeholder="Username"
-                                className="form-input"
-                                required
-                                onChange={(e) => setEmail(e.target.value)}>
-                            </input>
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                className="form-input"
-                                required
-                                onChange={(e) => setPassword(e.target.value)}>
-                            </input>
+                            const response = await APP_CONTROLLER.signInVerification(userName, userPassword);
+                            const returnResponseCheck = APP_CONTROLLER.returnResponseCheck();
+                            setResponseMessages(returnResponseCheck);
+                            returnResponseCheck.isValid && navigate('/');
+                        }}>
+                            <div className="input-wrapper">
+                                <input
+                                    type="text"
+                                    placeholder="Username"
+                                    className="form-input"
+                                    required
+                                    onChange={(e) => setName(e.target.value)}>
+                                </input>
+                                {
+                                    (responseMessages.errorMessage && responseMessages.errorType === 'username') 
+                                    && <span className="error-message">{responseMessages.errorMessage}</span>
+                                }
+                            </div>
+                            <div className="input-wrapper">
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    className="form-input"
+                                    required
+                                    onChange={(e) => setPassword(e.target.value)}>
+                                </input>
+                                {
+                                    (responseMessages.errorMessage && responseMessages.errorType === 'password') 
+                                    && <span className="error-message">{responseMessages.errorMessage}</span>
+                                }
+                            </div>
                             <a className="forgot-password">Forgot password?</a>
                             <button className="button auth-button">Sign in</button>
                         </form>

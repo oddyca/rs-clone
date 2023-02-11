@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import { Routes, Route, Navigate, Link } from "react-router-dom";
+import { Routes, Route, Navigate, Link, useNavigate } from "react-router-dom";
 
 import Board from "./components/pages/Board";
 import Workspace from "./components/pages/Workspace";
@@ -9,6 +9,7 @@ import Header from "./components/widgets/header/Header";
 import Controller from "./lib/Controller";
 import SignIn from "./components/pages/authorization/Signin";
 import SignUp from "./components/pages/authorization/Signup";
+import AllWorkspaces from "./components/pages/AllWorkspaces";
 
 const APP_CONTROLLER = new Controller();
 
@@ -20,21 +21,28 @@ function App() {
     board: 0
   });
 
-  async function login(username: string, password: string)  {
-    const response = await APP_CONTROLLER.userLogin(username, password);
-    if (response.ok) { // если HTTP-статус в диапазоне 200-299
-      // получаем тело ответа
-      return  response.json();
-    } else { // если HTTP-статус в диапазоне 200-299
-      // получаем ошибку
-      return `Ошибка:  ${response.status}`;
-    }
-  }
+const navigate = useNavigate();
 
-  login("user", "12345").then(
-    result => console.log(result), // обработает успешное выполнение
-    error => console.log(error) // обработает ошибку
-  );
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const loggedUserID = localStorage.getItem("userID") as string;
+
+  useEffect(() => {
+    async function getUser() {
+      const userDATA = await (await APP_CONTROLLER.getUserData(loggedUserID)).json()
+      const freshUsername = userDATA.username;
+      const freshUserPass = userDATA.password;
+      const freshUserWorkspaces = userDATA.workspaces;
+      setUserData({
+        USER_ID: loggedUserID,
+        USER_NAME: freshUsername,
+        USER_PASSWORD: freshUserPass,
+        USER_WORKSPACES: freshUserWorkspaces
+      });
+    }
+    loggedUserID && getUser();
+    isLoggedIn === 'true' ? navigate('/') : navigate('/signin', {replace: true});
+  }, []);
+  // localStorage.removeItem('isLoggedIn')
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
@@ -67,11 +75,11 @@ function App() {
 
   return (
     <div className="App">
-      <Header userWorkSpace={userData.USER_WORKSPACES} title={userData.USER_NAME} />
+      {isLoggedIn === "true" && (<Header userWorkSpace={userData.USER_WORKSPACES} title={userData.USER_NAME} />)}
       <Routes>
         <Route
           path="/"
-          element={<Navigate replace to={`/workspace-${viewData.workspace}/`} />} />
+          element={<AllWorkspaces allWorkSpaces={userData.USER_WORKSPACES}/>} />
         {getWorkspaces()}
         {getBoards()}
         <Route path="/signin" element={<SignIn />} />
@@ -79,7 +87,6 @@ function App() {
         <Route path="/404" element={<Page404 />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>
-      <Link to="/signin">AUTH-MODAL</Link>
     </div>
   );
 }

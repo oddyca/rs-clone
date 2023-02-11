@@ -10,25 +10,29 @@ interface UsernamePassword {
 
 export default function SignUp() {
     const APP_CONTROLLER = new Controller();
-    const fetchedData = APP_CONTROLLER.loadData(); // only first user. Must be an array of users
-
-    const [userEmail, setEmail] = useState('');
-    const [userPassword, setPassword] = useState('');
-    const [userRepeatPassword, setRepeatPassword] = useState('');
+    const [responseMessages, setResponseMessages] = useState({
+        errorType: '',
+        errorMessage: '',
+        isValid: false
+    });
+    const [userInput, setUserInput] = useState({
+        username: '',
+        password: '',
+        repeatPassword: ''
+    });
     const navigate = useNavigate();
-
-    const  signInVerification = () => {
-        const userNamePass: UsernamePassword = {
-            'username': fetchedData.USER_NAME,
-            'password': fetchedData.USER_PASSWORD
-        }
-
-        if (userEmail // will check if it exists already 
-            && (userRepeatPassword === userPassword)) {
-            navigate('/signin');
+    const allowed = /^[a-zA-Z0-9_]+$/;
+    
+    const onInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
+        
+        if (event.target.name === "username" && value && !allowed.test(event.target.value)) {
+            event.preventDefault();
         } else {
-            alert('password don\'t match');
-            return undefined
+            setUserInput(prev => ({
+                ...prev,
+                [name]: value
+            }));
         }
     }
 
@@ -38,41 +42,69 @@ export default function SignUp() {
                 <div className="hero-shot"></div>
                 <div className="auth-block">
                     <div className="auth-wrapper">
-                        <h3>Sign in</h3>
-                        <form className="auth-form" onSubmit={(e) => {
-                            e.preventDefault()
-                            signInVerification()}}>
-                            <input
-                                type="text"
-                                placeholder="Username"
-                                className="form-input"
-                                required
-                                onChange={(e) => setEmail(e.target.value)}>
-                            </input>
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                className="form-input"
-                                required
-                                onChange={(e) => setPassword(e.target.value)}>
-                            </input>
-                            <input
-                                type="password"
-                                placeholder="Repeat password"
-                                className="form-input"
-                                required
-                                onChange={(e) => setRepeatPassword(e.target.value)}>
-                            </input>
+                        <h3 className="h3-heading">Sign up</h3>
+                        <form className="auth-form" onSubmit={async (e) => {
+                            e.preventDefault();
+                            await APP_CONTROLLER.signUpVerification(userInput.username, userInput.password);
+                            const returnResponseCheck = APP_CONTROLLER.returnResponseCheck();
+                            setResponseMessages(returnResponseCheck);
+                            returnResponseCheck.isValid && navigate('/signin', {replace: true}); 
+                        }}>
+                            <div className="input-wrapper">
+                                <input
+                                    type="text"
+                                    placeholder="Username"
+                                    value={userInput.username}
+                                    name="username"
+                                    className="form-input"
+                                    required
+                                    onChange={(e) => onInputChange(e)}>
+                                </input>
+                                {
+                                    (responseMessages.errorMessage && responseMessages.errorType === 'userSignUp') 
+                                    && <span className="error-message">{responseMessages.errorMessage}</span>
+                                }
+                            </div>
+                            <div className="input-wrapper">
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    name="password"
+                                    value={userInput.password}
+                                    className="form-input"
+                                    min={4}
+                                    required
+                                    onChange={(e) => onInputChange(e)}>
+                                </input>
+                            </div>
+                            <div className="input-wrapper">
+                                <input
+                                    type="password"
+                                    placeholder="Repeat password"
+                                    name="repeatPassword"
+                                    value={userInput.repeatPassword}
+                                    className="form-input"
+                                    min={4}
+                                    required
+                                    onChange={(e) => onInputChange(e)}>
+                                </input>
+                                {
+                                    (userInput.repeatPassword && userInput.password !== userInput.repeatPassword) 
+                                    && <span className="error-message">Passwords don't match</span>
+                                }
+                            </div>
                             <label htmlFor="privacy">
-                            <input
-                                type="checkbox"
-                                id="privacy"
-                                required>
-                            </input>
+                                <input
+                                    type="checkbox"
+                                    id="privacy"
+                                    required>
+                                </input>
                             I agree with the Privacy policy
                             </label>
-                            
-                            <button className="button auth-button">Sign up</button>
+                            <button 
+                                className="button auth-button sign-up"
+                                disabled={!userInput.password || userInput.password !== userInput.repeatPassword ? true : false}
+                            >Sign up</button>
                         </form>
                     </div>
                 </div>
