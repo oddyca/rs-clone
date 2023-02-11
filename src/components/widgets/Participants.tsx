@@ -11,12 +11,12 @@ const Participants = (props: TParticipantsProps) => {
     })
   }
 
-
   return (
     <div className="participants">
       <div className="participants-title"><h3>Participants:</h3></div>
       <div className="participants-group">
         {renderParticipant()}
+        <div className="participant-add-btn">➕</div>
       </div>
     </div>
 
