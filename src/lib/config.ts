@@ -13,6 +13,7 @@ export default {
           BOARD_LISTS: [
             {
               LIST_ID: "1",
+              LIST_ORDER: 1,
               LIST_TITLE: "list-1",
               LIST_CARDS: [
                 {
@@ -27,6 +28,7 @@ export default {
             },
             {
               LIST_ID: "2",
+              LIST_ORDER: 2,
               LIST_TITLE: "list-2",
               LIST_CARDS: [
                 {
@@ -51,6 +53,7 @@ export default {
           BOARD_LISTS: [
             {
               LIST_ID: "1",
+              LIST_ORDER: 1,
               LIST_TITLE: "list-1",
               LIST_CARDS: [
                 {
@@ -69,6 +72,7 @@ export default {
             },
             {
               LIST_ID: "2",
+              LIST_ORDER: 2,
               LIST_TITLE: "list-2",
               LIST_CARDS: [
                 {
@@ -99,6 +103,7 @@ export default {
           BOARD_LISTS: [
             {
               LIST_ID: "1",
+              LIST_ORDER: 1,
               LIST_TITLE: "list-1",
               LIST_CARDS: [
                 {
@@ -117,6 +122,7 @@ export default {
             },
             {
               LIST_ID: "2",
+              LIST_ORDER: 2,
               LIST_TITLE: "list-2",
               LIST_CARDS: [
                 {
