@@ -1,32 +1,29 @@
 import React, { useState } from "react";
-import Icon from "../../../assets/myaccount.svg"
+import { TParticipantProps } from "../../../AppTypes";
 
-
-const Participant = (props: any) => {
+function Participant(props: TParticipantProps) {
   const [displayCloseBtn, setDisplayCloseBtn] = useState("none");
+  const { participant } = props;
 
   return (
-    <div className="participant"
-         onMouseOver={() => setDisplayCloseBtn("")}
-         onMouseLeave={() => setDisplayCloseBtn("none")}
+    <div
+      className="participant"
+      onFocus={() => setDisplayCloseBtn("")}
+      onMouseLeave={() => setDisplayCloseBtn("none")}
     >
-      <div className="participant-icon">
-
-      </div>
-      <div className="participant-title">
-        USER
-      </div>
+      <div className="participant-icon"></div>
+      <div className="participant-title">{participant}</div>
       <div
-        style={{display: displayCloseBtn}}
+        style={{ display: displayCloseBtn }}
         className="participant-del-btn"
         onClick={() => {
-          console.log("participant onClick");
+          console.log(`participant ${participant} onClick`);
         }}
       >
         ➖
       </div>
     </div>
   );
-};
+}
 
 export default Participant;

@@ -1,29 +1,52 @@
-type TCard = {
+import AllWorkspaces from "./components/pages/AllWorkspaces";
+import Participants from "./components/widgets/Participants";
+
+export type TCard = {
   CARD_ID: string;
   CARD_DATA: string;
 };
 
-type TListCards = TCard[];
+export type TListCards = TCard[];
 
-type TBoardsLists = TListCards[];
+export type TBoardLists = {
+  LIST_ID: string;
+  LIST_ORDER: number;
+  LIST_TITLE: string;
+  LIST_CARDS: TListCards[];
+};
 
-type TWorkspaceBoards = TBoardsLists[];
+export type TWorkspaceBoards = {
+  BOARD_ID: string;
+  BOARD_TITLE: string;
+  BOARD_LISTS: TBoardLists[];
+};
 
-type TUserWorkspaces = TWorkspaceBoards[];
+export type TUserWorkspace = {
+  WORKSPACE_ID: string;
+  WORKSPACE_TITLE: string;
+  WORKSPACE_PS: string[],
+  WORKSPACE_BOARDS: TWorkspaceBoards[];
+};
 
-type TUser = {
+export type TUser = {
   USER_ID: string;
   USER_NAME: string;
   USER_PASSWORD: string;
-  USER_WORKSPACES: TUserWorkspaces;
+  USER_WORKSPACES: TUserWorkspace[];
 };
 
-type TProps = {
-  id: string;
+export type TProps = {
+
 };
 
-type TPropsParticipants  = {
-  id: string;
+export type TPropsAllWorkspaces  = {
+  user: TUser;
 };
 
-export type TPropsHeader = TPropsParticipants;
+export type TParticipantsProps = {
+  participantsArr: string[];
+};
+
+export type TParticipantProps = {
+  participant: string;
+};

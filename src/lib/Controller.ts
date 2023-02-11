@@ -1,14 +1,17 @@
 import USER_DEFAULT_DATA from "./config";
+import { TUser, TUserWorkspace } from "../AppTypes";
+
 
 export default class Controller {
-  public currentUser: any;
+  public currentUser: TUser;
+  // public currentUser: any;
 
   constructor(defaultUser = JSON.parse(JSON.stringify(USER_DEFAULT_DATA))) {
     this.currentUser = defaultUser;
   }
 
   getIndexWorkspace(workspaceId: string) : number {
-    return this.currentUser.USER_WORKSPACES.findIndex((elem: any) => elem.WORKSPACE_ID === workspaceId)
+    return this.currentUser.USER_WORKSPACES.findIndex((elem: TUserWorkspace) => elem.WORKSPACE_ID === workspaceId)
   }
 
   getIndexBoard(workspaceId: string, boardId: string) : number {

@@ -82,7 +82,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={<AllWorkspaces allWorkSpaces={userData.USER_WORKSPACES} />} />
+          element={<AllWorkspaces user={userData} />} />
         {getWorkspaces()}
         {getBoards()}
         <Route path="/signin" element={<SignIn />} />

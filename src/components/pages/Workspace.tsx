@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Participants from "../widgets/Participants";
+import { TPropsAllWorkspaces } from "../../AppTypes";
 
 function Workspace(props: any) {
   const { WORKSPACE, workIndex, APP_CONTROLLER, BOARD, WORKSPACE_ID, setUserData, participantsArr } = props;
@@ -37,7 +38,7 @@ function Workspace(props: any) {
 
   return (
     <div className="workspace-window">
-      <Participants participantsArr={participantsArr} />
+      <Participants participantsArr={WORKSPACE.WORKSPACE_PS} />
       <div className="boards-group">
         {getBoards()}
       </div>
