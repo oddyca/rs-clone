@@ -50,6 +50,15 @@ export default class Controller {
       return elem;
     });
     this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS = structuredClone(newListArr);
+  }
+
+  sortListTask(userData: any) {
+    const workspaceId = userData.WORKSPACE_ID;
+    const boardId = userData.BOARD_ID;
+    const dragList = userData.dragList;
+    const dragTask = userData.dragTask;
+    const dropList = userData.dropList;
+    const currentListArr = this.getBoards(workspaceId, boardId);
 
     dropList.LIST_CARDS.push(dragTask);
     const currentIndexList = dragList.LIST_CARDS.indexOf(dragTask);
