@@ -216,6 +216,17 @@ export default class Controller {
 
   }
 
+  async delUser(id: string) {
+    return await fetch(`http://localhost:3008/api/userdata`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify(id)
+    });
+  }
+
   returnResponseCheck() {
     return this.responseCheck;
   }
