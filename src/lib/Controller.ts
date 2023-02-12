@@ -223,7 +223,7 @@ export default class Controller {
         "Content-Type": "application/json;charset=utf-8",
         "Access-Control-Allow-Origin": "*"
       },
-      body: JSON.stringify(id)
+      body: JSON.stringify({ id: id })
     });
   }
 
