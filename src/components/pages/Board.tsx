@@ -5,7 +5,7 @@ function Board(props: any) {
   const { BOARD, setUserData, WORKSPACE_ID, APP_CONTROLLER } = props;
   const [dragList, setDragList] = useState(null);
   const [dragTask, setDragTask] = useState(null);
-  const [currentObj, setCurrentObj] = useState(null);
+  const [currentObj, setCurrentObj] = useState('');
 
   function dragStartHandlerList(e: any, list: any) {
     e.stopPropagation();
