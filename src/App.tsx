@@ -28,21 +28,31 @@ function App() {
 
   useEffect(() => {
     async function getUser() {
-      const userDATA = await (await APP_CONTROLLER.getUserData(loggedUserID)).json();
-      const freshUsername = userDATA.username;
-      const freshUserPass = userDATA.password;
-      const freshUserWorkspaces = userDATA.workspaces;
-      setUserData({
-        USER_ID: loggedUserID,
-        USER_NAME: freshUsername,
-        USER_PASSWORD: freshUserPass,
-        USER_WORKSPACES: freshUserWorkspaces
-      });
+      try {
+        const loggedUserRequest = await APP_CONTROLLER.getUserData(loggedUserID);
+        if (!loggedUserRequest.ok) {
+          throw new Error("User not found");
+        }
+        const userDATA = await loggedUserRequest.json();
+        const freshUsername = userDATA.username;
+        const freshUserPass = userDATA.password;
+        const freshUserWorkspaces = userDATA.workspaces;
+        setUserData({
+          USER_ID: loggedUserID,
+          USER_NAME: freshUsername,
+          USER_PASSWORD: freshUserPass,
+          USER_WORKSPACES: freshUserWorkspaces
+        });
+      } catch(e) {
+        localStorage.clear();
+        navigate('/signin')
+      }
+     
     }
-
     loggedUserID && getUser();
     isLoggedIn === "true" ? navigate("/") : navigate("/signin", { replace: true });
   }, []);
+
   // localStorage.removeItem('isLoggedIn')
 
   const getWorkspaces = () => {
