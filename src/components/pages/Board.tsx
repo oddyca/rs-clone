@@ -5,9 +5,12 @@ function Board(props: any) {
   const { BOARD, setUserData, WORKSPACE_ID, APP_CONTROLLER } = props;
   const [dragList, setDragList] = useState(null);
   const [dragTask, setDragTask] = useState(null);
+  const [currentObj, setCurrentObj] = useState(null);
 
   function dragStartHandlerList(e: any, list: any) {
+    e.stopPropagation();
     setDragList(list);
+    setCurrentObj('list');
   }
 
   function dragEndHandlerList(e: any) {
@@ -30,6 +33,16 @@ function Board(props: any) {
         BOARD_ID: BOARD.BOARD_ID,
         dropList: list,
         dragList: dragList,
+      })
+      const newData = structuredClone(APP_CONTROLLER.loadData());
+      setUserData(newData);
+    }
+    if(e.target.className === 'list_work-area') {
+      APP_CONTROLLER.sortListCard({
+        WORKSPACE_ID: WORKSPACE_ID,
+        BOARD_ID: BOARD.BOARD_ID,
+        dropList: list,
+        dragList: dragList,
         dragTask: dragTask,
       })
       const newData = structuredClone(APP_CONTROLLER.loadData());
@@ -42,6 +55,9 @@ function Board(props: any) {
     if(e.target.className === 'list_card') {
       e.target.style.boxShadow = '0 2px 3px gray';
     }
+    if(currentObj === 'list') {
+      e.target.style.boxShadow = '0 2px 3px red';
+    }
   }
 
   function dragLeaveHandlerTask(e: any) {
@@ -51,8 +67,10 @@ function Board(props: any) {
   }
 
   function dragStartHandlerTask(e: any, list: any, card: any) {
+    e.stopPropagation();
     setDragList(list);
     setDragTask(card);
+    setCurrentObj('card');
   }
 
   function dragEndHandlerTask(e: any) {
@@ -62,7 +80,15 @@ function Board(props: any) {
   }
 
   function dropHandlerTask(e: any, list: any, card: any) {
-    e.preventDefault()
+    e.preventDefault();
+    e.stopPropagation();
+    console.log(e.target, 'event'); /* list_card */
+    console.log(dragList, 'list'); /*  */
+    if(currentObj === 'list') {
+      e.target.style.boxShadow = '0 0 0 0';
+      return
+    }
+    e.target.style.boxShadow = '0 0 0 0';
     if(e.target.className === 'list_card') {
       APP_CONTROLLER.sortCard({
         WORKSPACE_ID: WORKSPACE_ID,
