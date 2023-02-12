@@ -35,6 +35,17 @@ function Board(props: any) {
       const newData = structuredClone(APP_CONTROLLER.loadData());
       setUserData(newData);
     }
+    if(e.target.className === 'list_work-area') {
+      APP_CONTROLLER.sortListTask({
+        WORKSPACE_ID: WORKSPACE_ID,
+        BOARD_ID: BOARD.BOARD_ID,
+        dropList: list,
+        dragList: dragList,
+        dragTask: dragTask,
+      })
+      const newData = structuredClone(APP_CONTROLLER.loadData());
+      setUserData(newData);
+    }
   }
 
   function dragOverHandlerTask(e: any) {
