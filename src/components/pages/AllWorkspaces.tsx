@@ -1,9 +1,11 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import '../../style/all-workspaces.css'
+import { TPropsAllWorkspaces } from "../../AppTypes";
 
-export default function AllWorkspaces(props: any) {
-  const { allWorkSpaces } = props;
+export default function AllWorkspaces(props: TPropsAllWorkspaces) {
+  const { user } = props;
+  const allWorkSpaces = user.USER_WORKSPACES;
 
   function renderWorkspaces() {
     return allWorkSpaces.map((space: any) => {
@@ -14,7 +16,7 @@ export default function AllWorkspaces(props: any) {
             <div className="workspace_cover">
               <div className="workspaces_info">
                 <p>Boards: {space.WORKSPACE_BOARDS.length}</p>
-                <p>Participants: {}</p>
+                <p>Participants: {space.WORKSPACE_PS.join(" ")}</p>
               </div>
             </div>
           </div>

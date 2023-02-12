@@ -2,3 +2,14 @@
 @import url("./style/page404.css");
 @import url("./style/list.css");
 @import url("./style/board.css");
+@import url("./style/participants.css");
+
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header {
+    width: 100%;
+}

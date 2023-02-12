@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Participants from "../widgets/Participants";
+import { TPropsAllWorkspaces } from "../../AppTypes";
 
 function Workspace(props: any) {
-  const { WORKSPACE, workIndex, APP_CONTROLLER, BOARD, WORKSPACE_ID, setUserData } = props;
+  const { WORKSPACE, workIndex, APP_CONTROLLER, BOARD, WORKSPACE_ID, setUserData, participantsArr } = props;
 
   const WORKSPACE_BOARDS = WORKSPACE.WORKSPACE_BOARDS;
 
@@ -19,14 +21,14 @@ function Workspace(props: any) {
             </div>
           </Link>
           <button onClick={() => {
-              APP_CONTROLLER.deleteBoard({
+            APP_CONTROLLER.deleteBoard({
               WORKSPACE_ID: WORKSPACE_ID,
               BOARD_ID: BOARD.BOARD_ID
             });
-              const newData = structuredClone(APP_CONTROLLER.loadData());
-              setUserData(newData);
-            }}>
-              del
+            const newData = structuredClone(APP_CONTROLLER.loadData());
+            setUserData(newData);
+          }}>
+            del
           </button>
         </>
 
@@ -36,7 +38,10 @@ function Workspace(props: any) {
 
   return (
     <div className="workspace-window">
+      <Participants participantsArr={WORKSPACE.WORKSPACE_PS} />
+      <div className="boards-group">
         {getBoards()}
+      </div>
     </div>
   );
 };
