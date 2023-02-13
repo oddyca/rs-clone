@@ -1,6 +1,6 @@
-import React from 'react'
-import { Link } from 'react-router-dom';
-import '../../style/all-workspaces.css'
+import React from "react";
+import { Link } from "react-router-dom";
+import "../../style/all-workspaces.css";
 import { TPropsAllWorkspaces } from "../../AppTypes";
 
 export default function AllWorkspaces(props: TPropsAllWorkspaces) {
@@ -10,7 +10,11 @@ export default function AllWorkspaces(props: TPropsAllWorkspaces) {
   function renderWorkspaces() {
     return allWorkSpaces.map((space: any) => {
       return (
-        <Link id={space.WORKSPACE_ID} className="workspaces-link" to={`/workspace-${space.WORKSPACE_ID}`}>
+        <Link
+          id={space.WORKSPACE_ID}
+          className="workspaces-link"
+          to={`/workspace-${space.WORKSPACE_ID}`}
+        >
           <div className="workspace-card">
             <p className="workspaces_title">{space.WORKSPACE_TITLE}</p>
             <div className="workspace_cover">
@@ -21,16 +25,14 @@ export default function AllWorkspaces(props: TPropsAllWorkspaces) {
             </div>
           </div>
         </Link>
-      )
-    })
+      );
+    });
   }
 
   return (
-    <div className='workspaces-container'>
+    <div className="workspaces-container">
       <h3 className="h3-heading">Workspaces ({allWorkSpaces.length})</h3>
-      <div className="workspaces-list">
-        {renderWorkspaces()}
-      </div>
+      <div className="workspaces-list">{renderWorkspaces()}</div>
     </div>
-  )
+  );
 }
