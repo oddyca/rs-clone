@@ -76,6 +76,7 @@ export default function SignUp() {
                                     required
                                     onChange={(e) => onInputChange(e)}>
                                 </input>
+                                { userInput.password && userInput.password.length < 4 && <span className="error-message">Password is too short!</span> }
                             </div>
                             <div className="input-wrapper">
                                 <input
@@ -103,7 +104,7 @@ export default function SignUp() {
                             </label>
                             <button 
                                 className="button auth-button sign-up"
-                                disabled={!userInput.password || userInput.password !== userInput.repeatPassword ? true : false}
+                                disabled={!userInput.password || userInput.password !== userInput.repeatPassword || userInput.password.length < 4 ? true : false}
                             >Sign up</button>
                         </form>
                     </div>
