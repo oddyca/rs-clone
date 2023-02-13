@@ -37,6 +37,9 @@ function Board(props: any) {
       const newData = structuredClone(APP_CONTROLLER.loadData());
       setUserData(newData);
     }
+    if(currentObj === 'list') {
+      return
+    }
     if(e.target.className === 'list_work-area') {
       APP_CONTROLLER.sortListCard({
         WORKSPACE_ID: WORKSPACE_ID,
