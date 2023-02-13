@@ -35,6 +35,9 @@ export type TUser = {
   USER_WORKSPACES: TUserWorkspace[];
 };
 
+type TSetState = (addParticipantModal: boolean) => void;
+type TSetStateWork = (addParticipantModal: string) => void;
+
 export type TProps = {
 
 };
@@ -43,8 +46,18 @@ export type TPropsAllWorkspaces  = {
   user: TUser;
 };
 
+
 export type TParticipantsProps = {
+  WORKSPACE_ID: string;
   participantsArr: string[];
+  setAddParticipantModal: TSetState;
+  setCurrentWorkspaceId: TSetStateWork;
+};
+
+export type TParticipantsModalProps = {
+  addParticipant: TSetStateWork;
+  addParticipantModal: boolean;
+  setAddParticipantModal: TSetState;
 };
 
 export type TParticipantProps = {

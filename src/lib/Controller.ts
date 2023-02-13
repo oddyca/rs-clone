@@ -212,8 +212,21 @@ export default class Controller {
     }
   }
 
-  addParticipant() {
-
+  async addParticipant(currentWorkspaceId: string, participant: string) {
+    console.log("currentWorkspaceId", currentWorkspaceId);
+    console.log("participant", participant);
+    const newParticipant = {
+      idWorkspace: currentWorkspaceId,
+      nameParticipant: participant,
+    };
+    return await fetch("http://localhost:3008/api/userdata", {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify(newParticipant)
+    });
   }
 
   async delUser(id: string) {
