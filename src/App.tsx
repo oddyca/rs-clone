@@ -11,7 +11,7 @@ import SignIn from "./components/pages/authorization/Signin";
 import SignUp from "./components/pages/authorization/Signup";
 import AllWorkspaces from "./components/pages/AllWorkspaces";
 
-const APP_CONTROLLER = new Controller();
+let APP_CONTROLLER = new Controller();
 
 function App() {
   const [userData, setUserData] = useState(APP_CONTROLLER.loadData());
@@ -29,31 +29,22 @@ function App() {
   useEffect(() => {
     async function getUser() {
       try {
-        const loggedUserRequest = await APP_CONTROLLER.getUserData(loggedUserID);
-        if (!loggedUserRequest.ok) {
-          throw new Error("User not found");
-        }
-        const userDATA = await loggedUserRequest.json();
-        const freshUsername = userDATA.username;
-        const freshUserPass = userDATA.password;
-        const freshUserWorkspaces = userDATA.workspaces;
+        await APP_CONTROLLER.setCurrentUser(loggedUserID);
+        const freshUser = APP_CONTROLLER.currentUser
         setUserData({
           USER_ID: loggedUserID,
-          USER_NAME: freshUsername,
-          USER_PASSWORD: freshUserPass,
-          USER_WORKSPACES: freshUserWorkspaces
-        });
+          USER_NAME: freshUser.USER_NAME,
+          USER_PASSWORD: freshUser.USER_PASSWORD,
+          USER_WORKSPACES: freshUser.USER_WORKSPACES,
+        })
       } catch(e) {
         localStorage.clear();
         navigate('/signin')
       }
-     
     }
     loggedUserID && getUser();
     isLoggedIn === "true" ? navigate("/") : navigate("/signin", { replace: true });
   }, []);
-
-  // localStorage.removeItem('isLoggedIn')
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {

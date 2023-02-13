@@ -219,5 +219,23 @@ export default class Controller {
   returnResponseCheck() {
     return this.responseCheck;
   }
-}
 
+  async setCurrentUser(id: string) {
+    try {
+      const loggedUserRequest = await this.getUserData(id);
+      if (!loggedUserRequest.ok) {
+        throw new Error("User not found");
+      }
+      const parsedUserData = await loggedUserRequest.json();
+      const newUser = {
+        USER_ID: id,
+        USER_NAME: parsedUserData.username,
+        USER_PASSWORD: parsedUserData.password,
+        USER_WORKSPACES: parsedUserData.workspaces,
+      }
+      this.currentUser = newUser;
+    } catch(e) {
+      console.log(e);
+    }
+  }
+}
