@@ -77,27 +77,27 @@ export default class Controller {
     this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS = structuredClone(newListEmpty);
   }
 
-  sortCard(userData: any) {
+  sortCard(userData: any) {//todo описать в AppTypes @cumPositor#7629
     const workspaceId = userData.WORKSPACE_ID;
     const boardId = userData.BOARD_ID;
     const dragList = userData.dragList;
-    const dragTask = userData.dragTask;
     const dropList = userData.dropList;
+    const dragCard = userData.dragCard;
     const dropCard = userData.dropCard;
 
-    const currentIndexList = dragList.LIST_CARDS.indexOf(dragTask);
-    dragList.LIST_CARDS.splice(currentIndexList, 1);
-    const dropIndexList = dropList.LIST_CARDS.indexOf(dropCard);
-    dropList.LIST_CARDS.splice(dropIndexList + 1, 0, dragTask);
+    const dragIndexCard = dragList.LIST_CARDS.indexOf(dragCard);
+    const dropIndexCard = dropList.LIST_CARDS.indexOf(dropCard);
+    //
+    // console.log("dragIndexCard = ", dragIndexCard);
+    // console.log("dropIndexCard = ", dropIndexCard);
+
+    dragList.LIST_CARDS.splice(dragIndexCard, 1);
+    dropList.LIST_CARDS.splice(dropIndexCard, 0, dragCard);
+
     const currentListArr = this.getBoards(workspaceId, boardId)
-    /* console.log(this.getBoards(workspaceId, boardId)) */
     const newListArr = currentListArr.map((elem: any) => {
-      if(elem.LIST_ID === dropList.LIST_ID) {
-        return dropList;
-      }
-      if(elem.LIST_ID === dragList.LIST_ID) {
-        return dragList;
-      }
+      if(elem.LIST_ID === dropList.LIST_ID) return dropList;
+      if(elem.LIST_ID === dragList.LIST_ID) return dragList;
       return elem;
     });
     this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS = structuredClone(newListArr);
