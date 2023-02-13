@@ -185,9 +185,9 @@ export default class Controller {
   }
 
   responseCheck = {
-    errorType: '',
-    errorMessage: '',
-    isValid: false
+    errorType: "",
+    errorMessage: "",
+    isValid: false,
   }
 
   responseMessageHandler(data: string) {
