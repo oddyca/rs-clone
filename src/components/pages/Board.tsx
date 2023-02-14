@@ -85,8 +85,6 @@ function Board(props: any) {
   function dropHandlerTask(e: any, list: any, card: any) {
     e.preventDefault();
     e.stopPropagation();
-    console.log("event = ", e.target); /* list_card */
-    console.log("dragList = ", dragList); /*  */
     if (currentObj === "list") {
       e.target.style.boxShadow = "0 0 0 0";
       return;
