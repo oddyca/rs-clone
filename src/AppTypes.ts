@@ -24,7 +24,7 @@ export type TWorkspaceBoards = {
 export type TUserWorkspace = {
   WORKSPACE_ID: string;
   WORKSPACE_TITLE: string;
-  WORKSPACE_PS: string[],
+  WORKSPACE_PS: string[];
   WORKSPACE_BOARDS: TWorkspaceBoards[];
 };
 
@@ -38,14 +38,11 @@ export type TUser = {
 type TSetState = (addParticipantModal: boolean) => void;
 type TSetStateWork = (addParticipantModal: string) => void;
 
-export type TProps = {
+export type TProps = {};
 
-};
-
-export type TPropsAllWorkspaces  = {
+export type TPropsAllWorkspaces = {
   user: TUser;
 };
-
 
 export type TParticipantsProps = {
   WORKSPACE_ID: string;

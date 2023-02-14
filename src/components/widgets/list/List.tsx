@@ -6,9 +6,9 @@ function List(props: any) {
 
   const createCards = () => {
     return LIST_CARDS.map((card: any) => {
-      return <textarea id={card.CARD_ID} value={card.CARD_DATA} />
-    })
-  }
+      return <textarea id={card.CARD_ID} value={card.CARD_DATA} />;
+    });
+  };
 
   return (
     <div className="List">
@@ -16,6 +16,6 @@ function List(props: any) {
       {createCards()}
     </div>
   );
-};
+}
 
 export default List;

@@ -11,7 +11,7 @@ function Participant(props: TParticipantProps) {
       onMouseOver={() => setDisplayCloseBtn("")}
       onMouseLeave={() => setDisplayCloseBtn("none")}
     >
-      <div className="participant-icon"></div>
+      <div className="participant-icon" />
       <div className="participant-title">{participant}</div>
       <div
         style={{ display: displayCloseBtn }}

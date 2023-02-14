@@ -100,11 +100,11 @@ export default function SignUp() {
                 className="button auth-button sign-up"
                 type="submit"
                 disabled={
-                  !userInput.password ||
-                  userInput.password !== userInput.repeatPassword ||
-                  userInput.password.length < 4
-                    ? true
-                    : false
+                  !!(
+                    !userInput.password ||
+                    userInput.password !== userInput.repeatPassword ||
+                    userInput.password.length < 4
+                  )
                 }
               >
                 Sign up
