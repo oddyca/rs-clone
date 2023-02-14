@@ -1,66 +1,77 @@
-import { useState } from "react"
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../../../style/auth-modal.css";
 import Controller from "../../../lib/Controller";
 
-interface UsernamePassword {
-    [username: string]: string
-}
-
 export default function SignIn() {
-    const APP_CONTROLLER = new Controller();
-    const fetchedData = APP_CONTROLLER.loadData(); // only first user. Must be an array of users
+  const APP_CONTROLLER = new Controller();
+  const [userName, setName] = useState("");
+  const [userPassword, setPassword] = useState("");
+  const [responseMessages, setResponseMessages] = useState({
+    errorType: "",
+    errorMessage: "",
+    isValid: false,
+  });
+  const navigate = useNavigate();
 
-    const [userEmail, setEmail] = useState('');
-    const [userPassword, setPassword] = useState('');
-    const navigate = useNavigate();
-
-    const  signInVerification = () => {
-        const userNamePass: UsernamePassword = {
-            'username': fetchedData.USER_NAME,
-            'password': fetchedData.USER_PASSWORD
-        }
-
-        if (userEmail === userNamePass['username'] && userPassword === userNamePass['password']) {
-            navigate('/');
-        } else {
-            alert('wrong user-password');
-            return undefined
-        }
-    }
-
-    return (
-        <div className="auth-window">
-            <div className="auth-modal">
-                <div className="hero-shot"></div>
-                <div className="auth-block">
-                    <div className="auth-wrapper">
-                        <h3>Sign in</h3>
-                        <form className="auth-form" onSubmit={(e) => {
-                            e.preventDefault()
-                            signInVerification()}}>
-                            <input
-                                type="text"
-                                placeholder="Username"
-                                className="form-input"
-                                required
-                                onChange={(e) => setEmail(e.target.value)}>
-                            </input>
-                            <input
-                                type="password"
-                                placeholder="Password"
-                                className="form-input"
-                                required
-                                onChange={(e) => setPassword(e.target.value)}>
-                            </input>
-                            <a className="forgot-password">Forgot password?</a>
-                            <button className="button auth-button">Sign in</button>
-                        </form>
-                        <p>Or <a className="signup-link" onClick={()=> navigate('/signup')}>Create new account</a></p>
-                    </div>
-                </div>
-            </div>
+  return (
+    <div className="auth-window">
+      <div className="auth-modal">
+        <div className="hero-shot" />
+        <div className="auth-block">
+          <div className="auth-wrapper">
+            <h3>Sign in</h3>
+            <form
+              className="auth-form"
+              onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
+                e.preventDefault();
+                await APP_CONTROLLER.signInVerification(userName, userPassword);
+                const returnResponseCheck = APP_CONTROLLER.returnResponseCheck();
+                setResponseMessages(returnResponseCheck);
+                if (returnResponseCheck.isValid) navigate("/");
+              }}
+            >
+              <div className="input-wrapper">
+                <input
+                  type="text"
+                  placeholder="Username"
+                  className="form-input"
+                  required
+                  onChange={(e) => setName(e.target.value)}
+                />
+                {responseMessages.errorMessage && responseMessages.errorType === "username" && (
+                  <span className="error-message">{responseMessages.errorMessage}</span>
+                )}
+              </div>
+              <div className="input-wrapper">
+                <input
+                  type="password"
+                  placeholder="Password"
+                  className="form-input"
+                  required
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
+                />
+                {responseMessages.errorMessage && responseMessages.errorType === "password" && (
+                  <span className="error-message">{responseMessages.errorMessage}</span>
+                )}
+              </div>
+              <a className="forgot-password" href="/#">
+                Forgot password?
+              </a>
+              <button className="button auth-button" type="submit">
+                Sign in
+              </button>
+            </form>
+            <p>
+              Or
+              <a className="signup-link" onClick={() => navigate("/signup")}>
+                Create new account
+              </a>
+            </p>
+          </div>
         </div>
-    )
+      </div>
+    </div>
+  );
 }

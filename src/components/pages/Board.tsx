@@ -1,44 +1,148 @@
-import React, { useState } from "react";
-import Header from "../widgets/header/Header";
+import { useState } from "react";
 
 function Board(props: any) {
   const { USER_NAME } = props;
-  const { BOARD } = props;
+  const { BOARD, setUserData, WORKSPACE_ID, APP_CONTROLLER } = props;
+  const [dragList, setDragList] = useState(null);
+  const [dragTask, setDragTask] = useState(null);
+  const [currentObj, setCurrentObj] = useState("");
 
-  const [modalToggle, setModalToggle] = useState(false);
-  const [modalContent, setModalContent] = useState(''); // just text for now
-  const [titleToggle, setTitleToggle] = useState(true);
-  const [titleChange, setTitleChange] = useState('');
-
-  const toggleModal = (content?: any) => { // ANY!
-    setModalToggle(!modalToggle);
-    setModalContent(content);
-    return undefined;
+  function dragStartHandlerList(e: any, list: any) {
+    e.stopPropagation();
+    setDragList(list);
+    setCurrentObj("list");
   }
 
-  let clickedID: number;
-
-  const handleTitleChange = (input: string) => {
-    setTitleChange(input);
+  function dragEndHandlerList(e: any) {
+    e.target.style.boxShadow = "0 0 0 0";
   }
+
+  function dragOverHandlerList(e: any) {
+    e.preventDefault();
+    if (e.target.className === "list") {
+      e.target.style.boxShadow = "0 2px 3px gray";
+    }
+  }
+
+  function dropHandlerList(e: any, list: any) {
+    e.preventDefault();
+    if (e.target.className === "list") {
+      e.target.style.boxShadow = "0 0 0 0";
+      APP_CONTROLLER.sortList({
+        WORKSPACE_ID,
+        BOARD_ID: BOARD.BOARD_ID,
+        dropList: list,
+        dragList,
+      });
+      const newData = structuredClone(APP_CONTROLLER.loadData());
+      setUserData(newData);
+    }
+    if (currentObj === "list") {
+      return;
+    }
+    if (e.target.className === "list_work-area") {
+      APP_CONTROLLER.sortListCard({
+        WORKSPACE_ID,
+        BOARD_ID: BOARD.BOARD_ID,
+        dropList: list,
+        dragList,
+        dragTask,
+      });
+      const newData = structuredClone(APP_CONTROLLER.loadData());
+      setUserData(newData);
+    }
+  }
+
+  function dragOverHandlerTask(e: any) {
+    e.preventDefault();
+    if (e.target.className === "list_card") {
+      e.target.style.boxShadow = "0 2px 3px gray";
+    }
+    if (currentObj === "list") {
+      e.target.style.boxShadow = "0 2px 3px red";
+    }
+  }
+
+  function dragLeaveHandlerTask(e: any) {
+    if (e.target.className === "list_card") {
+      e.target.style.boxShadow = "none";
+    }
+  }
+
+  function dragStartHandlerTask(e: any, list: any, card: any) {
+    e.stopPropagation();
+    setDragList(list);
+    setDragTask(card);
+    setCurrentObj("card");
+  }
+
+  function dragEndHandlerTask(e: any) {
+    if (e.target.className === "list_card") {
+      e.target.style.boxShadow = "none";
+    }
+  }
+
+  function dropHandlerTask(e: any, list: any, card: any) {
+    e.preventDefault();
+    e.stopPropagation();
+    if (currentObj === "list") {
+      e.target.style.boxShadow = "0 0 0 0";
+      return;
+    }
+    e.target.style.boxShadow = "0 0 0 0";
+    if (e.target.className === "list_card") {
+      APP_CONTROLLER.sortCard({
+        WORKSPACE_ID,
+        BOARD_ID: BOARD.BOARD_ID,
+        dragList,
+        dropList: list,
+        dragCard: dragTask,
+        dropCard: card,
+      });
+      const newData = structuredClone(APP_CONTROLLER.loadData());
+      setUserData(newData);
+    }
+  }
+
+  const sortCards = (a: any, b: any) => {
+    if (a.LIST_ORDER > b.LIST_ORDER) {
+      return 1;
+    }
+    return -1;
+  };
 
   const getLists = () => {
-    return BOARD.BOARD_LISTS.map((list: any) => {
+    return BOARD.BOARD_LISTS.sort(sortCards).map((list: any) => {
       const cards = list.LIST_CARDS.map((card: any) => {
-        return <div 
-          id={card.CARD_ID} 
-          className="list_card"
-          onClick={() => {
-            toggleModal();
-            setModalContent(card.CARD_DATA);
-            setTitleChange(card.CARD_DATA);
-          }}>{card.CARD_DATA}</div>;
+        return (
+          <div
+            onDragOver={(e) => dragOverHandlerTask(e)}
+            onDragLeave={(e) => dragLeaveHandlerTask(e)}
+            onDragStart={(e) => dragStartHandlerTask(e, list, card)}
+            onDragEnd={(e) => dragEndHandlerTask(e)}
+            onDrop={(e) => dropHandlerTask(e, list, card)}
+            id={card.CARD_ID}
+            className="list_card"
+            draggable
+          >
+            {card.CARD_DATA}
+          </div>
+        );
       });
       return (
-        <div id={list.LIST_ID} className="list">
+        <div
+          className="list"
+          onDragStart={(e) => dragStartHandlerList(e, list)}
+          onDragLeave={(e) => dragEndHandlerList(e)}
+          onDragEnd={(e) => dragEndHandlerList(e)}
+          onDragOver={(e) => dragOverHandlerList(e)}
+          onDrop={(e) => dropHandlerList(e, list)}
+          draggable
+          id={list.LIST_ID}
+        >
           <div className="list-title">{list.LIST_TITLE}</div>
           <div className="list_work-area">
-            <div className="list-cover"></div>
+            <div className="list-cover" />
             {cards}
           </div>
         </div>
@@ -46,34 +150,7 @@ function Board(props: any) {
     });
   };
 
-  return (
-    <div className="board-window">
-      {getLists()}
-        {modalToggle && (
-        <div className="modal-window">
-          <div className="overlay" onClick={toggleModal}></div>
-          <div className="modal-window-wrapper">
-            <div className="modal-window_title">
-              <div className="modal_title-container">
-                <textarea value={titleChange} className="modal-title-text" readOnly={titleToggle} onChange={(e) => handleTitleChange(e.target.value)}></textarea>
-                <button 
-                  className="modal_title-edit"
-                  onClick={() => {
-                    setTitleToggle(!titleToggle);
-                  }}>{titleToggle ? 'edit' : 'save'}</button>
-              </div>
-              <button onClick={toggleModal}>close</button>
-            </div>
-            <div className="modal-window_content">
-              <div className="content-container">
-                <div className="modal-content">{modalContent}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
-  );
+  return <div className="board-window">{getLists()}</div>;
 }
 
 export default Board;

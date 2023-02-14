@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
-import { Routes, Route, Navigate, Link } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 
 import Board from "./components/pages/Board";
 import Workspace from "./components/pages/Workspace";
@@ -9,39 +9,60 @@ import Header from "./components/widgets/header/Header";
 import Controller from "./lib/Controller";
 import SignIn from "./components/pages/authorization/Signin";
 import SignUp from "./components/pages/authorization/Signup";
+import AllWorkspaces from "./components/pages/AllWorkspaces";
+import Modal from "./components/widgets/Modal";
 
 const APP_CONTROLLER = new Controller();
 
 function App() {
-  const [userData /* setUserData */] = useState(APP_CONTROLLER.loadData());
-  const [viewData /* setViewData */] = useState({
-    user: "",
-    workspace: 0,
-    board: 0
-  });
+  const [userData, setUserData] = useState(APP_CONTROLLER.loadData());
 
-  async function login(username: string, password: string)  {
-    const response = await APP_CONTROLLER.userLogin(username, password);
-    if (response.ok) { // если HTTP-статус в диапазоне 200-299
-      // получаем тело ответа
-      return  response.json();
-    } else { // если HTTP-статус в диапазоне 200-299
-      // получаем ошибку
-      return `Ошибка:  ${response.status}`;
+  const [currentWorkspaceId, setCurrentWorkspaceId] = useState("");
+  const [addParticipantModal, setAddParticipantModal] = useState(false);
+  const navigate = useNavigate();
+  // localStorage.clear();
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  const loggedUserID = localStorage.getItem("userID") as string;
+
+  useEffect(() => {
+    async function getUser() {
+      try {
+        await APP_CONTROLLER.setCurrentUser(loggedUserID);
+        const freshUser = APP_CONTROLLER.currentUser;
+        setUserData({
+          USER_ID: loggedUserID,
+          USER_NAME: freshUser.USER_NAME,
+          USER_PASSWORD: freshUser.USER_PASSWORD,
+          USER_WORKSPACES: freshUser.USER_WORKSPACES,
+        });
+      } catch (e) {
+        localStorage.clear();
+        navigate("/signin");
+      }
     }
-  }
-
-  login("user", "12345").then(
-    result => console.log(result), // обработает успешное выполнение
-    error => console.log(error) // обработает ошибку
-  );
+    loggedUserID && getUser();
+    isLoggedIn === "true" ? navigate("/") : navigate("/signin", { replace: true });
+  }, []);
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
+      const getIndexBoard = workspace.WORKSPACE_BOARDS.map((index: number) => {
+        return workspace.WORKSPACE_BOARDS[index];
+      });
       return (
         <Route
           path={`/workspace-${workspace.WORKSPACE_ID}/`}
-          element={<Workspace WORKSPACE={userData.USER_WORKSPACES[index]} />}
+          element={
+            <Workspace
+              setUserData={setUserData}
+              WORKSPACE_ID={workspace.WORKSPACE_ID}
+              BOARD={getIndexBoard}
+              setAddParticipantModal={setAddParticipantModal}
+              setCurrentWorkspaceId={setCurrentWorkspaceId}
+              APP_CONTROLLER={APP_CONTROLLER}
+              WORKSPACE={userData.USER_WORKSPACES[index]}
+            />
+          }
         />
       );
     });
@@ -53,20 +74,36 @@ function App() {
         return (
           <Route
             path={`/workspace-${workspace.WORKSPACE_ID}/board-${board.BOARD_ID}/`}
-            element={<Board BOARD={workspace.WORKSPACE_BOARDS[ind]} />}
+            element={
+              <Board
+                setUserData={setUserData}
+                WORKSPACE_ID={workspace.WORKSPACE_ID}
+                APP_CONTROLLER={APP_CONTROLLER}
+                BOARD={workspace.WORKSPACE_BOARDS[ind]}
+              />
+            }
           />
         );
       });
     });
   };
 
+  const addParticipant = async (participant: string) => {
+    await APP_CONTROLLER.addParticipant(currentWorkspaceId, participant);
+  };
+
   return (
     <div className="App">
-      <Header userWorkSpace={userData.USER_WORKSPACES} title={userData.USER_NAME} />
+      <Modal
+        addParticipantModal={addParticipantModal}
+        setAddParticipantModal={setAddParticipantModal}
+        addParticipant={addParticipant}
+      />
+      {isLoggedIn === "true" && (
+        <Header userWorkSpace={userData.USER_WORKSPACES} title={userData.USER_NAME} />
+      )}
       <Routes>
-        <Route
-          path="/"
-          element={<Navigate replace to={`/workspace-${viewData.workspace}/`} />} />
+        <Route path="/" element={<AllWorkspaces user={userData} />} />
         {getWorkspaces()}
         {getBoards()}
         <Route path="/signin" element={<SignIn />} />
@@ -74,7 +111,6 @@ function App() {
         <Route path="/404" element={<Page404 />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>
-      <Link to="/signin">AUTH-MODAL</Link>
     </div>
   );
 }
