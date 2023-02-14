@@ -10,11 +10,13 @@ import Controller from "./lib/Controller";
 import SignIn from "./components/pages/authorization/Signin";
 import SignUp from "./components/pages/authorization/Signup";
 import AllWorkspaces from "./components/pages/AllWorkspaces";
+import Login from "./components/pages/authorization/Login";
 
 let APP_CONTROLLER = new Controller();
 
 function App() {
   const [userData, setUserData] = useState(APP_CONTROLLER.loadData());
+  const [isLogged , setIsLogged ] = useState(false);
   const [viewData /* setViewData */] = useState({
     user: "",
     workspace: 0,
@@ -27,23 +29,24 @@ function App() {
   const loggedUserID = localStorage.getItem("userID") as string;
 
   useEffect(() => {
-    async function getUser() {
-      try {
-        await APP_CONTROLLER.setCurrentUser(loggedUserID);
-        const freshUser = APP_CONTROLLER.currentUser
-        setUserData({
-          USER_ID: loggedUserID,
-          USER_NAME: freshUser.USER_NAME,
-          USER_PASSWORD: freshUser.USER_PASSWORD,
-          USER_WORKSPACES: freshUser.USER_WORKSPACES,
-        })
-      } catch(e) {
-        localStorage.clear();
-        navigate('/signin')
-      }
-    }
-    loggedUserID && getUser();
-    isLoggedIn === "true" ? navigate("/") : navigate("/signin", { replace: true });
+    // async function getUser() {
+    //   try {
+    //     await APP_CONTROLLER.setCurrentUser(loggedUserID);
+    //     const freshUser = APP_CONTROLLER.currentUser
+    //     setUserData({
+    //       USER_ID: loggedUserID,
+    //       USER_NAME: freshUser.USER_NAME,
+    //       USER_PASSWORD: freshUser.USER_PASSWORD,
+    //       USER_WORKSPACES: freshUser.USER_WORKSPACES,
+    //     })
+    //   } catch(e) {
+    //     localStorage.clear();
+    //     navigate('/signin')
+    //   }
+    // }
+    // loggedUserID && getUser();
+    // isLoggedIn === "true" ? navigate("/") : navigate("/signin", { replace: true });
+    isLogged ? navigate("/") : navigate("/login", { replace: true });
   }, []);
 
   const getWorkspaces = () => {
@@ -79,13 +82,14 @@ function App() {
 
   return (
     <div className="App">
-      {isLoggedIn === "true" && (<Header userWorkSpace={userData.USER_WORKSPACES} title={userData.USER_NAME} />)}
+      {isLogged ? <Header userWorkSpace={userData.USER_WORKSPACES} title={userData.USER_NAME} /> : <></>}
       <Routes>
         <Route
           path="/"
           element={<AllWorkspaces user={userData} />} />
         {getWorkspaces()}
         {getBoards()}
+        <Route path="/login" element={<Login APP_CONTROLLER={APP_CONTROLLER} setUserData={setUserData} setIsLogged={setIsLogged}/>} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/404" element={<Page404 />} />

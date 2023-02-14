@@ -4,21 +4,22 @@ import { TUser, TUserWorkspace } from "../AppTypes";
 
 export default class Controller {
   public currentUser: TUser;
+
   // public currentUser: any;
 
   constructor(defaultUser = JSON.parse(JSON.stringify(USER_DEFAULT_DATA))) {
     this.currentUser = defaultUser;
   }
 
-  getIndexWorkspace(workspaceId: string) : number {
+  getIndexWorkspace(workspaceId: string): number {
     return this.currentUser.USER_WORKSPACES.findIndex((elem: TUserWorkspace) => elem.WORKSPACE_ID === workspaceId)
   }
 
-  getIndexBoard(workspaceId: string, boardId: string) : number {
+  getIndexBoard(workspaceId: string, boardId: string): number {
     return this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS.findIndex((elem: any) => elem.BOARD_ID === boardId);
   }
 
-  getBoards(workspaceId: string, boardId: string) : object[] {
+  getBoards(workspaceId: string, boardId: string): object[] {
     return this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS;
   }
 
@@ -66,10 +67,10 @@ export default class Controller {
     const currentIndexList = dragList.LIST_CARDS.indexOf(dragTask);
     dragList.LIST_CARDS.splice(currentIndexList, 1);
     const newListEmpty = currentListArr.map((elem: any) => {
-      if(elem.LIST_ID === dropList.LIST_ID) {
+      if (elem.LIST_ID === dropList.LIST_ID) {
         return dropList;
       }
-      if(elem.LIST_ID === dragList.LIST_ID) {
+      if (elem.LIST_ID === dragList.LIST_ID) {
         return dragList;
       }
       return elem;
@@ -92,10 +93,10 @@ export default class Controller {
     const currentListArr = this.getBoards(workspaceId, boardId)
     /* console.log(this.getBoards(workspaceId, boardId)) */
     const newListArr = currentListArr.map((elem: any) => {
-      if(elem.LIST_ID === dropList.LIST_ID) {
+      if (elem.LIST_ID === dropList.LIST_ID) {
         return dropList;
       }
-      if(elem.LIST_ID === dragList.LIST_ID) {
+      if (elem.LIST_ID === dragList.LIST_ID) {
         return dragList;
       }
       return elem;
@@ -120,18 +121,18 @@ export default class Controller {
   }
 
   async userLogin(username: string, password: string) {
-      const newUser = {
-        username: username,
-        password: password,
-      };
-      return await fetch("http://localhost:3008/api/login/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-          "Access-Control-Allow-Origin": "*"
-        },
-        body: JSON.stringify(newUser)
-      });
+    const newUser = {
+      username: username,
+      password: password,
+    };
+    return await fetch("http://localhost:3008/api/login/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "Access-Control-Allow-Origin": "*"
+      },
+      body: JSON.stringify(newUser)
+    });
   }
 
   async getUserData(id: string) {
@@ -162,7 +163,7 @@ export default class Controller {
         localStorage.setItem('userID', `${parsedResponse}`); // When session is reloaded laod data of this user from the server
       }
       return parsedResponse;
-    } catch(e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -179,7 +180,7 @@ export default class Controller {
         this.responseCheck.isValid = true;
       }
       return response;
-    } catch(e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -245,8 +246,18 @@ export default class Controller {
         USER_WORKSPACES: parsedUserData.workspaces,
       }
       this.currentUser = newUser;
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
   }
+
+  setUser(newUser: any) {
+    this.currentUser = structuredClone({
+      USER_ID: newUser.id,
+      USER_NAME: newUser.username,
+      USER_PASSWORD: newUser.password,
+      USER_WORKSPACES: newUser.workspaces,
+    });
+  }
+  
 }
