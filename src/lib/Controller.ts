@@ -1,7 +1,6 @@
 import USER_DEFAULT_DATA from "./config";
 import { TUser, TUserWorkspace } from "../AppTypes";
 
-
 export default class Controller {
   public currentUser: TUser;
   // public currentUser: any;
@@ -10,16 +9,22 @@ export default class Controller {
     this.currentUser = defaultUser;
   }
 
-  getIndexWorkspace(workspaceId: string) : number {
-    return this.currentUser.USER_WORKSPACES.findIndex((elem: TUserWorkspace) => elem.WORKSPACE_ID === workspaceId)
+  getIndexWorkspace(workspaceId: string): number {
+    return this.currentUser.USER_WORKSPACES.findIndex(
+      (elem: TUserWorkspace) => elem.WORKSPACE_ID === workspaceId,
+    );
   }
 
-  getIndexBoard(workspaceId: string, boardId: string) : number {
-    return this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS.findIndex((elem: any) => elem.BOARD_ID === boardId);
+  getIndexBoard(workspaceId: string, boardId: string): number {
+    return this.currentUser.USER_WORKSPACES[
+      this.getIndexWorkspace(workspaceId)
+    ].WORKSPACE_BOARDS.findIndex((elem: any) => elem.BOARD_ID === boardId);
   }
 
-  getBoards(workspaceId: string, boardId: string) : object[] {
-    return this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS;
+  getBoards(workspaceId: string, boardId: string): object[] {
+    return this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[
+      this.getIndexBoard(workspaceId, boardId)
+    ].BOARD_LISTS;
   }
 
   loadData() {
@@ -32,14 +37,17 @@ export default class Controller {
 
     this.getIndexWorkspace(workspaceId);
     this.getIndexBoard(workspaceId, boardId);
-    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS.splice(this.getIndexBoard(workspaceId, boardId), 1);
+    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS.splice(
+      this.getIndexBoard(workspaceId, boardId),
+      1,
+    );
   }
 
   sortList(userData: any) {
     const workspaceId = userData.WORKSPACE_ID;
     const boardId = userData.BOARD_ID;
-    const dragList = userData.dragList;
-    const dropList = userData.dropList;
+    const { dragList } = userData;
+    const { dropList } = userData;
 
     const currentListArr = this.getBoards(workspaceId, boardId);
     const newListArr = currentListArr.map((elem: any) => {
@@ -51,39 +59,44 @@ export default class Controller {
       }
       return elem;
     });
-    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS = structuredClone(newListArr);
+    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[
+      this.getIndexBoard(workspaceId, boardId)
+    ].BOARD_LISTS = structuredClone(newListArr);
   }
 
   sortListCard(userData: any) {
     const workspaceId = userData.WORKSPACE_ID;
     const boardId = userData.BOARD_ID;
-    const dragList = userData.dragList;
-    const dragTask = userData.dragTask;
-    const dropList = userData.dropList;
+    const { dragList } = userData;
+    const { dragTask } = userData;
+    const { dropList } = userData;
     const currentListArr = this.getBoards(workspaceId, boardId);
 
     dropList.LIST_CARDS.push(dragTask);
     const currentIndexList = dragList.LIST_CARDS.indexOf(dragTask);
     dragList.LIST_CARDS.splice(currentIndexList, 1);
     const newListEmpty = currentListArr.map((elem: any) => {
-      if(elem.LIST_ID === dropList.LIST_ID) {
+      if (elem.LIST_ID === dropList.LIST_ID) {
         return dropList;
       }
-      if(elem.LIST_ID === dragList.LIST_ID) {
+      if (elem.LIST_ID === dragList.LIST_ID) {
         return dragList;
       }
       return elem;
     });
-    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS = structuredClone(newListEmpty);
+    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[
+      this.getIndexBoard(workspaceId, boardId)
+    ].BOARD_LISTS = structuredClone(newListEmpty);
   }
 
-  sortCard(userData: any) {//todo описать в AppTypes @cumPositor#7629
+  sortCard(userData: any) {
+    // todo описать в AppTypes @cumPositor#7629
     const workspaceId = userData.WORKSPACE_ID;
     const boardId = userData.BOARD_ID;
-    const dragList = userData.dragList;
-    const dropList = userData.dropList;
-    const dragCard = userData.dragCard;
-    const dropCard = userData.dropCard;
+    const { dragList } = userData;
+    const { dropList } = userData;
+    const { dragCard } = userData;
+    const { dropCard } = userData;
 
     const dragIndexCard = dragList.LIST_CARDS.indexOf(dragCard);
     const dropIndexCard = dropList.LIST_CARDS.indexOf(dropCard);
@@ -94,53 +107,55 @@ export default class Controller {
     dragList.LIST_CARDS.splice(dragIndexCard, 1);
     dropList.LIST_CARDS.splice(dropIndexCard, 0, dragCard);
 
-    const currentListArr = this.getBoards(workspaceId, boardId)
+    const currentListArr = this.getBoards(workspaceId, boardId);
     const newListArr = currentListArr.map((elem: any) => {
-      if(elem.LIST_ID === dropList.LIST_ID) return dropList;
-      if(elem.LIST_ID === dragList.LIST_ID) return dragList;
+      if (elem.LIST_ID === dropList.LIST_ID) return dropList;
+      if (elem.LIST_ID === dragList.LIST_ID) return dragList;
       return elem;
     });
-    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS = structuredClone(newListArr);
+    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[
+      this.getIndexBoard(workspaceId, boardId)
+    ].BOARD_LISTS = structuredClone(newListArr);
   }
 
   async userRegistration(username: string, password: string) {
     const newUser = {
-      username: username,
-      password: password,
-      workspaces: USER_DEFAULT_DATA.USER_WORKSPACES
+      username,
+      password,
+      workspaces: USER_DEFAULT_DATA.USER_WORKSPACES,
     };
-    return await fetch("http://localhost:3008/api/registration/", {
+    return fetch("http://localhost:3008/api/registration/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "Access-Control-Allow-Origin": "*"
+        "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify(newUser)
+      body: JSON.stringify(newUser),
     });
   }
 
   async userLogin(username: string, password: string) {
-      const newUser = {
-        username: username,
-        password: password,
-      };
-      return await fetch("http://localhost:3008/api/login/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-          "Access-Control-Allow-Origin": "*"
-        },
-        body: JSON.stringify(newUser)
-      });
+    const newUser = {
+      username,
+      password,
+    };
+    return fetch("http://localhost:3008/api/login/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(newUser),
+    });
   }
 
   async getUserData(id: string) {
-    return await fetch(`http://localhost:3008/api/userdata?id=${id}`, {
+    return fetch(`http://localhost:3008/api/userdata?id=${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "Access-Control-Allow-Origin": "*"
-      }
+        "Access-Control-Allow-Origin": "*",
+      },
     });
   }
 
@@ -156,13 +171,13 @@ export default class Controller {
         const responseMessage = Object.values(parsedResponse)[0] as string;
         this.responseMessageHandler(responseMessage);
       } else {
-        console.log('LOG IN SUCCESSFUL', parsedResponse);
+        console.log("LOG IN SUCCESSFUL", parsedResponse);
         this.responseCheck.isValid = true;
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('userID', `${parsedResponse}`); // When session is reloaded laod data of this user from the server
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("userID", `${parsedResponse}`); // When session is reloaded laod data of this user from the server
       }
       return parsedResponse;
-    } catch(e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -175,11 +190,11 @@ export default class Controller {
         const responseMessage = Object.values(parsedResponse)[0] as string;
         this.responseMessageHandler(responseMessage);
       } else {
-        console.log('Sign Up SUCCESSFUL');
+        console.log("Sign Up SUCCESSFUL");
         this.responseCheck.isValid = true;
       }
       return response;
-    } catch(e) {
+    } catch (e) {
       throw e;
     }
   }
@@ -188,27 +203,27 @@ export default class Controller {
     errorType: "",
     errorMessage: "",
     isValid: false,
-  }
+  };
 
   responseMessageHandler(data: string) {
-    if (data.includes('not found')) {
+    if (data.includes("not found")) {
       this.responseCheck = {
         ...this.responseCheck,
-        errorType: 'username',
-        errorMessage: 'User not found!'
-      }
-    } else if (data.includes('Password')) {
+        errorType: "username",
+        errorMessage: "User not found!",
+      };
+    } else if (data.includes("Password")) {
       this.responseCheck = {
         ...this.responseCheck,
-        errorType: 'password',
-        errorMessage: 'Password incorrect!'
-      }
-    } else if (data.includes('exists')) {
+        errorType: "password",
+        errorMessage: "Password incorrect!",
+      };
+    } else if (data.includes("exists")) {
       this.responseCheck = {
         ...this.responseCheck,
-        errorType: 'userSignUp',
-        errorMessage: 'User already exists!'
-      }
+        errorType: "userSignUp",
+        errorMessage: "User already exists!",
+      };
     }
   }
 
@@ -219,24 +234,24 @@ export default class Controller {
       idWorkspace: currentWorkspaceId,
       nameParticipant: participant,
     };
-    return await fetch("http://localhost:3008/api/userdata", {
+    return fetch("http://localhost:3008/api/userdata", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "Access-Control-Allow-Origin": "*"
+        "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify(newParticipant)
+      body: JSON.stringify(newParticipant),
     });
   }
 
   async delUser(id: string) {
-    return await fetch(`http://localhost:3008/api/userdata`, {
+    return fetch(`http://localhost:3008/api/userdata`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
-        "Access-Control-Allow-Origin": "*"
+        "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify({ id: id })
+      body: JSON.stringify({ id }),
     });
   }
 
@@ -256,9 +271,9 @@ export default class Controller {
         USER_NAME: parsedUserData.username,
         USER_PASSWORD: parsedUserData.password,
         USER_WORKSPACES: parsedUserData.workspaces,
-      }
+      };
       this.currentUser = newUser;
-    } catch(e) {
+    } catch (e) {
       console.log(e);
     }
   }

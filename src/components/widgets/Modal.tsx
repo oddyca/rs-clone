@@ -3,15 +3,11 @@ import { Button, Dialog, Classes } from "@blueprintjs/core";
 import { TParticipantsModalProps } from "../../AppTypes";
 
 function Modal(props: TParticipantsModalProps) {
-
-
   const { addParticipantModal } = props;
   const { setAddParticipantModal } = props;
   const { addParticipant } = props;
 
-
   const [newParticipant, setNewParticipant] = useState("");
-
 
   const DIALOG_FOOTER = (
     <div className="">
@@ -37,10 +33,7 @@ function Modal(props: TParticipantsModalProps) {
 
   const DIALOG_BODY = (
     <div>
-      <textarea
-        value={newParticipant}
-        onChange={(e) => setNewParticipant(e.target.value)}
-      />
+      <textarea value={newParticipant} onChange={(e) => setNewParticipant(e.target.value)} />
     </div>
   );
 

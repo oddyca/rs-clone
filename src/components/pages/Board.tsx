@@ -5,67 +5,67 @@ function Board(props: any) {
   const { BOARD, setUserData, WORKSPACE_ID, APP_CONTROLLER } = props;
   const [dragList, setDragList] = useState(null);
   const [dragTask, setDragTask] = useState(null);
-  const [currentObj, setCurrentObj] = useState('');
+  const [currentObj, setCurrentObj] = useState("");
 
   function dragStartHandlerList(e: any, list: any) {
     e.stopPropagation();
     setDragList(list);
-    setCurrentObj('list');
+    setCurrentObj("list");
   }
 
   function dragEndHandlerList(e: any) {
-    e.target.style.background = 'white';
+    e.target.style.boxShadow = "0 0 0 0";
   }
 
   function dragOverHandlerList(e: any) {
     e.preventDefault();
-    if(e.target.className == 'list') {
-      e.target.style.background = 'lightgray';
+    if (e.target.className === "list") {
+      e.target.style.boxShadow = "0 2px 3px gray";
     }
   }
 
   function dropHandlerList(e: any, list: any) {
     e.preventDefault();
-    if(e.target.className === 'list') {
-      e.target.style.background = 'white';
+    if (e.target.className === "list") {
+      e.target.style.boxShadow = "0 0 0 0";
       APP_CONTROLLER.sortList({
-        WORKSPACE_ID: WORKSPACE_ID,
+        WORKSPACE_ID,
         BOARD_ID: BOARD.BOARD_ID,
         dropList: list,
-        dragList: dragList,
-      })
+        dragList,
+      });
       const newData = structuredClone(APP_CONTROLLER.loadData());
       setUserData(newData);
     }
-    if(currentObj === 'list') {
-      return
+    if (currentObj === "list") {
+      return;
     }
-    if(e.target.className === 'list_work-area') {
+    if (e.target.className === "list_work-area") {
       APP_CONTROLLER.sortListCard({
-        WORKSPACE_ID: WORKSPACE_ID,
+        WORKSPACE_ID,
         BOARD_ID: BOARD.BOARD_ID,
         dropList: list,
-        dragList: dragList,
-        dragTask: dragTask,
-      })
+        dragList,
+        dragTask,
+      });
       const newData = structuredClone(APP_CONTROLLER.loadData());
       setUserData(newData);
     }
   }
 
   function dragOverHandlerTask(e: any) {
-    e.preventDefault()
-    if(e.target.className === 'list_card') {
-      e.target.style.boxShadow = '0 2px 3px gray';
+    e.preventDefault();
+    if (e.target.className === "list_card") {
+      e.target.style.boxShadow = "0 2px 3px gray";
     }
-    if(currentObj === 'list') {
-      e.target.style.boxShadow = '0 2px 3px red';
+    if (currentObj === "list") {
+      e.target.style.boxShadow = "0 2px 3px red";
     }
   }
 
   function dragLeaveHandlerTask(e: any) {
-    if(e.target.className === 'list_card') {
-      e.target.style.boxShadow = 'none';
+    if (e.target.className === "list_card") {
+      e.target.style.boxShadow = "none";
     }
   }
 
@@ -73,46 +73,45 @@ function Board(props: any) {
     e.stopPropagation();
     setDragList(list);
     setDragTask(card);
-    setCurrentObj('card');
+    setCurrentObj("card");
   }
 
   function dragEndHandlerTask(e: any) {
-    if(e.target.className === 'list_card') {
-      e.target.style.boxShadow = 'none';
+    if (e.target.className === "list_card") {
+      e.target.style.boxShadow = "none";
     }
   }
 
   function dropHandlerTask(e: any, list: any, card: any) {
     e.preventDefault();
     e.stopPropagation();
-    console.log('event = ', e.target); /* list_card */
+    console.log("event = ", e.target); /* list_card */
     console.log("dragList = ", dragList); /*  */
-    if(currentObj === 'list') {
-      e.target.style.boxShadow = '0 0 0 0';
-      return
+    if (currentObj === "list") {
+      e.target.style.boxShadow = "0 0 0 0";
+      return;
     }
-    e.target.style.boxShadow = '0 0 0 0';
-    if(e.target.className === 'list_card') {
+    e.target.style.boxShadow = "0 0 0 0";
+    if (e.target.className === "list_card") {
       APP_CONTROLLER.sortCard({
-        WORKSPACE_ID: WORKSPACE_ID,
+        WORKSPACE_ID,
         BOARD_ID: BOARD.BOARD_ID,
-        dragList: dragList,
+        dragList,
         dropList: list,
         dragCard: dragTask,
         dropCard: card,
-      })
+      });
       const newData = structuredClone(APP_CONTROLLER.loadData());
       setUserData(newData);
     }
   }
 
   const sortCards = (a: any, b: any) => {
-    if(a.LIST_ORDER > b.LIST_ORDER) {
-      return 1
-    } else {
-      return -1
+    if (a.LIST_ORDER > b.LIST_ORDER) {
+      return 1;
     }
-  }
+    return -1;
+  };
 
   const getLists = () => {
     return BOARD.BOARD_LISTS.sort(sortCards).map((list: any) => {
@@ -126,7 +125,7 @@ function Board(props: any) {
             onDrop={(e) => dropHandlerTask(e, list, card)}
             id={card.CARD_ID}
             className="list_card"
-            draggable={true}
+            draggable
           >
             {card.CARD_DATA}
           </div>
@@ -140,12 +139,12 @@ function Board(props: any) {
           onDragEnd={(e) => dragEndHandlerList(e)}
           onDragOver={(e) => dragOverHandlerList(e)}
           onDrop={(e) => dropHandlerList(e, list)}
-          draggable={true}
+          draggable
           id={list.LIST_ID}
-          >
+        >
           <div className="list-title">{list.LIST_TITLE}</div>
           <div className="list_work-area">
-            <div className="list-cover"></div>
+            <div className="list-cover" />
             {cards}
           </div>
         </div>
@@ -153,9 +152,7 @@ function Board(props: any) {
     });
   };
 
-  return (
-    <div className="board-window">{getLists()}</div>
-  );
+  return <div className="board-window">{getLists()}</div>;
 }
 
 export default Board;

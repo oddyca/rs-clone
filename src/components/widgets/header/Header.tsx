@@ -118,9 +118,13 @@ function Header(props: any) {
                     <Link className="link" to="/signin">
                       <div className="user__list-inner">
                         <img src={logout} alt="" />
-                        <div onClick={() => {
-                          localStorage.clear();
-                        }}>Log out</div>
+                        <div
+                          onClick={() => {
+                            localStorage.clear();
+                          }}
+                        >
+                          Log out
+                        </div>
                       </div>
                     </Link>
                   </button>
