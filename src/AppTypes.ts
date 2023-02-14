@@ -60,3 +60,8 @@ export type TParticipantsModalProps = {
 export type TParticipantProps = {
   participant: string;
 };
+
+// export type TListModalProps = {
+//   setShowModal: boolean;
+
+// }

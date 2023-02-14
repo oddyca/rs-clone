@@ -277,24 +277,18 @@ export default class Controller {
       console.log(e);
     }
   }
-}
 
-  async setCurrentUser(id: string) {
-    try {
-      const loggedUserRequest = await this.getUserData(id);
-      if (!loggedUserRequest.ok) {
-        throw new Error("User not found");
-      }
-      const parsedUserData = await loggedUserRequest.json();
-      const newUser = {
-        USER_ID: id,
-        USER_NAME: parsedUserData.username,
-        USER_PASSWORD: parsedUserData.password,
-        USER_WORKSPACES: parsedUserData.workspaces,
-      };
-      this.currentUser = newUser;
-    } catch (e) {
-      console.log(e);
-    }
-  }
+  // findCurrent
+
+  // getBoards -> возвращает массив объектов с листами на текущем воркспейсе на текущей борде
+  // 
+
+  // changeListTitle(userData: any, title: string) {
+  //   const workspaceId = userData.WORKSPACE_ID;
+  //   const boardId = userData.BOARD_ID;
+  //   const { dragList } = userData;
+  //   const { dragTask } = userData;
+  //   const { dropList } = userData;
+  //   const currentListArr = this.getBoards(workspaceId, boardId);
+  // }
 }

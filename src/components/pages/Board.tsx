@@ -1,4 +1,5 @@
 import { useState } from "react";
+import TaskModal from "../widgets/list/TaskModal"
 
 function Board(props: any) {
   const { USER_NAME } = props;
@@ -6,6 +7,9 @@ function Board(props: any) {
   const [dragList, setDragList] = useState(null);
   const [dragTask, setDragTask] = useState(null);
   const [currentObj, setCurrentObj] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [boardID, setBoardID] = useState("");
+  const [currentTask, setCurrentTask] = useState(null);
 
   function dragStartHandlerList(e: any, list: any) {
     e.stopPropagation();
@@ -116,6 +120,13 @@ function Board(props: any) {
       const cards = list.LIST_CARDS.map((card: any) => {
         return (
           <div
+            onClick={(e) => {
+              // show task modal
+              // set current board id to pass it to ListModal component
+              setShowModal(true);
+              setBoardID(BOARD.BOARD_ID);
+              setCurrentTask(card)
+            }}
             onDragOver={(e) => dragOverHandlerTask(e)}
             onDragLeave={(e) => dragLeaveHandlerTask(e)}
             onDragStart={(e) => dragStartHandlerTask(e, list, card)}
@@ -129,23 +140,33 @@ function Board(props: any) {
           </div>
         );
       });
+
       return (
-        <div
-          className="list"
-          onDragStart={(e) => dragStartHandlerList(e, list)}
-          onDragLeave={(e) => dragEndHandlerList(e)}
-          onDragEnd={(e) => dragEndHandlerList(e)}
-          onDragOver={(e) => dragOverHandlerList(e)}
-          onDrop={(e) => dropHandlerList(e, list)}
-          draggable
-          id={list.LIST_ID}
-        >
+        <>
+          <TaskModal 
+            showModal={showModal}
+            currentWorkspace={WORKSPACE_ID}
+            currentBoard={boardID}
+            taskObj={currentTask}
+          />
+          <div
+            className="list"
+            onDragStart={(e) => dragStartHandlerList(e, list)}
+            onDragLeave={(e) => dragEndHandlerList(e)}
+            onDragEnd={(e) => dragEndHandlerList(e)}
+            onDragOver={(e) => dragOverHandlerList(e)}
+            onDrop={(e) => dropHandlerList(e, list)}
+            draggable
+            id={list.LIST_ID}
+          >
           <div className="list-title">{list.LIST_TITLE}</div>
           <div className="list_work-area">
             <div className="list-cover" />
             {cards}
           </div>
-        </div>
+          </div>
+        </>
+        
       );
     });
   };
