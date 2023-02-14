@@ -8,7 +8,7 @@ function Participant(props: TParticipantProps) {
   return (
     <div
       className="participant"
-      onFocus={() => setDisplayCloseBtn("")}
+      onMouseOver={() => setDisplayCloseBtn("")}
       onMouseLeave={() => setDisplayCloseBtn("none")}
     >
       <div className="participant-icon"></div>

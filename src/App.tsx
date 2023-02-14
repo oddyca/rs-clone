@@ -10,17 +10,18 @@ import Controller from "./lib/Controller";
 import SignIn from "./components/pages/authorization/Signin";
 import SignUp from "./components/pages/authorization/Signup";
 import AllWorkspaces from "./components/pages/AllWorkspaces";
+import Modal from "./components/widgets/Modal";
 
 let APP_CONTROLLER = new Controller();
 
 function App() {
   const [userData, setUserData] = useState(APP_CONTROLLER.loadData());
-  const [viewData /* setViewData */] = useState({
-    user: "",
-    workspace: 0,
-    board: 0
-  });
 
+
+
+
+  const [currentWorkspaceId, setCurrentWorkspaceId] = useState("");
+  const [addParticipantModal, setAddParticipantModal] = useState(false);
   const navigate = useNavigate();
   // localStorage.clear();
   const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -57,6 +58,7 @@ function App() {
         <Route
           path={`/workspace-${workspace.WORKSPACE_ID}/`}
           element={<Workspace setUserData={setUserData} WORKSPACE_ID={workspace.WORKSPACE_ID} BOARD={getIndexBoard}
+                              setAddParticipantModal={setAddParticipantModal} setCurrentWorkspaceId={setCurrentWorkspaceId}
                               APP_CONTROLLER={APP_CONTROLLER} WORKSPACE={userData.USER_WORKSPACES[index]} />}
         />
       );
@@ -77,8 +79,13 @@ function App() {
     });
   };
 
+  const addParticipant = async (participant: string) => {
+    await APP_CONTROLLER.addParticipant(currentWorkspaceId, participant);
+  }
+
   return (
     <div className="App">
+      <Modal addParticipantModal={addParticipantModal} setAddParticipantModal={setAddParticipantModal} addParticipant={addParticipant} />
       {isLoggedIn === "true" && (<Header userWorkSpace={userData.USER_WORKSPACES} title={userData.USER_NAME} />)}
       <Routes>
         <Route

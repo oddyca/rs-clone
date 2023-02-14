@@ -85,8 +85,8 @@ function Board(props: any) {
   function dropHandlerTask(e: any, list: any, card: any) {
     e.preventDefault();
     e.stopPropagation();
-    console.log(e.target, 'event'); /* list_card */
-    console.log(dragList, 'list'); /*  */
+    console.log('event = ', e.target); /* list_card */
+    console.log("dragList = ", dragList); /*  */
     if(currentObj === 'list') {
       e.target.style.boxShadow = '0 0 0 0';
       return
@@ -96,10 +96,10 @@ function Board(props: any) {
       APP_CONTROLLER.sortCard({
         WORKSPACE_ID: WORKSPACE_ID,
         BOARD_ID: BOARD.BOARD_ID,
-        dropList: list,
-        dropCard: card,
         dragList: dragList,
-        dragTask: dragTask,
+        dropList: list,
+        dragCard: dragTask,
+        dropCard: card,
       })
       const newData = structuredClone(APP_CONTROLLER.loadData());
       setUserData(newData);

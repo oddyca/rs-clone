@@ -4,7 +4,7 @@ import Participants from "../widgets/Participants";
 import { TPropsAllWorkspaces } from "../../AppTypes";
 
 function Workspace(props: any) {
-  const { WORKSPACE, workIndex, APP_CONTROLLER, BOARD, WORKSPACE_ID, setUserData, participantsArr } = props;
+  const { WORKSPACE, workIndex, APP_CONTROLLER, BOARD, WORKSPACE_ID, setUserData, setAddParticipantModal, setCurrentWorkspaceId } = props;
 
   const WORKSPACE_BOARDS = WORKSPACE.WORKSPACE_BOARDS;
 
@@ -38,7 +38,7 @@ function Workspace(props: any) {
 
   return (
     <div className="workspace-window">
-      <Participants participantsArr={WORKSPACE.WORKSPACE_PS} />
+      <Participants participantsArr={WORKSPACE.WORKSPACE_PS} setAddParticipantModal={setAddParticipantModal} WORKSPACE_ID={WORKSPACE_ID} setCurrentWorkspaceId={setCurrentWorkspaceId}/>
       <div className="boards-group">
         {getBoards()}
       </div>
