@@ -1,10 +1,12 @@
+import { nanoid } from "nanoid";
+
 export default {
   USER_ID: "1",
   USER_NAME: "user",
   USER_PASSWORD: "12345",
   USER_WORKSPACES: [
     {
-      WORKSPACE_ID: "1",
+      WORKSPACE_ID: nanoid(),
       WORKSPACE_TITLE: "workspace-1",
       WORKSPACE_PS: ["user"],
       WORKSPACE_BOARDS: [
@@ -95,7 +97,7 @@ export default {
       ],
     },
     {
-      WORKSPACE_ID: "2",
+      WORKSPACE_ID: nanoid(),
       WORKSPACE_TITLE: "workspace-2",
       WORKSPACE_PS: ["user"],
       WORKSPACE_BOARDS: [
