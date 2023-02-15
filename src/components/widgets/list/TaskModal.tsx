@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Dialog, Classes } from "@blueprintjs/core";
 import { TBoardLists, TCard } from "../../../AppTypes";
+import "../../../style/task-modal.css"
 
 function TaskModal(props: any) {
   const { showModal } = props;
@@ -15,28 +16,38 @@ function TaskModal(props: any) {
   const currentListObj = allLists.filter((list: TBoardLists) => list.LIST_ID === currentList)[0];
   const currentTaskObj = currentListObj.LIST_CARDS.filter((task: TCard) => task.CARD_ID === currentTask)[0];
 
-
-  console.log("alllists", allLists);
-  console.log("currentListObj", currentListObj);
-  console.log("currentTaskObj", currentTaskObj)
-
   // if title clicked change from readOnly=true to readOnly=false
   // default value of textarea (task title) = CARD_DATA
   const [titleToggle, setTitleToggle] = useState(true);
   const [titleChange, setTitleChange] = useState(currentTaskObj.CARD_DATA);
+  const [bodyChange, setBodyChange] = useState("Description text")
 
-  const handleTitleChange = (input: string) => {
-    setTitleChange(input);
+  const textArea = (type: string) => {
+    const value = type === "title" ? titleChange : bodyChange;
+    const readOnly = type === "title" ? titleToggle : false;
+    return (
+      <textarea 
+        value={value} 
+        className={`task-modal_${type}-text`}
+        readOnly={readOnly} 
+        onChange={(e) => {
+          if (type === "title") {
+            setTitleChange(e.target.value);
+            e.target.setAttribute("style", `width: auto`);
+            e.target.setAttribute("style", `width: ${e.target.scrollWidth}px`);
+          } else {
+            setBodyChange(e.target.value);
+            e.target.setAttribute("style", `height: auto`);
+            e.target.setAttribute("style", `height: ${e.target.scrollHeight}px`);
+          }
+        }} 
+      />
+    )
   }
 
   const DIALOG_HEADER = (
-    <div className="modal_title-container">
-      <textarea 
-        value={titleChange} 
-        className="modal-title-text" 
-        readOnly={titleToggle} 
-        onChange={(e) => handleTitleChange(e.target.value)} 
-      />
+    <div className="dialog-header_title">
+      {textArea("title")}
       <button 
         className="modal_title-edit"
         onClick={() => {
@@ -48,32 +59,29 @@ function TaskModal(props: any) {
   )
 
   const DIALOG_BODY = (
-    <div className="task-modal_body">
-      <div></div>
+    <div className="task-modal_description">
+      <p>Description</p>
+      {textArea("body")}
     </div>
   );
 
-  // const DIALOG_FOOTER = (
-  //   <div className="">
-  //     <Button
-  //       onClick={() => {
-  //         addParticipant(newParticipant);
-  //         setAddParticipantModal(false);
-  //         setNewParticipant("");
-  //       }}
-  //     >
-  //       Добавить
-  //     </Button>
-  //     <Button
-  //       onClick={() => {
-  //         // setAddParticipantModal(false);
-  //         setNewParticipant("");
-  //       }}
-  //     >
-  //       Отмена
-  //     </Button>
-  //   </div>
-  // );
+  const DIALOG_FOOTER = (
+    <div className="">
+      <Button
+        onClick={() => {
+        }}
+      >
+        Save
+      </Button>
+      <Button
+        onClick={() => {
+          setShowModal(false);
+        }}
+      >
+        Cancel
+      </Button>
+    </div>
+  );
 
   return (
     <Dialog
@@ -81,11 +89,14 @@ function TaskModal(props: any) {
       onClose={() => {
         setShowModal(false);
       }}
-      canOutsideClickClose={true}
+      canOutsideClickClose={false}
       isCloseButtonShown
     >
       <div className={Classes.DIALOG_HEADER}>{DIALOG_HEADER}</div>
       <div className={Classes.DIALOG_BODY}>{DIALOG_BODY}</div>
+      <div className={Classes.DIALOG_FOOTER}>
+        <div className={Classes.DIALOG_FOOTER_ACTIONS}>{DIALOG_FOOTER}</div>
+      </div>
     </Dialog>
   );
 }

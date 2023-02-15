@@ -1,0 +1,45 @@
+:root {
+  --stroke: #F2F2F2;
+  --background: #FBFBFB;
+  --shadow: rgba(0, 0, 0, 0.05);
+  --focus: #FF6E4F;
+}
+
+.dialog-header_title {
+  height: 44px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+}
+
+.task-modal_title-text {
+  resize: none;
+  height: 18px;
+  white-space: nowrap;
+  overflow-x: hidden;
+  border: none;
+}
+
+.task-modal_title-text:read-write {
+  outline: solid 1px var(--focus);
+}
+
+.task-modal_title-text:read-write:focus {
+  outline: solid 1px var(--focus);
+}
+
+.task-modal_description {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-modal_body-text {
+  resize: none;
+  padding: 8px;
+  width: 100%;
+  overflow-y: hidden;
+}
