@@ -9,7 +9,8 @@ function Board(props: any) {
   const [currentObj, setCurrentObj] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [boardID, setBoardID] = useState("");
-  const [currentTask, setCurrentTask] = useState(null);
+  const [currentTask, setCurrentTask] = useState("");
+  const [currentList, setCurrentList] = useState("")
 
   function dragStartHandlerList(e: any, list: any) {
     e.stopPropagation();
@@ -125,7 +126,8 @@ function Board(props: any) {
               // set current board id to pass it to ListModal component
               setShowModal(true);
               setBoardID(BOARD.BOARD_ID);
-              setCurrentTask(card)
+              setCurrentTask(card.CARD_ID);
+              setCurrentList(list.LIST_ID)
             }}
             onDragOver={(e) => dragOverHandlerTask(e)}
             onDragLeave={(e) => dragLeaveHandlerTask(e)}
@@ -143,12 +145,6 @@ function Board(props: any) {
 
       return (
         <>
-          <TaskModal 
-            showModal={showModal}
-            currentWorkspace={WORKSPACE_ID}
-            currentBoard={boardID}
-            taskObj={currentTask}
-          />
           <div
             className="list"
             onDragStart={(e) => dragStartHandlerList(e, list)}
@@ -171,7 +167,18 @@ function Board(props: any) {
     });
   };
 
-  return <div className="board-window">{getLists()}</div>;
+  return <div className="board-window">
+    {showModal && <TaskModal 
+      showModal={showModal}
+      setShowModal={setShowModal}
+      currentWorkspace={WORKSPACE_ID}
+      currentBoard={boardID}
+      currentList={currentList}
+      currentTask={currentTask}
+      APP_CONTROLLER={APP_CONTROLLER}
+    />}
+    {getLists()}
+  </div>;
 }
 
 export default Board;
