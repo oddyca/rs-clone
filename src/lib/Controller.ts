@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import USER_DEFAULT_DATA from "./config";
-import { TUser, TUserWorkspace } from "../AppTypes";
+import { TUser, TUserWorkspace, TListModalProps, TCard, TListCards } from "../AppTypes";
 
 export default class Controller {
   public currentUser: TUser;
@@ -20,6 +20,20 @@ export default class Controller {
     return this.currentUser.USER_WORKSPACES[
       this.getIndexWorkspace(workspaceId)
     ].WORKSPACE_BOARDS.findIndex((elem: any) => elem.BOARD_ID === boardId);
+  }
+
+  getIndexList(workspaceId: string, boardId: string, listId: string): number {
+    return this.currentUser.USER_WORKSPACES[
+      this.getIndexWorkspace(workspaceId)
+    ].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS.findIndex((elem) => elem.LIST_ID === listId);
+  }
+
+  getIndexTask(workspaceId: string, boardId: string, listId: string, taskId: string): number {
+    const taskArr: any = this.currentUser.USER_WORKSPACES[ // :TListCards doesnt work
+      this.getIndexWorkspace(workspaceId)
+    ].WORKSPACE_BOARDS[this.getIndexBoard(workspaceId, boardId)].BOARD_LISTS[this.getIndexList(workspaceId, boardId, listId)].LIST_CARDS;
+
+    return taskArr.findIndex((elem: TCard) => elem.CARD_ID === taskId);
   }
 
   getBoards(workspaceId: string, boardId: string): object[] {
@@ -279,17 +293,23 @@ export default class Controller {
     }
   }
 
-  // findCurrent
+  saveTaskModalChanges( args: TListModalProps) {
+    const currentWS = args.currentWorkspace;
+    const currB = args.currentBoard;
+    const currL = args.currentList;
+    const currT = args.currentTask;
+    const newTitle = args.titleChange;
+    const newDescription = args.bodyChange;
 
-  // getBoards -> возвращает массив объектов с листами на текущем воркспейсе на текущей борде
-  // 
+    this.currentUser
+      .USER_WORKSPACES[this.getIndexWorkspace(currentWS)]
+      .WORKSPACE_BOARDS[this.getIndexBoard(currentWS, currB)]
+      .BOARD_LISTS[this.getIndexList(currentWS, currB, currL)]
+      .LIST_CARDS[this.getIndexTask(currentWS, currB, currL, currT)] = <any>{ // doesnt accept types from AppTypes
+        CARD_ID: currT,
+        CARD_DATA: newTitle/* ,
+        CARD_DESCRITPTION: newDescription */
+      }
 
-  // changeListTitle(userData: any, title: string) {
-  //   const workspaceId = userData.WORKSPACE_ID;
-  //   const boardId = userData.BOARD_ID;
-  //   const { dragList } = userData;
-  //   const { dragTask } = userData;
-  //   const { dropList } = userData;
-  //   const currentListArr = this.getBoards(workspaceId, boardId);
-  // }
+  }
 }

@@ -61,7 +61,12 @@ export type TParticipantProps = {
   participant: string;
 };
 
-// export type TListModalProps = {
-//   setShowModal: boolean;
-
-// }
+export type TListModalProps = {
+  [key: string]: string
+  // workspace: string;
+  // board: string;
+  // list: string;
+  // task: string;
+  // newTitle: string;
+  // newDescription: string
+}

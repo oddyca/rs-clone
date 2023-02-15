@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Dialog, Classes } from "@blueprintjs/core";
-import { TBoardLists, TCard } from "../../../AppTypes";
-import "../../../style/task-modal.css"
+import { TBoardLists, TCard, TListModalProps} from "../../../AppTypes";
+import "../../../style/task-modal.css";
 
 function TaskModal(props: any) {
   const { showModal } = props;
@@ -12,7 +12,7 @@ function TaskModal(props: any) {
   const { currentTask } = props;
   const { APP_CONTROLLER } = props;
 
-  const allLists = APP_CONTROLLER.getBoards(currentWorkspace, currentBoard)
+  const allLists = APP_CONTROLLER.getBoards(currentWorkspace, currentBoard);
   const currentListObj = allLists.filter((list: TBoardLists) => list.LIST_ID === currentList)[0];
   const currentTaskObj = currentListObj.LIST_CARDS.filter((task: TCard) => task.CARD_ID === currentTask)[0];
 
@@ -20,7 +20,11 @@ function TaskModal(props: any) {
   // default value of textarea (task title) = CARD_DATA
   const [titleToggle, setTitleToggle] = useState(true);
   const [titleChange, setTitleChange] = useState(currentTaskObj.CARD_DATA);
-  const [bodyChange, setBodyChange] = useState("Description text")
+  const [bodyChange, setBodyChange] = useState("Description text");
+
+  const saveChanges = (args: TListModalProps) => {
+    APP_CONTROLLER.saveTaskModalChanges(args);
+  }
 
   const textArea = (type: string) => {
     const value = type === "title" ? titleChange : bodyChange;
@@ -29,11 +33,12 @@ function TaskModal(props: any) {
       <textarea 
         value={value} 
         className={`task-modal_${type}-text`}
+        maxLength={40}
         readOnly={readOnly} 
         onChange={(e) => {
           if (type === "title") {
             setTitleChange(e.target.value);
-            e.target.setAttribute("style", `width: auto`);
+            e.target.setAttribute("style", `width: 1px`);
             e.target.setAttribute("style", `width: ${e.target.scrollWidth}px`);
           } else {
             setBodyChange(e.target.value);
@@ -69,6 +74,8 @@ function TaskModal(props: any) {
     <div className="">
       <Button
         onClick={() => {
+          saveChanges({currentWorkspace, currentBoard, currentList, currentTask, titleChange, bodyChange});
+          setShowModal(false);
         }}
       >
         Save
