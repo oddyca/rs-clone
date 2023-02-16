@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { Button, Dialog, Classes } from "@blueprintjs/core";
-import { TParticipantsModalProps } from "../../AppTypes";
+import { TParticipantsModalProps } from "../../../AppTypes";
 
-function Modal(props: TParticipantsModalProps) {
-  const { addParticipantModal } = props;
-  const { setAddParticipantModal } = props;
-  const { addParticipant } = props;
+function PartModal(props: TParticipantsModalProps) {
+  const { viewPartModal } = props;
+  const { setViewPartModal } = props;
+  const { setParticipant } = props;
+  const { currentWorkspaceId } = props;
 
   const [newParticipant, setNewParticipant] = useState("");
 
@@ -13,8 +14,8 @@ function Modal(props: TParticipantsModalProps) {
     <div className="">
       <Button
         onClick={() => {
-          addParticipant(newParticipant);
-          setAddParticipantModal(false);
+          setParticipant(currentWorkspaceId, newParticipant, "add");
+          setViewPartModal(false);
           setNewParticipant("");
         }}
       >
@@ -22,7 +23,7 @@ function Modal(props: TParticipantsModalProps) {
       </Button>
       <Button
         onClick={() => {
-          setAddParticipantModal(false);
+          setViewPartModal(false);
           setNewParticipant("");
         }}
       >
@@ -40,9 +41,9 @@ function Modal(props: TParticipantsModalProps) {
   return (
     <Dialog
       title="Add participant"
-      isOpen={addParticipantModal}
+      isOpen={viewPartModal}
       onClose={() => {
-        setAddParticipantModal(false);
+        setViewPartModal(false);
         setNewParticipant("");
       }}
       canOutsideClickClose={false}
@@ -56,4 +57,4 @@ function Modal(props: TParticipantsModalProps) {
   );
 }
 
-export default Modal;
+export default PartModal;
