@@ -293,7 +293,7 @@ export default class Controller {
     }
   }
 
-  saveTaskModalChanges( args: TListModalProps) {
+  saveTaskModalChanges(args: TListModalProps) {
     const currentWS = args.currentWorkspace;
     const currB = args.currentBoard;
     const currL = args.currentList;
@@ -310,6 +310,6 @@ export default class Controller {
         CARD_DATA: newTitle/* ,
         CARD_DESCRITPTION: newDescription */
       }
-
+    console.log(this.currentUser)
   }
 }

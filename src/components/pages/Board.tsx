@@ -162,7 +162,6 @@ function Board(props: any) {
           </div>
           </div>
         </>
-        
       );
     });
   };
@@ -176,6 +175,7 @@ function Board(props: any) {
       currentList={currentList}
       currentTask={currentTask}
       APP_CONTROLLER={APP_CONTROLLER}
+      setUserData={setUserData}
     />}
     {getLists()}
   </div>;

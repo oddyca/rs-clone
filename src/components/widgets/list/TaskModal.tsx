@@ -11,6 +11,7 @@ function TaskModal(props: any) {
   const { currentList } = props;
   const { currentTask } = props;
   const { APP_CONTROLLER } = props;
+  const { setUserData } = props;
 
   const allLists = APP_CONTROLLER.getBoards(currentWorkspace, currentBoard);
   const currentListObj = allLists.filter((list: TBoardLists) => list.LIST_ID === currentList)[0];
@@ -24,6 +25,7 @@ function TaskModal(props: any) {
 
   const saveChanges = (args: TListModalProps) => {
     APP_CONTROLLER.saveTaskModalChanges(args);
+    setUserData(APP_CONTROLLER.loadData()); // rerenders only the first time
   }
 
   const textArea = (type: string) => {
@@ -38,14 +40,12 @@ function TaskModal(props: any) {
         onChange={(e) => {
           if (type === "title") {
             setTitleChange(e.target.value);
-            e.target.setAttribute("style", `width: 1px`);
-            e.target.setAttribute("style", `width: ${e.target.scrollWidth}px`);
           } else {
             setBodyChange(e.target.value);
             e.target.setAttribute("style", `height: auto`);
             e.target.setAttribute("style", `height: ${e.target.scrollHeight}px`);
           }
-        }} 
+        }}
       />
     )
   }
@@ -75,7 +75,7 @@ function TaskModal(props: any) {
       <Button
         onClick={() => {
           saveChanges({currentWorkspace, currentBoard, currentList, currentTask, titleChange, bodyChange});
-          setShowModal(false);
+          // setShowModal(false);
         }}
       >
         Save
