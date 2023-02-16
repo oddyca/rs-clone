@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "../../style/all-workspaces.css";
 import { TPropsAllWorkspaces } from "../../AppTypes";
+import WorkSpaceModal from "../widgets/list/WorkSpaceModal";
 
 export default function AllWorkspaces(props: TPropsAllWorkspaces) {
-  const { user } = props;
+  const { user, setUserData, APP_CONTROLLER } = props;
   const allWorkSpaces = user.USER_WORKSPACES;
+  const [showNewWorkspaceModal, setShowNewWorkspaceModal] = useState(false);
 
   function renderWorkspaces() {
     return allWorkSpaces.map((space: any) => {
@@ -32,7 +34,31 @@ export default function AllWorkspaces(props: TPropsAllWorkspaces) {
   return (
     <div className="workspaces-container">
       <h3 className="h3-heading">Workspaces ({allWorkSpaces.length})</h3>
-      <div className="workspaces-list">{renderWorkspaces()}</div>
+      <div className="workspaces-list">
+        {renderWorkspaces()}
+        <div className="workspaces-link">
+          <div className="workspace-card">
+            <div className="workspace_cover">
+              <div
+                onClick={(e) => {
+                  setShowNewWorkspaceModal(true);
+                }}
+                className="workspaces_info"
+              >
+                Add WorkSpace(+)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {showNewWorkspaceModal && (
+        <WorkSpaceModal
+          showModal={showNewWorkspaceModal}
+          setShowModal={setShowNewWorkspaceModal}
+          APP_CONTROLLER={APP_CONTROLLER}
+          setUserData={setUserData}
+        />
+      )}
     </div>
   );
 }

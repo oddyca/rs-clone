@@ -93,20 +93,22 @@ function App() {
   const setParticipant = (workspaceId: string, participant: string, act: string) => {
     if (act === "add") {
       APP_CONTROLLER.setParticipant(currentWorkspaceId, participant, act).then(
-        result => {
+        (result) => {
           APP_CONTROLLER.addParticipant(participant, currentWorkspaceId);
           setUserData(structuredClone(APP_CONTROLLER.loadData()));
         },
-        error => console.log(error))
+        (error) => console.log(error),
+      );
     }
     if (act === "del") {
       if (participant === userData.USER_NAME) return;
       APP_CONTROLLER.setParticipant(workspaceId, participant, act).then(
-        result => {
+        (result) => {
           APP_CONTROLLER.delParticipant(participant, currentWorkspaceId);
           setUserData(structuredClone(APP_CONTROLLER.loadData()));
         },
-        error => console.log(error))
+        (error) => console.log(error),
+      );
     }
   };
 
@@ -126,7 +128,16 @@ function App() {
         />
       )}
       <Routes>
-        <Route path="/" element={<AllWorkspaces user={userData} />} />
+        <Route
+          path="/"
+          element={
+            <AllWorkspaces
+              APP_CONTROLLER={APP_CONTROLLER}
+              setUserData={setUserData}
+              user={userData}
+            />
+          }
+        />
         {getWorkspaces()}
         {getBoards()}
         <Route path="/signin" element={<SignIn />} />
