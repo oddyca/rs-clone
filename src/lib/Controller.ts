@@ -361,8 +361,7 @@ export default class Controller {
     const workSpaceId = workspace_id;
     const boardId = current_board;
     const boardArr = this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workSpaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workSpaceId, boardId)].BOARD_LISTS
-
-    /* console.log(order.length) */
+    const lastOrder =  boardArr[boardArr.length-1].LIST_ORDER;
 
     this
       .currentUser
@@ -370,7 +369,7 @@ export default class Controller {
       .WORKSPACE_BOARDS[this.getIndexBoard(workSpaceId, boardId)]
       .BOARD_LISTS.push({
         LIST_ID: nanoid(),
-        LIST_ORDER: boardArr.length + 1,
+        LIST_ORDER: lastOrder + 1,
         LIST_TITLE: nameList,
         LIST_CARDS: [],
       })
