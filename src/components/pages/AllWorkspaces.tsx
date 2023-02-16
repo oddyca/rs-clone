@@ -12,21 +12,33 @@ export default function AllWorkspaces(props: TPropsAllWorkspaces) {
   function renderWorkspaces() {
     return allWorkSpaces.map((space: any) => {
       return (
-        <Link
-          id={space.WORKSPACE_ID}
-          className="workspaces-link"
-          to={`/workspace-${space.WORKSPACE_ID}`}
-        >
-          <div className="workspace-card">
-            <p className="workspaces_title">{space.WORKSPACE_TITLE}</p>
-            <div className="workspace_cover">
-              <div className="workspaces_info">
-                <p>Boards: {space.WORKSPACE_BOARDS.length}</p>
-                <p>Participants: {space.WORKSPACE_PS.join(" ")}</p>
+        <div className="workspaces-link">
+          <Link
+            id={space.WORKSPACE_ID}
+            className="workspaces-link"
+            to={`/workspace-${space.WORKSPACE_ID}`}
+          >
+            <div className="workspace-card">
+              <p className="workspaces_title">{space.WORKSPACE_TITLE}</p>
+              <div className="workspace_cover">
+                <div className="workspaces_info">
+                  <p>Boards: {space.WORKSPACE_BOARDS.length}</p>
+                  <p>Participants: {space.WORKSPACE_PS.join(" ")}</p>
+                </div>
               </div>
             </div>
-          </div>
-        </Link>
+          </Link>
+          <button
+            onClick={(e) => {
+              APP_CONTROLLER.deleteWorkSpace({
+                WORKSPACE_ID: space.WORKSPACE_ID
+              });
+              setUserData(structuredClone(APP_CONTROLLER.loadData()));
+            }}
+          >
+            delete
+          </button>
+        </div>
       );
     });
   }
