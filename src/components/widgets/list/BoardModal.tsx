@@ -6,17 +6,18 @@ function TaskModal(props: any) {
   const { showModal } = props;
   const { setShowModal } = props;
   const { APP_CONTROLLER } = props;
-  const [newWorkSpace, setNewWorkSpace] = useState("");
+  const { WORKSPACE_ID } = props;
+  const [newBoard, setNewBoard] = useState("");
 
-  const saveChanges = (new_work_space: any) => {
-    APP_CONTROLLER.addWorkSpace(new_work_space);
+  const saveChanges = (new_board: any, workspace_id: any) => {
+    APP_CONTROLLER.addBoard(new_board, workspace_id);
   };
 
   const DIALOG_FOOTER = (
     <div className="">
       <Button
         onClick={() => {
-          saveChanges(newWorkSpace);
+          saveChanges(newBoard, WORKSPACE_ID);
           setShowModal(false);
         }}
       >
@@ -24,7 +25,7 @@ function TaskModal(props: any) {
       </Button>
       <Button
         onClick={() => {
-          setNewWorkSpace("");
+          setNewBoard("");
           setShowModal(false);
         }}
       >
@@ -35,8 +36,8 @@ function TaskModal(props: any) {
 
   const DIALOG_BODY = (
     <div>
-      Add workspace
-      <input value={newWorkSpace} onChange={(e) => setNewWorkSpace(e.target.value)} />
+      Add Board
+      <input value={newBoard} onChange={(e) => setNewBoard(e.target.value)} />
     </div>
   );
 

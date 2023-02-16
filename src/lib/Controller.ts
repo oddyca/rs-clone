@@ -293,7 +293,7 @@ export default class Controller {
     }
   }
 
-  saveTaskModalChanges( args: TListModalProps) {
+  saveTaskModalChanges(args: TListModalProps) {
     const currentWS = args.currentWorkspace;
     const currB = args.currentBoard;
     const currL = args.currentList;
@@ -312,8 +312,8 @@ export default class Controller {
       }
   }
 
-  addWorkSpace( args: any ) {
-    const nameWorkSpace = args.newWorkSpace;
+  addWorkSpace(new_work_space: any) {
+    const nameWorkSpace = new_work_space;
 
     this.currentUser.USER_WORKSPACES.push({
       WORKSPACE_ID: nanoid(),
@@ -322,5 +322,18 @@ export default class Controller {
       WORKSPACE_BOARDS: [],
     });
     console.log(this.currentUser);
+  }
+
+  addBoard(new_board: any, workspace_id: any) {
+    const nameBoard = new_board;
+    const workSpaceId = workspace_id;
+
+    this
+    .currentUser.USER_WORKSPACES[this.getIndexWorkspace(workSpaceId)]
+    .WORKSPACE_BOARDS.push({
+      BOARD_ID: nanoid(),
+      BOARD_TITLE: nameBoard,
+      BOARD_LISTS: []
+    });
   }
 }

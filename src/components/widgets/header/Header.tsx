@@ -147,13 +147,13 @@ function Header(props: any) {
           </button>
         </div>
       </div>
-      {showNewWorkspaceModal && 
+      {showNewWorkspaceModal && (
         <WorkSpaceModal
           showModal={showNewWorkspaceModal}
           setShowModal={setShowNewWorkspaceModal}
           APP_CONTROLLER={APP_CONTROLLER}
         />
-      }
+      )}
     </header>
   );
 }
