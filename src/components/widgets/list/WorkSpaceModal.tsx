@@ -6,6 +6,7 @@ function TaskModal(props: any) {
   const { showModal } = props;
   const { setShowModal } = props;
   const { APP_CONTROLLER } = props;
+  const { setUserData } = props;
   const [newWorkSpace, setNewWorkSpace] = useState("");
 
   const saveChanges = (new_work_space: any) => {
@@ -18,6 +19,7 @@ function TaskModal(props: any) {
         onClick={() => {
           saveChanges(newWorkSpace);
           setShowModal(false);
+          setUserData(structuredClone(APP_CONTROLLER.loadData()));
         }}
       >
         Добавить

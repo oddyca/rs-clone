@@ -11,7 +11,7 @@ import "./index.css";
 import WorkSpaceModal from "../list/WorkSpaceModal";
 
 function Header(props: any) {
-  const { title, userWorkSpace, APP_CONTROLLER } = props;
+  const { title, userWorkSpace, APP_CONTROLLER, setUserData } = props;
   const [openDropDown, setOpenDropDown] = useState(false);
   const [openDropDownUser, setOpenDropDownUser] = useState(false);
   const [showNewWorkspaceModal, setShowNewWorkspaceModal] = useState(false);
@@ -152,6 +152,7 @@ function Header(props: any) {
           showModal={showNewWorkspaceModal}
           setShowModal={setShowNewWorkspaceModal}
           APP_CONTROLLER={APP_CONTROLLER}
+          setUserData={setUserData}
         />
       )}
     </header>

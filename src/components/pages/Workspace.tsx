@@ -75,6 +75,7 @@ function Workspace(props: any) {
           setShowModal={setShowNewBoardModal}
           APP_CONTROLLER={APP_CONTROLLER}
           WORKSPACE_ID={WORKSPACE_ID}
+          setUserData={setUserData}
         />
       )}
     </div>

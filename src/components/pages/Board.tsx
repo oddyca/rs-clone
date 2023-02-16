@@ -162,6 +162,19 @@ function Board(props: any) {
             <div className="list-cover" />
             {cards}
           </div>
+          <button
+            onClick={() => {
+              APP_CONTROLLER.deleteList({
+                WORKSPACE_ID,
+                BOARD_ID: BOARD.BOARD_ID,
+                CURRENTLIST: currentList
+              });
+              const newData = structuredClone(APP_CONTROLLER.loadData());
+              setUserData(newData);
+            }}
+          >
+            del
+          </button>
           </div>
         </>
       );
@@ -189,6 +202,7 @@ function Board(props: any) {
       WORKSPACE_ID={WORKSPACE_ID}
       APP_CONTROLLER={APP_CONTROLLER}
       currentBoard={boardID}
+      setUserData={setUserData}
     />}
   </div>;
 }
