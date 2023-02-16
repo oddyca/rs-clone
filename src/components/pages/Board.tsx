@@ -1,6 +1,7 @@
 import { useState } from "react";
 import TaskModal from "../widgets/list/TaskModal";
 import NewListModal from "../widgets/list/NewListModal";
+import AddNewTask from "../addNewTask";
 
 function Board(props: any) {
   const { USER_NAME } = props;
@@ -13,6 +14,8 @@ function Board(props: any) {
   const [boardID, setBoardID] = useState("");
   const [currentTask, setCurrentTask] = useState("");
   const [currentList, setCurrentList] = useState("");
+  // const [newTaskTitle, setNewTaskTitle] = useState("");
+
 
   function dragStartHandlerList(e: any, list: any) {
     e.stopPropagation();
@@ -158,10 +161,13 @@ function Board(props: any) {
             id={list.LIST_ID}
           >
           <div className="list-title">{list.LIST_TITLE}</div>
-          <div className="list_work-area">
+          <div 
+            className="list_work-area"
+          >
             <div className="list-cover" />
             {cards}
           </div>
+
           <button
             onClick={() => {
               APP_CONTROLLER.deleteList({
@@ -175,6 +181,15 @@ function Board(props: any) {
           >
             del
           </button>
+
+          <AddNewTask
+            APP_CONTROLLER={APP_CONTROLLER}
+            setUserData={setUserData}
+            WORKSPACE_ID={WORKSPACE_ID}
+            BOARD_ID={BOARD.BOARD_ID}
+            list={list}
+          />
+
           </div>
         </>
       );

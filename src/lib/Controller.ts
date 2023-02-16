@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import USER_DEFAULT_DATA from "./config";
-import { TUser, TUserWorkspace, TListModalProps, TCard, TListCards } from "../AppTypes";
+import { TUser, TUserWorkspace, TListModalProps, TCard, TBoardLists } from "../AppTypes";
 
 export default class Controller {
   public currentUser: TUser;
@@ -394,5 +394,26 @@ export default class Controller {
     const workspaceId = userData.WORKSPACE_ID;
 
     this.currentUser.USER_WORKSPACES.splice(this.getIndexWorkspace(workspaceId), 1);
+  }
+  pushNewTask(workspaceID: string, boardID: string, incomingList: TBoardLists, newTaskTitle: string) {
+    const currentListID = incomingList.LIST_ID;
+    const lastTaskID = incomingList.LIST_CARDS.length + 1;
+    const newTask: /* TCard */any = {
+      CARD_ID: `${lastTaskID}`,
+      CARD_DATA: newTaskTitle ? newTaskTitle : "New Task"
+    };
+
+    this.currentUser
+      .USER_WORKSPACES[this.getIndexWorkspace(workspaceID)]
+      .WORKSPACE_BOARDS[this.getIndexBoard(workspaceID, boardID)]
+      .BOARD_LISTS[this.getIndexList(workspaceID, boardID, currentListID)]
+      .LIST_CARDS.push(newTask);
+  }
+  deleteTask(workspaceID: string, curreboardIDntBoard: string, listID: string, taskID: string) {
+    this.currentUser
+      .USER_WORKSPACES[this.getIndexWorkspace(workspaceID)]
+      .WORKSPACE_BOARDS[this.getIndexBoard(workspaceID, curreboardIDntBoard)]
+      .BOARD_LISTS[this.getIndexList(workspaceID, curreboardIDntBoard, listID)]
+      .LIST_CARDS.splice(this.getIndexTask(workspaceID, curreboardIDntBoard, listID, taskID), 1);
   }
 }
