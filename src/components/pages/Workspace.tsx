@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Participants from "../widgets/participant/Participants";
 import { TPropsAllWorkspaces } from "../../AppTypes";
+import BoardModal from "../widgets/list/BoardModal";
 
 function Workspace(props: any) {
+  const [showNewBoardModal, setShowNewBoardModal] = useState(false);
   const {
     WORKSPACE,
     workIndex,
@@ -56,7 +58,26 @@ function Workspace(props: any) {
         WORKSPACE_ID={WORKSPACE_ID}
         setCurrentWorkspaceId={setCurrentWorkspaceId}
       />
-      <div className="boards-group">{getBoards()}</div>
+      <div className="boards-group">
+        {getBoards()}
+        <div
+          className="board"
+          onClick={(e) => {
+            setShowNewBoardModal(true);
+          }}
+        >
+          Add Board(+)
+        </div>
+      </div>
+      {showNewBoardModal && (
+        <BoardModal
+          showModal={showNewBoardModal}
+          setShowModal={setShowNewBoardModal}
+          APP_CONTROLLER={APP_CONTROLLER}
+          WORKSPACE_ID={WORKSPACE_ID}
+          setUserData={setUserData}
+        />
+      )}
     </div>
   );
 }

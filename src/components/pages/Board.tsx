@@ -1,5 +1,6 @@
 import { useState } from "react";
 import TaskModal from "../widgets/list/TaskModal";
+import NewListModal from "../widgets/list/NewListModal";
 import AddNewTask from "../addNewTask";
 
 function Board(props: any) {
@@ -9,10 +10,12 @@ function Board(props: any) {
   const [dragTask, setDragTask] = useState(null);
   const [currentObj, setCurrentObj] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showListModal, setShowListModal] = useState(false);
   const [boardID, setBoardID] = useState("");
   const [currentTask, setCurrentTask] = useState("");
   const [currentList, setCurrentList] = useState("");
   // const [newTaskTitle, setNewTaskTitle] = useState("");
+
 
   function dragStartHandlerList(e: any, list: any) {
     e.stopPropagation();
@@ -164,6 +167,21 @@ function Board(props: any) {
             <div className="list-cover" />
             {cards}
           </div>
+
+          <button
+            onClick={() => {
+              APP_CONTROLLER.deleteList({
+                WORKSPACE_ID,
+                BOARD_ID: BOARD.BOARD_ID,
+                CURRENTLIST: currentList
+              });
+              const newData = structuredClone(APP_CONTROLLER.loadData());
+              setUserData(newData);
+            }}
+          >
+            del
+          </button>
+
           <AddNewTask
             APP_CONTROLLER={APP_CONTROLLER}
             setUserData={setUserData}
@@ -171,6 +189,7 @@ function Board(props: any) {
             BOARD_ID={BOARD.BOARD_ID}
             list={list}
           />
+
           </div>
         </>
       );
@@ -188,7 +207,18 @@ function Board(props: any) {
       APP_CONTROLLER={APP_CONTROLLER}
       setUserData={setUserData}
     />}
+    <div onClick={() => {setShowListModal(true); setBoardID(BOARD.BOARD_ID);}} className="list">
+      Add List
+    </div>
     {getLists()}
+    {showListModal && <NewListModal
+      showModal={showListModal}
+      setShowModal={setShowListModal}
+      WORKSPACE_ID={WORKSPACE_ID}
+      APP_CONTROLLER={APP_CONTROLLER}
+      currentBoard={boardID}
+      setUserData={setUserData}
+    />}
   </div>;
 }
 
