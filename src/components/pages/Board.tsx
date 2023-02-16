@@ -1,5 +1,6 @@
 import { useState } from "react";
-import TaskModal from "../widgets/list/TaskModal"
+import { EditableText } from "@blueprintjs/core";
+import TaskModal from "../widgets/list/TaskModal";
 
 function Board(props: any) {
   const { USER_NAME } = props;
@@ -10,7 +11,8 @@ function Board(props: any) {
   const [showModal, setShowModal] = useState(false);
   const [boardID, setBoardID] = useState("");
   const [currentTask, setCurrentTask] = useState("");
-  const [currentList, setCurrentList] = useState("")
+  const [currentList, setCurrentList] = useState("");
+  const [newTaskTitle, setNewTaskTitle] = useState("");
 
   function dragStartHandlerList(e: any, list: any) {
     e.stopPropagation();
@@ -116,6 +118,10 @@ function Board(props: any) {
     return -1;
   };
 
+  const createNewTask = (taskTitle: string) => {
+    APP_CONTROLLER
+  }
+
   const getLists = () => {
     return BOARD.BOARD_LISTS.sort(sortCards).map((list: any) => {
       const cards = list.LIST_CARDS.map((card: any) => {
@@ -156,10 +162,24 @@ function Board(props: any) {
             id={list.LIST_ID}
           >
           <div className="list-title">{list.LIST_TITLE}</div>
-          <div className="list_work-area">
+          <div 
+            className="list_work-area"
+          >
             <div className="list-cover" />
             {cards}
           </div>
+          <EditableText
+            multiline={false}
+            confirmOnEnterKey={true}
+            maxLength={30}
+            placeholder="Add new task +"
+            onChange={(e) => setNewTaskTitle(e)}
+            onConfirm={(e) => {
+              APP_CONTROLLER.pushNewTask(WORKSPACE_ID, BOARD.BOARD_ID, list, newTaskTitle);
+              setUserData(structuredClone(APP_CONTROLLER.loadData()));
+              setNewTaskTitle("");
+            }}
+          />
           </div>
         </>
       );
