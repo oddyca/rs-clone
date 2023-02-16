@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { EditableText } from "@blueprintjs/core";
 import TaskModal from "../widgets/list/TaskModal";
+import AddNewTask from "../addNewTask";
 
 function Board(props: any) {
   const { USER_NAME } = props;
@@ -12,7 +12,7 @@ function Board(props: any) {
   const [boardID, setBoardID] = useState("");
   const [currentTask, setCurrentTask] = useState("");
   const [currentList, setCurrentList] = useState("");
-  const [newTaskTitle, setNewTaskTitle] = useState("");
+  // const [newTaskTitle, setNewTaskTitle] = useState("");
 
   function dragStartHandlerList(e: any, list: any) {
     e.stopPropagation();
@@ -168,17 +168,12 @@ function Board(props: any) {
             <div className="list-cover" />
             {cards}
           </div>
-          <EditableText
-            multiline={false}
-            confirmOnEnterKey={true}
-            maxLength={30}
-            placeholder="Add new task +"
-            onChange={(e) => setNewTaskTitle(e)}
-            onConfirm={(e) => {
-              APP_CONTROLLER.pushNewTask(WORKSPACE_ID, BOARD.BOARD_ID, list, newTaskTitle);
-              setUserData(structuredClone(APP_CONTROLLER.loadData()));
-              setNewTaskTitle("");
-            }}
+          <AddNewTask
+            APP_CONTROLLER={APP_CONTROLLER}
+            setUserData={setUserData}
+            WORKSPACE_ID={WORKSPACE_ID}
+            BOARD_ID={BOARD.BOARD_ID}
+            list={list}
           />
           </div>
         </>
