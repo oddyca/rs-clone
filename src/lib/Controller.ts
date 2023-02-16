@@ -310,6 +310,17 @@ export default class Controller {
         CARD_DATA: newTitle/* ,
         CARD_DESCRITPTION: newDescription */
       }
+  }
 
+  addWorkSpace( args: any ) {
+    const nameWorkSpace = args.newWorkSpace;
+
+    this.currentUser.USER_WORKSPACES.push({
+      WORKSPACE_ID: nanoid(),
+      WORKSPACE_TITLE: nameWorkSpace,
+      WORKSPACE_PS: [this.currentUser.USER_NAME],
+      WORKSPACE_BOARDS: [],
+    });
+    console.log(this.currentUser);
   }
 }

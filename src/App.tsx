@@ -101,7 +101,11 @@ function App() {
         addParticipant={addParticipant}
       />
       {isLoggedIn === "true" && (
-        <Header userWorkSpace={userData.USER_WORKSPACES} title={userData.USER_NAME} />
+        <Header
+          APP_CONTROLLER={APP_CONTROLLER}
+          userWorkSpace={userData.USER_WORKSPACES}
+          title={userData.USER_NAME}
+        />
       )}
       <Routes>
         <Route path="/" element={<AllWorkspaces user={userData} />} />

@@ -8,11 +8,13 @@ import settings from "../../../assets/settings.svg";
 import support from "../../../assets/support.svg";
 import logout from "../../../assets/logout.svg";
 import "./index.css";
+import WorkSpaceModal from "../list/WorkSpaceModal";
 
 function Header(props: any) {
-  const { title, userWorkSpace } = props;
+  const { title, userWorkSpace, APP_CONTROLLER } = props;
   const [openDropDown, setOpenDropDown] = useState(false);
   const [openDropDownUser, setOpenDropDownUser] = useState(false);
+  const [showNewWorkspaceModal, setShowNewWorkspaceModal] = useState(false);
 
   return (
     <header className="header">
@@ -49,6 +51,17 @@ function Header(props: any) {
                     </li>
                   );
                 })}
+                <li className="dropdownList">
+                  <button
+                    type="submit"
+                    className="header__dropdownChild  btn__dropdown  dropdownBtn"
+                    onClick={(e) => {
+                      setShowNewWorkspaceModal(true);
+                    }}
+                  >
+                    Add workspace
+                  </button>
+                </li>
               </ul>
             )}
           </div>
@@ -134,6 +147,13 @@ function Header(props: any) {
           </button>
         </div>
       </div>
+      {showNewWorkspaceModal && 
+        <WorkSpaceModal
+          showModal={showNewWorkspaceModal}
+          setShowModal={setShowNewWorkspaceModal}
+          APP_CONTROLLER={APP_CONTROLLER}
+        />
+      }
     </header>
   );
 }
