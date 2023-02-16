@@ -1,5 +1,6 @@
 import { useState } from "react";
-import TaskModal from "../widgets/list/TaskModal"
+import TaskModal from "../widgets/list/TaskModal";
+import NewListModal from "../widgets/list/NewListModal";
 
 function Board(props: any) {
   const { USER_NAME } = props;
@@ -8,9 +9,10 @@ function Board(props: any) {
   const [dragTask, setDragTask] = useState(null);
   const [currentObj, setCurrentObj] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showListModal, setShowListModal] = useState(false);
   const [boardID, setBoardID] = useState("");
   const [currentTask, setCurrentTask] = useState("");
-  const [currentList, setCurrentList] = useState("")
+  const [currentList, setCurrentList] = useState("");
 
   function dragStartHandlerList(e: any, list: any) {
     e.stopPropagation();
@@ -177,7 +179,17 @@ function Board(props: any) {
       currentTask={currentTask}
       APP_CONTROLLER={APP_CONTROLLER}
     />}
+    <div onClick={() => {setShowListModal(true); setBoardID(BOARD.BOARD_ID);}} className="list">
+      Add List
+    </div>
     {getLists()}
+    {showListModal && <NewListModal
+      showModal={showListModal}
+      setShowModal={setShowListModal}
+      WORKSPACE_ID={WORKSPACE_ID}
+      APP_CONTROLLER={APP_CONTROLLER}
+      currentBoard={boardID}
+    />}
   </div>;
 }
 

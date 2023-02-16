@@ -336,4 +336,24 @@ export default class Controller {
       BOARD_LISTS: []
     });
   }
+
+  addListOnBoard(new_list: any, workspace_id: any, current_board: any) {
+    const nameList = new_list;
+    const workSpaceId = workspace_id;
+    const boardId = current_board;
+    const order = this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workSpaceId)].WORKSPACE_BOARDS[this.getIndexBoard(workSpaceId, boardId)].BOARD_LISTS
+
+    /* console.log(order.length) */
+
+    this
+      .currentUser
+      .USER_WORKSPACES[this.getIndexWorkspace(workSpaceId)]
+      .WORKSPACE_BOARDS[this.getIndexBoard(workSpaceId, boardId)]
+      .BOARD_LISTS.push({
+        LIST_ID: nanoid(),
+        LIST_ORDER: order.length + 1,
+        LIST_TITLE: nameList,
+        LIST_CARDS: [],
+      })
+  }
 }
