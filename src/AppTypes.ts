@@ -1,5 +1,5 @@
 import AllWorkspaces from "./components/pages/AllWorkspaces";
-import Participants from "./components/widgets/Participants";
+import Participants from "./components/widgets/participant/Participants";
 
 export type TCard = {
   CARD_ID: string;
@@ -37,6 +37,7 @@ export type TUser = {
 
 type TSetState = (addParticipantModal: boolean) => void;
 type TSetStateWork = (addParticipantModal: string) => void;
+type TSetStatePart = (workspaceId: string, addParticipantModal: string, act: string) => void;
 
 export type TProps = {};
 
@@ -49,14 +50,19 @@ export type TParticipantsProps = {
   participantsArr: string[];
   setAddParticipantModal: TSetState;
   setCurrentWorkspaceId: TSetStateWork;
+  setParticipant: TSetStatePart;
 };
 
 export type TParticipantsModalProps = {
-  addParticipant: TSetStateWork;
-  addParticipantModal: boolean;
-  setAddParticipantModal: TSetState;
+  setParticipant: TSetStatePart;
+  viewPartModal: boolean;
+  setViewPartModal: TSetState;
+  currentWorkspaceId: string;
 };
 
 export type TParticipantProps = {
   participant: string;
+  setCurrentWorkspaceId: TSetStateWork;
+  WORKSPACE_ID: string;
+  setParticipant: TSetStatePart;
 };

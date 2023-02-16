@@ -1,16 +1,22 @@
 import React from "react";
-import Participant from "./participant/Participant";
-import { TParticipantsProps } from "../../AppTypes";
+import Participant from "./Participant";
+import { TParticipantsProps } from "../../../AppTypes";
 
 function Participants(props: TParticipantsProps) {
   const { participantsArr } = props;
   const { WORKSPACE_ID } = props;
   const { setCurrentWorkspaceId } = props;
   const { setAddParticipantModal } = props;
+  const { setParticipant } = props;
 
   const renderParticipant = () => {
     return participantsArr.map((par: string) => {
-      return <Participant participant={par} />;
+      return (<Participant
+        participant={par}
+        setCurrentWorkspaceId={setCurrentWorkspaceId}
+        WORKSPACE_ID={WORKSPACE_ID}
+        setParticipant={setParticipant}
+      />);
     });
   };
 
