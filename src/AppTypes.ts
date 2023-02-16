@@ -69,10 +69,4 @@ export type TParticipantProps = {
 
 export type TListModalProps = {
   [key: string]: string
-  // workspace: string;
-  // board: string;
-  // list: string;
-  // task: string;
-  // newTitle: string;
-  // newDescription: string
 }

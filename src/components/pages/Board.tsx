@@ -118,10 +118,6 @@ function Board(props: any) {
     return -1;
   };
 
-  const createNewTask = (taskTitle: string) => {
-    APP_CONTROLLER
-  }
-
   const getLists = () => {
     return BOARD.BOARD_LISTS.sort(sortCards).map((list: any) => {
       const cards = list.LIST_CARDS.map((card: any) => {

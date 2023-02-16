@@ -337,12 +337,19 @@ export default class Controller {
       CARD_ID: `${lastTaskID}`,
       CARD_DATA: newTaskTitle ? newTaskTitle : "New Task"
     };
-    // const updatedList = {...incomingList, LIST_CARDS: [...incomingList.LIST_CARDS, newTask]};
 
     this.currentUser
       .USER_WORKSPACES[this.getIndexWorkspace(workspaceID)]
       .WORKSPACE_BOARDS[this.getIndexBoard(workspaceID, boardID)]
       .BOARD_LISTS[this.getIndexList(workspaceID, boardID, currentListID)]
       .LIST_CARDS.push(newTask);
+  }
+
+  deleteTask(workspaceID: string, curreboardIDntBoard: string, listID: string, taskID: string) {
+    this.currentUser
+      .USER_WORKSPACES[this.getIndexWorkspace(workspaceID)]
+      .WORKSPACE_BOARDS[this.getIndexBoard(workspaceID, curreboardIDntBoard)]
+      .BOARD_LISTS[this.getIndexList(workspaceID, curreboardIDntBoard, listID)]
+      .LIST_CARDS.splice(this.getIndexTask(workspaceID, curreboardIDntBoard, listID, taskID), 1);
   }
 }

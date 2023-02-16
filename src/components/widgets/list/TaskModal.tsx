@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Dialog, Classes } from "@blueprintjs/core";
 import { TBoardLists, TCard, TListModalProps} from "../../../AppTypes";
 import "../../../style/task-modal.css";
+import delete_icon from "../../../assets/delete_icon.svg";
 
 function TaskModal(props: any) {
   const { showModal } = props;
@@ -71,22 +72,39 @@ function TaskModal(props: any) {
   );
 
   const DIALOG_FOOTER = (
-    <div className="">
-      <Button
-        onClick={() => {
-          saveChanges({currentWorkspace, currentBoard, currentList, currentTask, titleChange, bodyChange});
-          setShowModal(false);
-        }}
-      >
-        Save
-      </Button>
-      <Button
-        onClick={() => {
-          setShowModal(false);
-        }}
-      >
-        Cancel
-      </Button>
+    <div className="task-modal_footer-container">
+      <div className="task-modal_delete-task">
+        <button 
+          className="delete-task-button"
+          onClick={() => {
+            setShowModal(false);
+            APP_CONTROLLER.deleteTask(currentWorkspace, currentBoard, currentList, currentTask);
+            setUserData(APP_CONTROLLER.loadData());
+          }}
+        >
+          <img 
+            src={delete_icon}
+            alt="delete-icon"
+          />
+        </button>
+      </div>
+      <div className="task-modal_controls">
+        <Button
+          onClick={() => {
+            saveChanges({currentWorkspace, currentBoard, currentList, currentTask, titleChange, bodyChange});
+            setShowModal(false);
+          }}
+        >
+          Save
+        </Button>
+        <Button
+          onClick={() => {
+            setShowModal(false);
+          }}
+        >
+          Cancel
+        </Button>
+      </div>
     </div>
   );
 
