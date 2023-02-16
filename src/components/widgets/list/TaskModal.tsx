@@ -21,11 +21,11 @@ function TaskModal(props: any) {
   // default value of textarea (task title) = CARD_DATA
   const [titleToggle, setTitleToggle] = useState(true);
   const [titleChange, setTitleChange] = useState(currentTaskObj.CARD_DATA);
-  const [bodyChange, setBodyChange] = useState("Description text");
+  const [bodyChange, setBodyChange] = useState(currentTaskObj.CARD_DESCRITPTION ? currentTaskObj.CARD_DESCRITPTION : "Description text");
 
   const saveChanges = (args: TListModalProps) => {
     APP_CONTROLLER.saveTaskModalChanges(args);
-    setUserData(APP_CONTROLLER.loadData()); // rerenders only the first time
+    setUserData(structuredClone(APP_CONTROLLER.loadData()));
   }
 
   const textArea = (type: string) => {
@@ -75,7 +75,7 @@ function TaskModal(props: any) {
       <Button
         onClick={() => {
           saveChanges({currentWorkspace, currentBoard, currentList, currentTask, titleChange, bodyChange});
-          // setShowModal(false);
+          setShowModal(false);
         }}
       >
         Save

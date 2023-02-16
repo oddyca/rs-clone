@@ -325,9 +325,8 @@ export default class Controller {
       .BOARD_LISTS[this.getIndexList(currentWS, currB, currL)]
       .LIST_CARDS[this.getIndexTask(currentWS, currB, currL, currT)] = <any>{ // doesnt accept types from AppTypes
         CARD_ID: currT,
-        CARD_DATA: newTitle/* ,
-        CARD_DESCRITPTION: newDescription */
+        CARD_DATA: newTitle,
+        CARD_DESCRIPTION: newDescription
       }
-    console.log(this.currentUser)
   }
 }
