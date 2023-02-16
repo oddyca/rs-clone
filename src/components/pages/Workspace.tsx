@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Participants from "../widgets/Participants";
+import Participants from "../widgets/participant/Participants";
 import { TPropsAllWorkspaces } from "../../AppTypes";
 import BoardModal from "../widgets/list/BoardModal";
 
@@ -15,6 +15,7 @@ function Workspace(props: any) {
     setUserData,
     setAddParticipantModal,
     setCurrentWorkspaceId,
+    setParticipant
   } = props;
 
   const { WORKSPACE_BOARDS } = WORKSPACE;
@@ -51,6 +52,7 @@ function Workspace(props: any) {
   return (
     <div className="workspace-window">
       <Participants
+        setParticipant={setParticipant}
         participantsArr={WORKSPACE.WORKSPACE_PS}
         setAddParticipantModal={setAddParticipantModal}
         WORKSPACE_ID={WORKSPACE_ID}

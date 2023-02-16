@@ -4,6 +4,9 @@ import { TParticipantProps } from "../../../AppTypes";
 function Participant(props: TParticipantProps) {
   const [displayCloseBtn, setDisplayCloseBtn] = useState("none");
   const { participant } = props;
+  const { setCurrentWorkspaceId } = props;
+  const { WORKSPACE_ID } = props;
+  const { setParticipant } = props;
 
   return (
     <div
@@ -17,7 +20,8 @@ function Participant(props: TParticipantProps) {
         style={{ display: displayCloseBtn }}
         className="participant-del-btn"
         onClick={() => {
-          console.log(`participant ${participant} onClick`);
+          setCurrentWorkspaceId(WORKSPACE_ID);
+          setParticipant(WORKSPACE_ID, participant, "del");
         }}
       >
         ➖

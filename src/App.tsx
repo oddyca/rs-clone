@@ -10,7 +10,7 @@ import Controller from "./lib/Controller";
 import SignIn from "./components/pages/authorization/Signin";
 import SignUp from "./components/pages/authorization/Signup";
 import AllWorkspaces from "./components/pages/AllWorkspaces";
-import Modal from "./components/widgets/Modal";
+import PartModal from "./components/widgets/participant/PartModal";
 
 const APP_CONTROLLER = new Controller();
 
@@ -18,7 +18,7 @@ function App() {
   const [userData, setUserData] = useState(APP_CONTROLLER.loadData());
 
   const [currentWorkspaceId, setCurrentWorkspaceId] = useState("");
-  const [addParticipantModal, setAddParticipantModal] = useState(false);
+  const [viewPartModal, setViewPartModal] = useState(false);
   const navigate = useNavigate();
   // localStorage.clear();
   const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -57,10 +57,11 @@ function App() {
               setUserData={setUserData}
               WORKSPACE_ID={workspace.WORKSPACE_ID}
               BOARD={getIndexBoard}
-              setAddParticipantModal={setAddParticipantModal}
+              setAddParticipantModal={setViewPartModal}
               setCurrentWorkspaceId={setCurrentWorkspaceId}
               APP_CONTROLLER={APP_CONTROLLER}
               WORKSPACE={userData.USER_WORKSPACES[index]}
+              setParticipant={setParticipant}
             />
           }
         />
@@ -89,16 +90,33 @@ function App() {
     });
   };
 
-  const addParticipant = async (participant: string) => {
-    await APP_CONTROLLER.addParticipant(currentWorkspaceId, participant);
+  const setParticipant = (workspaceId: string, participant: string, act: string) => {
+    if (act === "add") {
+      APP_CONTROLLER.setParticipant(currentWorkspaceId, participant, act).then(
+        result => {
+          APP_CONTROLLER.addParticipant(participant, currentWorkspaceId);
+          setUserData(structuredClone(APP_CONTROLLER.loadData()));
+        },
+        error => console.log(error))
+    }
+    if (act === "del") {
+      if (participant === userData.USER_NAME) return;
+      APP_CONTROLLER.setParticipant(workspaceId, participant, act).then(
+        result => {
+          APP_CONTROLLER.delParticipant(participant, currentWorkspaceId);
+          setUserData(structuredClone(APP_CONTROLLER.loadData()));
+        },
+        error => console.log(error))
+    }
   };
 
   return (
     <div className="App">
-      <Modal
-        addParticipantModal={addParticipantModal}
-        setAddParticipantModal={setAddParticipantModal}
-        addParticipant={addParticipant}
+      <PartModal
+        viewPartModal={viewPartModal}
+        setViewPartModal={setViewPartModal}
+        setParticipant={setParticipant}
+        currentWorkspaceId={currentWorkspaceId}
       />
       {isLoggedIn === "true" && (
         <Header

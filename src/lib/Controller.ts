@@ -242,14 +242,13 @@ export default class Controller {
     }
   }
 
-  async addParticipant(currentWorkspaceId: string, participant: string) {
-    console.log("currentWorkspaceId", currentWorkspaceId);
-    console.log("participant", participant);
+  async setParticipant(currentWorkspaceId: string, participant: string, act: string) {
     const newParticipant = {
       idWorkspace: currentWorkspaceId,
       nameParticipant: participant,
+      act: act
     };
-    return fetch("http://localhost:3008/api/userdata", {
+    const response = await fetch("http://localhost:3008/api/userdata", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json;charset=utf-8",
@@ -257,6 +256,25 @@ export default class Controller {
       },
       body: JSON.stringify(newParticipant),
     });
+    if (response.ok) {
+      return response.json();
+    } else {
+      return `Ошибка:  ${response.status}`;
+    }
+  }
+
+  addParticipant(participant: string, currentWorkspaceId: string) {
+    const wIndex = this.getIndexWorkspace(currentWorkspaceId);
+    this.currentUser.USER_WORKSPACES[wIndex].WORKSPACE_PS.push(participant);
+  }
+
+  delParticipant(participant: string, currentWorkspaceId: string) {
+    const wIndex = this.getIndexWorkspace(currentWorkspaceId);
+    const pIndex = this.currentUser.USER_WORKSPACES[wIndex].WORKSPACE_PS
+      .findIndex((part) => part === participant);
+    if (pIndex !== -1) {
+      this.currentUser.USER_WORKSPACES[wIndex].WORKSPACE_PS.splice(pIndex, 1);
+    }
   }
 
   async delUser(id: string) {
@@ -307,9 +325,10 @@ export default class Controller {
       .BOARD_LISTS[this.getIndexList(currentWS, currB, currL)]
       .LIST_CARDS[this.getIndexTask(currentWS, currB, currL, currT)] = <any>{ // doesnt accept types from AppTypes
         CARD_ID: currT,
-        CARD_DATA: newTitle/* ,
-        CARD_DESCRITPTION: newDescription */
+        CARD_DATA: newTitle,
+        CARD_DESCRIPTION: newDescription
       }
+
   }
 
   addWorkSpace(new_work_space: any) {
