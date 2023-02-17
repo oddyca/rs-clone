@@ -66,3 +66,7 @@ export type TParticipantProps = {
   WORKSPACE_ID: string;
   setParticipant: TSetStatePart;
 };
+
+export type TListModalProps = {
+  [key: string]: string
+}

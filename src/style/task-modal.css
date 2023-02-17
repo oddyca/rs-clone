@@ -1,0 +1,66 @@
+:root {
+  --stroke: #F2F2F2;
+  --background: #FBFBFB;
+  --shadow: rgba(0, 0, 0, 0.05);
+  --focus: #FF6E4F;
+}
+
+.dialog-header_title {
+  height: 44px;
+  width: 100%;
+  padding-right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+}
+
+.task-modal_title-text {
+  resize: none;
+  height: 18px;
+  width: 100%;
+  overflow: hidden;
+  border: none;
+  text-overflow: ellipsis;
+}
+
+.task-modal_title-text:read-write {
+  outline: solid 1px var(--focus);
+}
+
+.task-modal_title-text:read-write:focus {
+  outline: solid 1px var(--focus);
+}
+
+.task-modal_description {
+  display: flex;
+  flex-direction: column;
+}
+
+.task-modal_body-text {
+  resize: none;
+  padding: 8px;
+  width: 100%;
+  overflow-y: hidden;
+}
+
+.task-modal_footer-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-task-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.delete-task-button:hover > img {
+  filter: invert(23%) sepia(34%) saturate(6750%) hue-rotate(354deg) brightness(121%) contrast(108%);
+  transform: scale(1.1);
+}
