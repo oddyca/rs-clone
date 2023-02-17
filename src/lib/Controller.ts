@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import USER_DEFAULT_DATA from "./config";
-import { TUser, TUserWorkspace } from "../AppTypes";
+import { TUser, TUserWorkspace, TListModalProps, TCard, TBoardLists } from "../AppTypes";
 
 export default class Controller {
   public currentUser: TUser;
@@ -20,6 +20,21 @@ export default class Controller {
     return this.currentUser.USER_WORKSPACES[
       this.getIndexWorkspace(workspaceId)
     ].WORKSPACE_BOARDS.findIndex((elem: any) => elem.BOARD_ID === boardId);
+  }
+
+  getIndexList(workspaceId: string, boardId: string, listId: string): number {
+    return this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[
+      this.getIndexBoard(workspaceId, boardId)
+    ].BOARD_LISTS.findIndex((elem) => elem.LIST_ID === listId);
+  }
+
+  getIndexTask(workspaceId: string, boardId: string, listId: string, taskId: string): number {
+    const taskArr: any =
+      this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[ // :TListCards doesnt work
+        this.getIndexBoard(workspaceId, boardId)
+      ].BOARD_LISTS[this.getIndexList(workspaceId, boardId, listId)].LIST_CARDS;
+
+    return taskArr.findIndex((elem: TCard) => elem.CARD_ID === taskId);
   }
 
   getBoards(workspaceId: string, boardId: string): object[] {
@@ -232,7 +247,7 @@ export default class Controller {
     const newParticipant = {
       idWorkspace: currentWorkspaceId,
       nameParticipant: participant,
-      act: act
+      act: act,
     };
     const response = await fetch("http://localhost:3008/api/userdata", {
       method: "PATCH",
@@ -256,8 +271,9 @@ export default class Controller {
 
   delParticipant(participant: string, currentWorkspaceId: string) {
     const wIndex = this.getIndexWorkspace(currentWorkspaceId);
-    const pIndex = this.currentUser.USER_WORKSPACES[wIndex].WORKSPACE_PS
-      .findIndex((part) => part === participant);
+    const pIndex = this.currentUser.USER_WORKSPACES[wIndex].WORKSPACE_PS.findIndex(
+      (part) => part === participant,
+    );
     if (pIndex !== -1) {
       this.currentUser.USER_WORKSPACES[wIndex].WORKSPACE_PS.splice(pIndex, 1);
     }
@@ -295,5 +311,109 @@ export default class Controller {
     } catch (e) {
       console.log(e);
     }
+  }
+
+  saveTaskModalChanges(args: TListModalProps) {
+    const currentWS = args.currentWorkspace;
+    const currB = args.currentBoard;
+    const currL = args.currentList;
+    const currT = args.currentTask;
+    const newTitle = args.titleChange;
+    const newDescription = args.bodyChange;
+
+    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(currentWS)].WORKSPACE_BOARDS[
+      this.getIndexBoard(currentWS, currB)
+    ].BOARD_LISTS[this.getIndexList(currentWS, currB, currL)].LIST_CARDS[
+      this.getIndexTask(currentWS, currB, currL, currT)
+    ] = <any>{
+      // doesnt accept types from AppTypes
+      CARD_ID: currT,
+      CARD_DATA: newTitle,
+      CARD_DESCRIPTION: newDescription,
+    };
+  }
+
+  addWorkSpace(new_work_space: any) {
+    const nameWorkSpace = new_work_space;
+
+    this.currentUser.USER_WORKSPACES.push({
+      WORKSPACE_ID: nanoid(),
+      WORKSPACE_TITLE: nameWorkSpace,
+      WORKSPACE_PS: [this.currentUser.USER_NAME],
+      WORKSPACE_BOARDS: [],
+    });
+    console.log(this.currentUser);
+  }
+
+  addBoard(new_board: any, workspace_id: any) {
+    const nameBoard = new_board;
+    const workSpaceId = workspace_id;
+
+    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workSpaceId)].WORKSPACE_BOARDS.push({
+      BOARD_ID: nanoid(),
+      BOARD_TITLE: nameBoard,
+      BOARD_LISTS: [],
+    });
+  }
+
+  addListOnBoard(new_list: any, workspace_id: any, current_board: any) {
+    const nameList = new_list;
+    const workSpaceId = workspace_id;
+    const boardId = current_board;
+    const boardArr =
+      this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workSpaceId)].WORKSPACE_BOARDS[
+        this.getIndexBoard(workSpaceId, boardId)
+      ].BOARD_LISTS;
+    /*     let lastOrder = 0;
+    if(boardArr) {
+      lastOrder = boardArr[boardArr.length-1].LIST_ORDER;
+    } */
+
+    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workSpaceId)].WORKSPACE_BOARDS[
+      this.getIndexBoard(workSpaceId, boardId)
+    ].BOARD_LISTS.push({
+      LIST_ID: nanoid(),
+      /* LIST_ORDER: boardArr.length > 1 ? lastOrder + 1 : 1, */
+      LIST_ORDER: boardArr.length + 1,
+      LIST_TITLE: nameList,
+      LIST_CARDS: [],
+    });
+  }
+
+  deleteList(userData: any) {
+    const workspaceId = userData.WORKSPACE_ID;
+    const boardId = userData.BOARD_ID;
+    const listId = userData.CURRENTLIST;
+
+    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[
+      this.getIndexBoard(workspaceId, boardId)
+    ].BOARD_LISTS.splice(this.getIndexList(workspaceId, boardId, listId), 1);
+  }
+
+  deleteWorkSpace(userData: any) {
+    const workspaceId = userData.WORKSPACE_ID;
+
+    this.currentUser.USER_WORKSPACES.splice(this.getIndexWorkspace(workspaceId), 1);
+  }
+  pushNewTask(workspaceID: string, boardID: string, incomingList: TBoardLists, newTaskTitle: string) {
+    const currentListID = incomingList.LIST_ID;
+    const lastTaskID = incomingList.LIST_CARDS.length + 1;
+    const newTask: /* TCard */any = {
+      CARD_ID: `${lastTaskID}`,
+      CARD_DATA: newTaskTitle ? newTaskTitle : "New Task"
+    };
+
+    this.currentUser
+      .USER_WORKSPACES[this.getIndexWorkspace(workspaceID)]
+      .WORKSPACE_BOARDS[this.getIndexBoard(workspaceID, boardID)]
+      .BOARD_LISTS[this.getIndexList(workspaceID, boardID, currentListID)]
+      .LIST_CARDS.push(newTask);
+  }
+  deleteTask(workspaceID: string, curreboardIDntBoard: string, listID: string, taskID: string) {
+    this.currentUser
+      .USER_WORKSPACES[this.getIndexWorkspace(workspaceID)]
+      .WORKSPACE_BOARDS[this.getIndexBoard(workspaceID, curreboardIDntBoard)]
+      .BOARD_LISTS[this.getIndexList(workspaceID, curreboardIDntBoard, listID)]
+      .LIST_CARDS.splice(this.getIndexTask(workspaceID, curreboardIDntBoard, listID, taskID), 1);
   }
 }
