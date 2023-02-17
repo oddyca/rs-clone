@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { Button, Dialog, Classes } from "@blueprintjs/core";
 import { TBoardLists, TCard, TListModalProps} from "../../../AppTypes";
 import "../../../style/task-modal.css";
 import delete_icon from "../../../assets/delete_icon.svg";
 
-function TaskModal(props: any) {
-  const { showModal } = props;
-  const { setShowModal } = props;
-  const { currentWorkspace } = props;
-  const { currentBoard } = props;
-  const { currentList } = props;
-  const { currentTask } = props;
-  const { APP_CONTROLLER } = props;
-  const { setUserData } = props;
+const TaskModal = memo(function TaskModal(props: any) {
+  const { 
+    showModal,
+    setShowModal,
+    currentWorkspace,
+    currentBoard,
+    currentList,
+    currentTask,
+    APP_CONTROLLER,
+    setUserData
+    } = props;
 
   const allLists = APP_CONTROLLER.getBoards(currentWorkspace, currentBoard);
   const currentListObj = allLists.filter((list: TBoardLists) => list.LIST_ID === currentList)[0];
@@ -124,6 +126,6 @@ function TaskModal(props: any) {
       </div>
     </Dialog>
   );
-}
+})
 
 export default TaskModal;

@@ -2,12 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../../../style/auth-modal.css";
-import Controller from "../../../lib/Controller";
 import { ISetUserData } from "../../../AppTypes"
 
 export default function SignIn(props: ISetUserData) {
-  const APP_CONTROLLER = new Controller();
-  const { setUserData } = props
+  const { setUserData, APP_CONTROLLER } = props
   const [userName, setName] = useState("");
   const [userPassword, setPassword] = useState("");
   const [responseMessages, setResponseMessages] = useState({
@@ -32,7 +30,7 @@ export default function SignIn(props: ISetUserData) {
                 const returnResponseCheck = APP_CONTROLLER.returnResponseCheck();
                 setResponseMessages(returnResponseCheck);
                 if (returnResponseCheck.isValid) {
-                  setUserData(structuredClone(APP_CONTROLLER.loadData())) 
+                  setUserData(structuredClone(APP_CONTROLLER.loadData()));
                   navigate("/")
                 };
               }}
