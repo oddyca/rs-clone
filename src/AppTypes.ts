@@ -35,6 +35,8 @@ export type TUser = {
   USER_WORKSPACES: TUserWorkspace[];
 };
 
+export interface ISetUserData { setUserData: Function }
+
 type TSetState = (addParticipantModal: boolean) => void;
 type TSetStateWork = (addParticipantModal: string) => void;
 type TSetStatePart = (workspaceId: string, addParticipantModal: string, act: string) => void;

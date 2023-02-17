@@ -172,10 +172,10 @@ export default class Controller {
         const responseMessage = Object.values(parsedResponse)[0] as string;
         this.responseMessageHandler(responseMessage);
       } else {
-        console.log("LOG IN SUCCESSFUL", parsedResponse);
         this.responseCheck.isValid = true;
         localStorage.setItem("isLoggedIn", "true");
         localStorage.setItem("userID", `${parsedResponse}`); // When session is reloaded laod data of this user from the server
+        await this.setCurrentUser(parsedResponse);
       }
       return parsedResponse;
     } catch (e) {

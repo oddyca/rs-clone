@@ -124,7 +124,7 @@ function App() {
         <Route path="/" element={<AllWorkspaces user={userData} />} />
         {getWorkspaces()}
         {getBoards()}
-        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signin" element={<SignIn setUserData={setUserData} />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/404" element={<Page404 />} />
         <Route path="*" element={<Navigate replace to="/404" />} />

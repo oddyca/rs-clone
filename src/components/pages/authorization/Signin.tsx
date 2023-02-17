@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 
 import "../../../style/auth-modal.css";
 import Controller from "../../../lib/Controller";
+import { ISetUserData } from "../../../AppTypes"
 
-export default function SignIn() {
+export default function SignIn(props: ISetUserData) {
   const APP_CONTROLLER = new Controller();
+  const { setUserData } = props
   const [userName, setName] = useState("");
   const [userPassword, setPassword] = useState("");
   const [responseMessages, setResponseMessages] = useState({
@@ -29,7 +31,10 @@ export default function SignIn() {
                 await APP_CONTROLLER.signInVerification(userName, userPassword);
                 const returnResponseCheck = APP_CONTROLLER.returnResponseCheck();
                 setResponseMessages(returnResponseCheck);
-                if (returnResponseCheck.isValid) navigate("/");
+                if (returnResponseCheck.isValid) {
+                  setUserData(structuredClone(APP_CONTROLLER.loadData())) 
+                  navigate("/")
+                };
               }}
             >
               <div className="input-wrapper">
