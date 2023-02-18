@@ -313,7 +313,7 @@ export default class Controller {
     }
   }
 
-  saveTaskModalChanges(args: TListModalProps) {
+  saveModalChanges(args: TListModalProps, whichModal: string, color?: string, list?: TBoardLists) {
     const currentWS = args.currentWorkspace;
     const currB = args.currentBoard;
     const currL = args.currentList;
@@ -321,16 +321,28 @@ export default class Controller {
     const newTitle = args.titleChange;
     const newDescription = args.bodyChange;
 
-    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(currentWS)].WORKSPACE_BOARDS[
-      this.getIndexBoard(currentWS, currB)
-    ].BOARD_LISTS[this.getIndexList(currentWS, currB, currL)].LIST_CARDS[
-      this.getIndexTask(currentWS, currB, currL, currT)
-    ] = <any>{
-      // doesnt accept types from AppTypes
-      CARD_ID: currT,
-      CARD_DATA: newTitle,
-      CARD_DESCRIPTION: newDescription,
-    };
+    if (whichModal === "task"){
+      this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(currentWS)].WORKSPACE_BOARDS[
+        this.getIndexBoard(currentWS, currB)
+      ].BOARD_LISTS[this.getIndexList(currentWS, currB, currL)].LIST_CARDS[
+        this.getIndexTask(currentWS, currB, currL, currT)
+      ] = <any>{
+        // doesnt accept types from AppTypes
+        CARD_ID: currT,
+        CARD_DATA: newTitle,
+        CARD_DESCRIPTION: newDescription,
+      };
+    } else {
+      this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(currentWS)].WORKSPACE_BOARDS[
+        this.getIndexBoard(currentWS, currB)
+      ].BOARD_LISTS[this.getIndexList(currentWS, currB, currL)] = <TBoardLists>{
+        LIST_ID: currL,
+        LIST_TITLE: newTitle,
+        LIST_ORDER: list?.LIST_ORDER,
+        LIST_CARDS: list?.LIST_CARDS,
+        LIST_COLOR: color,
+      };
+    }
   }
 
   addWorkSpace(new_work_space: any) {
