@@ -7,6 +7,8 @@ function Participant(props: TParticipantProps) {
   const { setCurrentWorkspaceId } = props;
   const { WORKSPACE_ID } = props;
   const { setParticipant } = props;
+  const { partObj } = props;
+  const { userLogo } = props;
 
   return (
     <div
@@ -14,7 +16,9 @@ function Participant(props: TParticipantProps) {
       onMouseOver={() => setDisplayCloseBtn("")}
       onMouseLeave={() => setDisplayCloseBtn("none")}
     >
-      <div className="participant-icon" />
+      <div className="participant-icon" >
+        <img src={partObj != undefined ? partObj.PARTICIPANT_LOGO : userLogo} />
+      </div>
       <div className="participant-title">{participant}</div>
       <div
         style={{ display: displayCloseBtn }}

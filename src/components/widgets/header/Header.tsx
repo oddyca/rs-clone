@@ -2,8 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
 import search_icon from "../../../assets/search_icon.svg";
-import logouser from "../../../assets/usericon.png";
-import myaccount from "../../../assets/myaccount.svg";
+import logoUser from "../../../assets/usericon.png";
+import myAccount from "../../../assets/myaccount.svg";
 import settings from "../../../assets/settings.svg";
 import support from "../../../assets/support.svg";
 import logout from "../../../assets/logout.svg";
@@ -79,7 +79,7 @@ function Header(props: any) {
             type="submit"
           >
             <div className="user__icon">
-              <img className="userIcon" src={logouser} alt="" />
+              <img className="userIcon" src={logoUser} alt="" />
             </div>
             <div>{title}</div>
             {openDropDownUser && (
@@ -91,7 +91,7 @@ function Header(props: any) {
                     className="header__dropdownChild  btn__dropdown  dropdownBtn  dropdownBtnUser"
                   >
                     <div className="user__list-inner">
-                      <img src={myaccount} alt="" />
+                      <img src={myAccount} alt="" />
                       <div>My account</div>
                     </div>
                   </button>

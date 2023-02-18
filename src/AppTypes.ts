@@ -1,5 +1,3 @@
-import AllWorkspaces from "./components/pages/AllWorkspaces";
-import Participants from "./components/widgets/participant/Participants";
 import Controller from "./lib/Controller";
 
 export type TCard = {
@@ -29,20 +27,36 @@ export type TUserWorkspace = {
   WORKSPACE_BOARDS: TWorkspaceBoards[];
 };
 
+export type TUserParticipant = {
+  PARTICIPANT_NAME: string;
+  PARTICIPANT_LOGO: string;
+};
+
+export type TUserSettings = {
+  USER_LOGO: string;
+  USER_BG: string;
+  USER_LANG: string;
+  USER_THEME: string;
+  USER_PARTICIPANTS: TUserParticipant[];
+};
+
 export type TUser = {
   USER_ID: string;
   USER_NAME: string;
   USER_PASSWORD: string;
   USER_WORKSPACES: TUserWorkspace[];
+  USER_SETTINGS: TUserSettings;
 };
 
-export interface ISetUserData { 
-  setUserData: Function, 
-  APP_CONTROLLER: Controller }
+export interface ISetUserData {
+  setUserData: Function,
+  APP_CONTROLLER: Controller
+}
 
 type TSetState = (addParticipantModal: boolean) => void;
 type TSetStateWork = (addParticipantModal: string) => void;
 type TSetStatePart = (workspaceId: string, addParticipantModal: string, act: string) => void;
+type TSetViewModal = (view: boolean) => void;
 
 export type TProps = {};
 
@@ -52,12 +66,20 @@ export type TPropsAllWorkspaces = {
   APP_CONTROLLER: Controller
 };
 
+export type TPropsErrorModal = {
+  errorMessage: string;
+  viewErrorModal: boolean;
+  setViewErrorModal: TSetViewModal;
+};
+
 export type TParticipantsProps = {
   WORKSPACE_ID: string;
   participantsArr: string[];
-  setAddParticipantModal: TSetState;
+  setAddParticipantModal: TSetViewModal;
   setCurrentWorkspaceId: TSetStateWork;
   setParticipant: TSetStatePart;
+  users: TUserParticipant[];
+  userLogo: string;
 };
 
 export type TParticipantsModalProps = {
@@ -65,6 +87,7 @@ export type TParticipantsModalProps = {
   viewPartModal: boolean;
   setViewPartModal: TSetState;
   currentWorkspaceId: string;
+  users: TUserParticipant[];
 };
 
 export type TParticipantProps = {
@@ -72,6 +95,8 @@ export type TParticipantProps = {
   setCurrentWorkspaceId: TSetStateWork;
   WORKSPACE_ID: string;
   setParticipant: TSetStatePart;
+  partObj: TUserParticipant | undefined;
+  userLogo: string;
 };
 
 export type TListModalProps = {

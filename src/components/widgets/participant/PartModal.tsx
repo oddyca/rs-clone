@@ -1,23 +1,26 @@
 import React, { useState } from "react";
-import { Button, Dialog, Classes } from "@blueprintjs/core";
-import { TParticipantsModalProps } from "../../../AppTypes";
+import { Button, Dialog, MenuItem, Classes } from "@blueprintjs/core";
+import { Select2 } from "@blueprintjs/select";
+import { TParticipantsModalProps, TUserParticipant } from "../../../AppTypes";
 
 function PartModal(props: TParticipantsModalProps) {
   const { viewPartModal } = props;
   const { setViewPartModal } = props;
   const { setParticipant } = props;
   const { currentWorkspaceId } = props;
+  const { users } = props;
 
-  const [newParticipant, setNewParticipant] = useState("");
+  const [newParticipant, setNewParticipant] = useState("Select participant");
   const [serverResponse, setServerResponse] = useState("");
 
   const DIALOG_FOOTER = (
     <div className="">
       <Button
+        disabled={newParticipant === "Select participant" ? true : false}
         onClick={() => {
           setParticipant(currentWorkspaceId, newParticipant, "add");
           setViewPartModal(false);
-          setNewParticipant("");
+          setNewParticipant("Select participant");
         }}
       >
         Добавить
@@ -35,8 +38,25 @@ function PartModal(props: TParticipantsModalProps) {
 
   const DIALOG_BODY = (
     <div>
-      <input value={newParticipant} onChange={(e) => setNewParticipant(e.target.value)} />
-      <div className="server-response">{serverResponse}</div>
+      <Select2
+        filterable={false}
+        items={users.map((elem:TUserParticipant) => elem.PARTICIPANT_NAME)}
+        itemRenderer={(val, itemProps) => {
+          return (
+            <MenuItem
+              key={val}
+              text={val}
+              onClick={(elm: any) => {
+                setNewParticipant(elm.target.textContent);
+              }}
+            />
+          );
+        }}
+        onItemSelect={() => {
+        }}
+      >
+        <Button text={newParticipant} rightIcon="double-caret-vertical" />
+      </Select2>
     </div>
   );
 

@@ -139,6 +139,7 @@ export default class Controller {
       username,
       password,
       workspaces: USER_DEFAULT_DATA.USER_WORKSPACES,
+      settings: USER_DEFAULT_DATA.USER_SETTINGS,
     };
     return fetch("http://localhost:3008/api/registration/", {
       method: "POST",
@@ -301,13 +302,20 @@ export default class Controller {
         throw new Error("User not found");
       }
       const parsedUserData = await loggedUserRequest.json();
-      const newUser = {
+      // const newUser = {
+      //   USER_ID: id,
+      //   USER_NAME: parsedUserData.username,
+      //   USER_PASSWORD: parsedUserData.password,
+      //   USER_WORKSPACES: parsedUserData.workspaces,
+      // };
+      // this.currentUser = newUser;
+      this.currentUser = {
         USER_ID: id,
         USER_NAME: parsedUserData.username,
         USER_PASSWORD: parsedUserData.password,
         USER_WORKSPACES: parsedUserData.workspaces,
+        USER_SETTINGS: parsedUserData.settings,
       };
-      this.currentUser = newUser;
     } catch (e) {
       console.log(e);
     }

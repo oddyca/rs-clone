@@ -8,6 +8,8 @@ function Participants(props: TParticipantsProps) {
   const { setCurrentWorkspaceId } = props;
   const { setAddParticipantModal } = props;
   const { setParticipant } = props;
+  const { users } = props;
+  const { userLogo } = props;
 
   const renderParticipant = () => {
     return participantsArr.map((par: string) => {
@@ -16,6 +18,8 @@ function Participants(props: TParticipantsProps) {
         setCurrentWorkspaceId={setCurrentWorkspaceId}
         WORKSPACE_ID={WORKSPACE_ID}
         setParticipant={setParticipant}
+        partObj={users.find(user => user.PARTICIPANT_NAME === par)}
+        userLogo={userLogo}
       />);
     });
   };

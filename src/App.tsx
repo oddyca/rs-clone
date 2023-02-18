@@ -11,12 +11,14 @@ import SignIn from "./components/pages/authorization/Signin";
 import SignUp from "./components/pages/authorization/Signup";
 import AllWorkspaces from "./components/pages/AllWorkspaces";
 import PartModal from "./components/widgets/participant/PartModal";
+import ErrorModal from "./components/widgets/error/ErrorModal";
 
 const APP_CONTROLLER = new Controller();
 
 function App() {
   const [userData, setUserData] = useState(APP_CONTROLLER.loadData());
-  const [users, setUsers] = useState(APP_CONTROLLER.loadData());
+  const [errorMessage, setErrorMessage] = useState("");
+  const [viewErrorModal, setViewErrorModal] = useState(false);
   const [currentWorkspaceId, setCurrentWorkspaceId] = useState("");
   const [viewPartModal, setViewPartModal] = useState(false);
   const navigate = useNavigate();
@@ -28,18 +30,13 @@ function App() {
     async function getUser() {
       try {
         await APP_CONTROLLER.setCurrentUser(loggedUserID);
-        const freshUser = APP_CONTROLLER.currentUser;
-        setUserData({
-          USER_ID: loggedUserID,
-          USER_NAME: freshUser.USER_NAME,
-          USER_PASSWORD: freshUser.USER_PASSWORD,git
-          USER_WORKSPACES: freshUser.USER_WORKSPACES,
-        });
+        setUserData(structuredClone(APP_CONTROLLER.loadData()));
       } catch (e) {
         localStorage.clear();
         navigate("/signin");
       }
     }
+
     loggedUserID && getUser();
     isLoggedIn === "true" ? navigate("/") : navigate("/signin", { replace: true });
   }, []);
@@ -62,6 +59,8 @@ function App() {
               APP_CONTROLLER={APP_CONTROLLER}
               WORKSPACE={userData.USER_WORKSPACES[index]}
               setParticipant={setParticipant}
+              users={userData.USER_SETTINGS.USER_PARTICIPANTS}
+              userLogo={userData.USER_SETTINGS.USER_LOGO}
             />
           }
         />
@@ -92,12 +91,18 @@ function App() {
 
   const setParticipant = (workspaceId: string, participant: string, act: string) => {
     if (act === "add") {
+      const indexWorkSpace = APP_CONTROLLER.getIndexWorkspace(workspaceId);
+      if (userData.USER_WORKSPACES[indexWorkSpace].WORKSPACE_PS.includes(participant)) {
+        setErrorMessage(`${participant} already was added!`);
+        setViewErrorModal(true);
+        return;
+      }
       APP_CONTROLLER.setParticipant(currentWorkspaceId, participant, act).then(
         (result) => {
           APP_CONTROLLER.addParticipant(participant, currentWorkspaceId);
           setUserData(structuredClone(APP_CONTROLLER.loadData()));
         },
-        (error) => console.log(error),
+        (error) => console.log(error)
       );
     }
     if (act === "del") {
@@ -107,18 +112,24 @@ function App() {
           APP_CONTROLLER.delParticipant(participant, currentWorkspaceId);
           setUserData(structuredClone(APP_CONTROLLER.loadData()));
         },
-        (error) => console.log(error),
+        (error) => console.log(error)
       );
     }
   };
 
   return (
     <div className="App">
+      <ErrorModal
+        errorMessage={errorMessage}
+        viewErrorModal={viewErrorModal}
+        setViewErrorModal={setViewErrorModal}
+      />
       <PartModal
         viewPartModal={viewPartModal}
         setViewPartModal={setViewPartModal}
         setParticipant={setParticipant}
         currentWorkspaceId={currentWorkspaceId}
+        users={userData.USER_SETTINGS.USER_PARTICIPANTS}
       />
       {isLoggedIn === "true" && (
         <Header
@@ -140,7 +151,7 @@ function App() {
         />
         {getWorkspaces()}
         {getBoards()}
-        <Route path="/signin" element={<SignIn setUserData={setUserData} APP_CONTROLLER={APP_CONTROLLER}/>} />
+        <Route path="/signin" element={<SignIn setUserData={setUserData} APP_CONTROLLER={APP_CONTROLLER} />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/404" element={<Page404 />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
