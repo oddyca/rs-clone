@@ -48,7 +48,8 @@ export default function ListModal(props: any) {
   
     const DIALOG_BODY = (
       <div className="modal-window_description">
-        <input 
+        <input
+          className="modal-window_color-picker"
           type="color"
           value={colorPick}
           onChange={(e) => setColorPick(e.target.value)}
