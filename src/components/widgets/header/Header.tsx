@@ -134,6 +134,7 @@ function Header(props: any) {
                         <div
                           onClick={() => {
                             localStorage.clear();
+                            setUserData({})
                           }}
                         >
                           Log out

@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import TaskModal from "../widgets/list/TaskModal";
 import NewListModal from "../widgets/list/NewListModal";
 import AddNewTask from "../addNewTask";
 
-function Board(props: any) {
-  const { USER_NAME } = props;
+const Board = memo(function Board(props: any) {
   const { BOARD, setUserData, WORKSPACE_ID, APP_CONTROLLER } = props;
   const [dragList, setDragList] = useState(null);
   const [dragTask, setDragTask] = useState(null);
@@ -14,9 +13,7 @@ function Board(props: any) {
   const [boardID, setBoardID] = useState("");
   const [currentTask, setCurrentTask] = useState("");
   const [currentList, setCurrentList] = useState("");
-  // const [newTaskTitle, setNewTaskTitle] = useState("");
-
-
+  
   function dragStartHandlerList(e: any, list: any) {
     e.stopPropagation();
     setDragList(list);
@@ -220,6 +217,6 @@ function Board(props: any) {
       setUserData={setUserData}
     />}
   </div>;
-}
+})
 
 export default Board;
