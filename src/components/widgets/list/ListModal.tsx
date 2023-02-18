@@ -20,7 +20,7 @@ export default function ListModal(props: any) {
   
     const [titleToggle, setTitleToggle] = useState(true);
     const [titleChange, setTitleChange] = useState(currentListObj.LIST_TITLE);
-    const [colorPick, setColorPick] = useState("#FFFFFF");
+    const [colorPick, setColorPick] = useState(currentListObj.LIST_COLOR ? currentListObj.LIST_COLOR : "#FFFFFF");
 
     const saveChanges = (args: TListModalProps, whichModal: string, color: string, currentListObj: TBoardLists) => {
       APP_CONTROLLER.saveModalChanges(args, whichModal, color, currentListObj);
@@ -62,13 +62,13 @@ export default function ListModal(props: any) {
           <button 
             className="modal_delete-button"
             onClick={() => {
+              setShowListModal(false);
               APP_CONTROLLER.deleteList({
                 currentWorkspace,
                 BOARD_ID: currentBoard,
                 CURRENTLIST: currentList
               });
-              setShowListModal(false);
-              const newData = structuredClone(APP_CONTROLLER.loadData());
+              const newData = structuredClone(structuredClone(APP_CONTROLLER.loadData()));
               setUserData(newData);
             }}
           >

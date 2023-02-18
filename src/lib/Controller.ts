@@ -393,7 +393,7 @@ export default class Controller {
   }
 
   deleteList(userData: any) {
-    const workspaceId = userData.WORKSPACE_ID;
+    const workspaceId = userData.currentWorkspace;
     const boardId = userData.BOARD_ID;
     const listId = userData.CURRENTLIST;
 

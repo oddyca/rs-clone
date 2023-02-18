@@ -170,7 +170,7 @@ const Board = memo(function Board(props: any) {
           <div 
             className="list_work-area"
           >
-            <div className="list-cover" style={list.LIST_COLOR ? {backgroundColor: `${list.LIST_COLOR}`} : {}}/>
+            <div className="list-cover" style={list.LIST_COLOR ? {backgroundColor: `${list.LIST_COLOR}`} : {backgroundColor: "#FFFFFF"}}/>
             {cards}
           </div>
           
