@@ -1,10 +1,10 @@
-import React, { useState, memo } from "react";
+import React, { useState } from "react";
 import { Button, Dialog, Classes } from "@blueprintjs/core";
 import { TBoardLists, TCard, TListModalProps} from "../../../AppTypes";
 import "../../../style/task-modal.css";
 import delete_icon from "../../../assets/delete_icon.svg";
 
-const TaskModal = memo(function TaskModal(props: any) {
+function TaskModal(props: any) {
   const { 
     showModal,
     setShowModal,
@@ -27,7 +27,7 @@ const TaskModal = memo(function TaskModal(props: any) {
   const [bodyChange, setBodyChange] = useState(currentTaskObj.CARD_DESCRITPTION ? currentTaskObj.CARD_DESCRITPTION : "Description text");
 
   const saveChanges = (args: TListModalProps) => {
-    APP_CONTROLLER.saveTaskModalChanges(args);
+    APP_CONTROLLER.saveModalChanges(args, "task");
     setUserData(structuredClone(APP_CONTROLLER.loadData()));
   }
 
@@ -37,7 +37,7 @@ const TaskModal = memo(function TaskModal(props: any) {
     return (
       <textarea 
         value={value} 
-        className={`task-modal_${type}-text`}
+        className={`modal-window_${type}-text`}
         maxLength={40}
         readOnly={readOnly} 
         onChange={(e) => {
@@ -67,17 +67,17 @@ const TaskModal = memo(function TaskModal(props: any) {
   )
 
   const DIALOG_BODY = (
-    <div className="task-modal_description">
+    <div className="modal-window_description">
       <p>Description</p>
       {textArea("body")}
     </div>
   );
 
   const DIALOG_FOOTER = (
-    <div className="task-modal_footer-container">
-      <div className="task-modal_delete-task">
+    <div className="modal-window_footer-container">
+      <div className="modal-window_delete-task">
         <button 
-          className="delete-task-button"
+          className="modal_delete-button"
           onClick={() => {
             setShowModal(false);
             APP_CONTROLLER.deleteTask(currentWorkspace, currentBoard, currentList, currentTask);
@@ -90,7 +90,7 @@ const TaskModal = memo(function TaskModal(props: any) {
           />
         </button>
       </div>
-      <div className="task-modal_controls">
+      <div className="modal-window_controls">
         <Button
           onClick={() => {
             saveChanges({currentWorkspace, currentBoard, currentList, currentTask, titleChange, bodyChange});
@@ -126,6 +126,6 @@ const TaskModal = memo(function TaskModal(props: any) {
       </div>
     </Dialog>
   );
-})
+}
 
 export default TaskModal;

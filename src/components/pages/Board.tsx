@@ -1,5 +1,6 @@
 import { useState, memo } from "react";
 import TaskModal from "../widgets/list/TaskModal";
+import ListModal from "../widgets/list/ListModal";
 import NewListModal from "../widgets/list/NewListModal";
 import AddNewTask from "../addNewTask";
 
@@ -9,6 +10,7 @@ const Board = memo(function Board(props: any) {
   const [dragTask, setDragTask] = useState(null);
   const [currentObj, setCurrentObj] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showAddListModal, setShowAddListModal] = useState(false);
   const [showListModal, setShowListModal] = useState(false);
   const [boardID, setBoardID] = useState("");
   const [currentTask, setCurrentTask] = useState("");
@@ -157,28 +159,21 @@ const Board = memo(function Board(props: any) {
             draggable
             id={list.LIST_ID}
           >
-          <div className="list-title">{list.LIST_TITLE}</div>
+          <div 
+            className="list-title"
+            onClick={() => {
+              setShowListModal(true);
+              setBoardID(BOARD.BOARD_ID);
+              setCurrentList(list.LIST_ID);
+            }}
+          >{list.LIST_TITLE}</div>
           <div 
             className="list_work-area"
           >
-            <div className="list-cover" />
+            <div className="list-cover" style={list.LIST_COLOR ? {backgroundColor: `${list.LIST_COLOR}`} : {backgroundColor: "#FFFFFF"}}/>
             {cards}
           </div>
-
-          <button
-            onClick={() => {
-              APP_CONTROLLER.deleteList({
-                WORKSPACE_ID,
-                BOARD_ID: BOARD.BOARD_ID,
-                CURRENTLIST: currentList
-              });
-              const newData = structuredClone(APP_CONTROLLER.loadData());
-              setUserData(newData);
-            }}
-          >
-            del
-          </button>
-
+          
           <AddNewTask
             APP_CONTROLLER={APP_CONTROLLER}
             setUserData={setUserData}
@@ -194,23 +189,36 @@ const Board = memo(function Board(props: any) {
   };
 
   return <div className="board-window">
-    {showModal && <TaskModal 
-      showModal={showModal}
-      setShowModal={setShowModal}
-      currentWorkspace={WORKSPACE_ID}
-      currentBoard={boardID}
-      currentList={currentList}
-      currentTask={currentTask}
-      APP_CONTROLLER={APP_CONTROLLER}
-      setUserData={setUserData}
-    />}
-    <div onClick={() => {setShowListModal(true); setBoardID(BOARD.BOARD_ID);}} className="list">
+    {showListModal && 
+      <ListModal 
+        showListModal={showListModal}
+        setShowListModal={setShowListModal}
+        currentWorkspace={WORKSPACE_ID}
+        currentBoard={boardID}
+        currentList={currentList}
+        APP_CONTROLLER={APP_CONTROLLER}
+        setUserData={setUserData}
+      />
+    }
+    {showModal && 
+      <TaskModal 
+        showModal={showModal}
+        setShowModal={setShowModal}
+        currentWorkspace={WORKSPACE_ID}
+        currentBoard={boardID}
+        currentList={currentList}
+        currentTask={currentTask}
+        APP_CONTROLLER={APP_CONTROLLER}
+        setUserData={setUserData}
+     />
+    }
+    <div onClick={() => {setShowAddListModal(true); setBoardID(BOARD.BOARD_ID);}} className="list">
       Add List
     </div>
     {getLists()}
-    {showListModal && <NewListModal
-      showModal={showListModal}
-      setShowModal={setShowListModal}
+    {showAddListModal && <NewListModal
+      showModal={showAddListModal}
+      setShowModal={setShowAddListModal}
       WORKSPACE_ID={WORKSPACE_ID}
       APP_CONTROLLER={APP_CONTROLLER}
       currentBoard={boardID}
