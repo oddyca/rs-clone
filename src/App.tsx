@@ -16,7 +16,7 @@ const APP_CONTROLLER = new Controller();
 
 function App() {
   const [userData, setUserData] = useState(APP_CONTROLLER.loadData());
-
+  const [users, setUsers] = useState(APP_CONTROLLER.loadData());
   const [currentWorkspaceId, setCurrentWorkspaceId] = useState("");
   const [viewPartModal, setViewPartModal] = useState(false);
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ function App() {
         setUserData({
           USER_ID: loggedUserID,
           USER_NAME: freshUser.USER_NAME,
-          USER_PASSWORD: freshUser.USER_PASSWORD,
+          USER_PASSWORD: freshUser.USER_PASSWORD,git
           USER_WORKSPACES: freshUser.USER_WORKSPACES,
         });
       } catch (e) {

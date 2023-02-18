@@ -9,6 +9,7 @@ function PartModal(props: TParticipantsModalProps) {
   const { currentWorkspaceId } = props;
 
   const [newParticipant, setNewParticipant] = useState("");
+  const [serverResponse, setServerResponse] = useState("");
 
   const DIALOG_FOOTER = (
     <div className="">
@@ -34,7 +35,8 @@ function PartModal(props: TParticipantsModalProps) {
 
   const DIALOG_BODY = (
     <div>
-      <textarea value={newParticipant} onChange={(e) => setNewParticipant(e.target.value)} />
+      <input value={newParticipant} onChange={(e) => setNewParticipant(e.target.value)} />
+      <div className="server-response">{serverResponse}</div>
     </div>
   );
 
