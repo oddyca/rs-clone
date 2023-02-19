@@ -7,6 +7,8 @@ import BoardModal from "../widgets/list/BoardModal";
 function Workspace(props: any) {
   const [showNewBoardModal, setShowNewBoardModal] = useState(false);
   const {
+    users,
+    userLogo,
     WORKSPACE,
     workIndex,
     APP_CONTROLLER,
@@ -57,6 +59,8 @@ function Workspace(props: any) {
         setAddParticipantModal={setAddParticipantModal}
         WORKSPACE_ID={WORKSPACE_ID}
         setCurrentWorkspaceId={setCurrentWorkspaceId}
+        users={users}
+        userLogo={userLogo}
       />
       <div className="boards-group">
         {getBoards()}
