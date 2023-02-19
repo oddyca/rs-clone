@@ -48,9 +48,11 @@ export type TUser = {
   USER_SETTINGS: TUserSettings;
 };
 
-export interface ISetUserData {
+export interface ISignIn {
   setUserData: Function,
-  APP_CONTROLLER: Controller
+  APP_CONTROLLER: Controller,
+  setViewErrorModal: Function,
+  setErrorMessage: Function
 }
 
 type TSetState = (addParticipantModal: boolean) => void;
