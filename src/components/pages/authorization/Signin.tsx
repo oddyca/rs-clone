@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "../../../style/auth-modal.css";
-import { ISetUserData } from "../../../AppTypes"
+import { ISignIn } from "../../../AppTypes"
 
-export default function SignIn(props: ISetUserData) {
-  const { setUserData, APP_CONTROLLER } = props
+export default function SignIn(props: ISignIn) {
+  const { setUserData, APP_CONTROLLER, setViewErrorModal, setErrorMessage } = props
   const [userName, setName] = useState("");
   const [userPassword, setPassword] = useState("");
   const [responseMessages, setResponseMessages] = useState({
@@ -32,7 +32,11 @@ export default function SignIn(props: ISetUserData) {
                 if (returnResponseCheck.isValid) {
                   setUserData(structuredClone(APP_CONTROLLER.loadData()));
                   navigate("/")
-                };
+                } else {
+                  console.log(returnResponseCheck)
+                  setViewErrorModal(true);
+                  setErrorMessage(returnResponseCheck.errorMessage);
+                }
               }}
             >
               <div className="input-wrapper">

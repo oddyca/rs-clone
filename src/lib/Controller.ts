@@ -240,7 +240,13 @@ export default class Controller {
         ...this.responseCheck,
         errorType: "userSignUp",
         errorMessage: "User already exists!",
-      };
+      }
+    } else if (data.includes("error")) {
+      this.responseCheck = {
+        isValid: false,
+        errorType: "server",
+        errorMessage: "Server error",
+      }
     }
   }
 
@@ -298,17 +304,11 @@ export default class Controller {
   async setCurrentUser(id: string) {
     try {
       const loggedUserRequest = await this.getUserData(id);
+      let parsedUserData = await loggedUserRequest.json();
       if (!loggedUserRequest.ok) {
-        throw new Error("User not found");
+        const responseMessage = Object.values(parsedUserData)[0] as string;
+        this.responseMessageHandler(responseMessage);
       }
-      const parsedUserData = await loggedUserRequest.json();
-      // const newUser = {
-      //   USER_ID: id,
-      //   USER_NAME: parsedUserData.username,
-      //   USER_PASSWORD: parsedUserData.password,
-      //   USER_WORKSPACES: parsedUserData.workspaces,
-      // };
-      // this.currentUser = newUser;
       this.currentUser = {
         USER_ID: id,
         USER_NAME: parsedUserData.username,
