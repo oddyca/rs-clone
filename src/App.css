@@ -3,6 +3,7 @@
 @import url("./style/list.css");
 @import url("./style/board.css");
 @import url("./style/participants.css");
+@import url("./style/account-settings.css");
 
 .App {
     display: flex;

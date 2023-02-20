@@ -25,7 +25,7 @@ function App() {
   const [currentWorkspaceId, setCurrentWorkspaceId] = useState("");
   const [viewPartModal, setViewPartModal] = useState(false);
   const navigate = useNavigate();
-  localStorage.clear();
+  // localStorage.clear();
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const loggedUserID = localStorage.getItem("userID") as string;
 
@@ -158,7 +158,7 @@ function App() {
         <Route path="/signin" element={<SignIn setUserData={setUserData} APP_CONTROLLER={APP_CONTROLLER} setViewErrorModal={setViewErrorModal} setErrorMessage={setErrorMessage}/>} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/404" element={<Page404 />} />
-        <Route path="/accountsettings" element={<AccountSettings userData={userData}/>} />
+        <Route path="/accountsettings" element={<AccountSettings userData={userData} APP_CONTROLLER={APP_CONTROLLER} setUserData={setUserData} />} />
         <Route path="/appsettings" element={<AppSettings />} />
         <Route path="/help" element={<HelpPage />} />
         <Route path="*" element={<Navigate replace to="/404" />} />

@@ -1,0 +1,19 @@
+.user-logo-btn {
+    outline: 1px solid black;
+}
+
+.user-logo-btn:hover {
+    cursor: pointer;
+}
+
+#custom-file-upload {
+    display: none;
+}
+
+.user-del {
+    outline: 1px solid black;
+}
+
+.user-del:hover {
+    cursor: pointer;
+}
