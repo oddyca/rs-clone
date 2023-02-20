@@ -12,6 +12,9 @@ import SignUp from "./components/pages/authorization/Signup";
 import AllWorkspaces from "./components/pages/AllWorkspaces";
 import PartModal from "./components/widgets/participant/PartModal";
 import ErrorModal from "./components/widgets/error/ErrorModal";
+import AccountSettings from "./components/pages/AccountSettings";
+import AppSettings from "./components/pages/AppSettings";
+import HelpPage from "./components/pages/HelpPage";
 
 const APP_CONTROLLER = new Controller();
 
@@ -155,6 +158,9 @@ function App() {
         <Route path="/signin" element={<SignIn setUserData={setUserData} APP_CONTROLLER={APP_CONTROLLER} setViewErrorModal={setViewErrorModal} setErrorMessage={setErrorMessage}/>} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/404" element={<Page404 />} />
+        <Route path="/accountsettings" element={<AccountSettings userData={userData}/>} />
+        <Route path="/appsettings" element={<AppSettings />} />
+        <Route path="/help" element={<HelpPage />} />
         <Route path="*" element={<Navigate replace to="/404" />} />
       </Routes>
     </div>

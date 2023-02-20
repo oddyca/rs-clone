@@ -90,10 +90,12 @@ function Header(props: any) {
                     onClick={() => setOpenDropDownUser(false)}
                     className="header__dropdownChild  btn__dropdown  dropdownBtn  dropdownBtnUser"
                   >
-                    <div className="user__list-inner">
-                      <img src={myAccount} alt="" />
-                      <div>My account</div>
-                    </div>
+                    <Link className="link" to="/signin">
+                      <div className="user__list-inner">
+                        <img src={myAccount} alt="" />
+                        <div>My account</div>
+                      </div>
+                    </Link>
                   </button>
                 </li>
                 <div className="br_border" />
@@ -134,7 +136,7 @@ function Header(props: any) {
                         <div
                           onClick={() => {
                             localStorage.clear();
-                            setUserData({})
+                            setUserData({});
                           }}
                         >
                           Log out
