@@ -90,6 +90,12 @@ header {
 
 .userIcon {
     margin-top: -5px;
+    width: 36px;
+    height: 36px;
+}
+
+.user__title {
+    margin-top: 5px;
 }
 
 .userDrop {
