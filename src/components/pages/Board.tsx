@@ -15,6 +15,8 @@ const Board = memo(function Board(props: any) {
   const [boardID, setBoardID] = useState("");
   const [currentTask, setCurrentTask] = useState("");
   const [currentList, setCurrentList] = useState("");
+
+  console.log(BOARD);
   
   function dragStartHandlerList(e: any, list: any) {
     e.stopPropagation();
@@ -212,10 +214,13 @@ const Board = memo(function Board(props: any) {
         setUserData={setUserData}
      />
     }
-    <div onClick={() => {setShowAddListModal(true); setBoardID(BOARD.BOARD_ID);}} className="list">
-      Add List
-    </div>
-    {getLists()}
+      <div className="board__title">{BOARD.BOARD_TITLE}</div>
+      <div className="board-inner">
+        <div onClick={() => {setShowAddListModal(true); setBoardID(BOARD.BOARD_ID);}} className="list">
+          Add List
+        </div>
+        {getLists()}
+      </div>
     {showAddListModal && <NewListModal
       showModal={showAddListModal}
       setShowModal={setShowAddListModal}
