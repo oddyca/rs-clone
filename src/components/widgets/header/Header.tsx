@@ -9,6 +9,7 @@ import support from "../../../assets/support.svg";
 import logout from "../../../assets/logout.svg";
 import "./index.css";
 import WorkSpaceModal from "../list/WorkSpaceModal";
+import USER_DEFAULT_DATA from "../../../lib/config";
 
 function Header(props: any) {
   const { title, userWorkSpace, APP_CONTROLLER, setUserData } = props;
@@ -90,10 +91,12 @@ function Header(props: any) {
                     onClick={() => setOpenDropDownUser(false)}
                     className="header__dropdownChild  btn__dropdown  dropdownBtn  dropdownBtnUser"
                   >
-                    <div className="user__list-inner">
-                      <img src={myAccount} alt="" />
-                      <div>My account</div>
-                    </div>
+                    <Link className="link" to="/accountsettings">
+                      <div className="user__list-inner">
+                        <img src={myAccount} alt="" />
+                        <div>My account</div>
+                      </div>
+                    </Link>
                   </button>
                 </li>
                 <div className="br_border" />
@@ -103,10 +106,12 @@ function Header(props: any) {
                     onClick={() => setOpenDropDownUser(false)}
                     className="header__dropdownChild  btn__dropdown  dropdownBtn  dropdownBtnUser"
                   >
-                    <div className="user__list-inner">
-                      <img src={settings} alt="" />
-                      <div>Settings</div>
-                    </div>
+                    <Link className="link" to="/appsettings">
+                      <div className="user__list-inner">
+                        <img src={settings} alt="" />
+                        <div>Settings</div>
+                      </div>
+                    </Link>
                   </button>
                 </li>
                 <li className="dropdownBgUserList">
@@ -115,10 +120,12 @@ function Header(props: any) {
                     onClick={() => setOpenDropDownUser(false)}
                     className="header__dropdownChild  btn__dropdown  dropdownBtn  dropdownBtnUser"
                   >
-                    <div className="user__list-inner">
-                      <img src={support} alt="" />
-                      <div>Support</div>
-                    </div>
+                    <Link className="link" to="/help">
+                      <div className="user__list-inner">
+                        <img src={support} alt="" />
+                        <div>Support</div>
+                      </div>
+                    </Link>
                   </button>
                 </li>
                 <div className="br_border" />
@@ -134,7 +141,8 @@ function Header(props: any) {
                         <div
                           onClick={() => {
                             localStorage.clear();
-                            setUserData({})
+                            APP_CONTROLLER.currentUser = USER_DEFAULT_DATA
+                            setUserData(structuredClone(APP_CONTROLLER.loadData()));
                           }}
                         >
                           Log out
