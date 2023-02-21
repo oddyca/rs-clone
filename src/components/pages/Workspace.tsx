@@ -33,7 +33,7 @@ function Workspace(props: any) {
             to={`/workspace-${WORKSPACE.WORKSPACE_ID}/board-${board.BOARD_ID}/`}
           >
             <div id={board.BOARD_ID} className="board">
-              {board.BOARD_TITLE}
+              <p className="board-name">{board.BOARD_TITLE}</p>
             </div>
           </Link>
           <button

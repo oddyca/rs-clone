@@ -6,16 +6,25 @@
     font-weight: 400;
     font-size: 24px;
     line-height: 120%;
+    padding-top: 22px;
+    padding-bottom: 24px;
 }
 
 .board {
     background: gray;
     height: 100px;
-    width: 200px;
-    border: 1px solid black;
+    width: 283px;
+    border-radius: 4px;
+}
+
+.board-name {
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 130%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    color: #FFFFFF;
+    padding: 26px 0px 27px 19px;
 }
 
 .board-item {
@@ -42,8 +51,13 @@
     flex-direction: row;
 }
 
+.boards-title {
+    border-bottom: 1px solid grey;
+    margin-bottom: 24px;
+}
+
 .board-link-add {
-    width: 283px;
+    min-width: 283px;
     height: 100px;
     background: #FFFFFF;
     box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.05);
