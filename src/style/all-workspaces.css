@@ -11,6 +11,7 @@
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.05);
   border-radius: 4px;
   position: relative;
+  margin-right: 20px !important;
 }
 
 .workspaces-link-add:hover {
@@ -19,9 +20,10 @@
 }
 
 .workspaces_img-add {
-  position: relative;
+  position: absolute;
   top: 50%;
-  transform: translate(45%, -50%);
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .workspaces-link:hover > .trashBin-icon {

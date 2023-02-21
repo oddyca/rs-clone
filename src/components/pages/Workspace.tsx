@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Participants from "../widgets/participant/Participants";
+import trashBin_icon from "../../assets/delete_icon.svg";
+import addIcon from "../../assets/add-icon.png";
 import { TPropsAllWorkspaces } from "../../AppTypes";
 import BoardModal from "../widgets/list/BoardModal";
+import "../../style/workspace.css";
 
 function Workspace(props: any) {
   const [showNewBoardModal, setShowNewBoardModal] = useState(false);
@@ -10,14 +13,13 @@ function Workspace(props: any) {
     users,
     userLogo,
     WORKSPACE,
-    workIndex,
     APP_CONTROLLER,
     BOARD,
     WORKSPACE_ID,
     setUserData,
     setAddParticipantModal,
     setCurrentWorkspaceId,
-    setParticipant
+    setParticipant,
   } = props;
 
   const { WORKSPACE_BOARDS } = WORKSPACE;
@@ -25,7 +27,7 @@ function Workspace(props: any) {
   const getBoards = () => {
     return WORKSPACE_BOARDS.map((board: any, index: number) => {
       return (
-        <>
+        <div className="board-item link-board">
           <Link
             className="link"
             to={`/workspace-${WORKSPACE.WORKSPACE_ID}/board-${board.BOARD_ID}/`}
@@ -43,10 +45,11 @@ function Workspace(props: any) {
               const newData = structuredClone(APP_CONTROLLER.loadData());
               setUserData(newData);
             }}
+            className="boards_trashBin-icon"
           >
-            del
+            <img className="boards_trashBin-img" src={trashBin_icon} alt="" />
           </button>
-        </>
+        </div>
       );
     });
   };
@@ -62,15 +65,22 @@ function Workspace(props: any) {
         users={users}
         userLogo={userLogo}
       />
+      <div className="boards-title">
+        <h3 className="boardsTitle title-workspace">Boards: </h3>
+      </div>
       <div className="boards-group">
         {getBoards()}
         <div
-          className="board"
+          className="board-link-add link-board"
           onClick={(e) => {
             setShowNewBoardModal(true);
           }}
         >
-          Add Board(+)
+          <div className="board-link_add">
+            <div className="board-add">
+              <img src={addIcon} alt="" />
+            </div>
+          </div>
         </div>
       </div>
       {showNewBoardModal && (
