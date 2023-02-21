@@ -122,11 +122,11 @@ function App() {
 
   return (
     <div className="App">
-      <ErrorModal
+      {errorMessage.includes("server") && <ErrorModal
         errorMessage={errorMessage}
         viewErrorModal={viewErrorModal}
         setViewErrorModal={setViewErrorModal}
-      />
+      />}
       <PartModal
         viewPartModal={viewPartModal}
         setViewPartModal={setViewPartModal}

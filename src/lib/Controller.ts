@@ -187,6 +187,7 @@ export default class Controller {
       if (!response.ok) {
         const responseMessage = Object.values(parsedResponse)[0] as string;
         this.responseMessageHandler(responseMessage);
+        this.responseCheck.isValid = false;
       } else {
         this.responseCheck.isValid = true;
         localStorage.setItem("isLoggedIn", "true");
