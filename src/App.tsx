@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { TUserWorkspace, TWorkspaceBoards } from "./AppTypes"
 
 import Board from "./components/pages/Board";
 import Workspace from "./components/pages/Workspace";
@@ -44,8 +45,8 @@ function App() {
   }, []);
 
   const getWorkspaces = () => {
-    return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
-      const getIndexBoard = workspace.WORKSPACE_BOARDS.map((index: number) => {
+    return userData.USER_WORKSPACES.map((workspace: TUserWorkspace, index: number) => {
+      const getIndexBoard = workspace.WORKSPACE_BOARDS.map((board: TWorkspaceBoards, index: number) => {
         return workspace.WORKSPACE_BOARDS[index];
       });
       return (
@@ -71,8 +72,8 @@ function App() {
   };
 
   const getBoards = () => {
-    return userData.USER_WORKSPACES.map((workspace: any, index: number) => {
-      return workspace.WORKSPACE_BOARDS.map((board: any, ind: number) => {
+    return userData.USER_WORKSPACES.map((workspace: TUserWorkspace, index: number) => {
+      return workspace.WORKSPACE_BOARDS.map((board: TWorkspaceBoards, ind: number) => {
         return (
           <Route
             path={`/workspace-${workspace.WORKSPACE_ID}/board-${board.BOARD_ID}/`}

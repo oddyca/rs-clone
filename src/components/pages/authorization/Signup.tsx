@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Controller from "../../../lib/Controller";
+import {  } from "../../../AppTypes";
 
 import "../../../style/auth-modal.css";
-import Controller from "../../../lib/Controller";
+import logo_ellipse from "../../../assets/logo_ellipse.svg";
+import hero_logo from "../../../assets/hero_logo.svg"
+
 
 export default function SignUp() {
   const APP_CONTROLLER = new Controller();
@@ -35,7 +39,21 @@ export default function SignUp() {
   return (
     <div className="auth-window">
       <div className="auth-modal">
-        <div className="hero-shot" />
+        <div className="hero-shot">
+          <div className="hero-top">
+            <div className="top-ellipse">
+              <img src={logo_ellipse} alt="logo ellipse" />
+              <div className="hero_logo">
+                <img src={hero_logo} alt="logo icon" />
+                <p className="logo_text">Ollert</p>
+              </div>
+            </div>
+          </div>
+          <div className="hero-mid">
+            <h4 className="hero_subtitle">Bring all your tasks, teammates, and tools together</h4>
+            <p className="hero_paragraph">Keep everything in the same place—even if your team isn&apos;t.</p>
+          </div>
+        </div>
         <div className="auth-block">
           <div className="auth-wrapper">
             <h3 className="h3-heading">Sign up</h3>
