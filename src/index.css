@@ -15,8 +15,10 @@
   user-select: none;
 }
 
-a, button {
+a,
+button {
   outline: none !important;
+  text-decoration: none !important;
 }
 
 body {
@@ -30,4 +32,15 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.header {
+  position: fixed;
+  z-index: 100;
+}
+
+.workspaces-container,
+.workspace-window,
+.board-window {
+  padding-top: 45px;
 }

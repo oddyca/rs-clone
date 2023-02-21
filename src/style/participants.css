@@ -3,6 +3,7 @@
     height: 150px;
     display: flex;
     flex-direction: column;
+    margin-bottom: 64px;
 }
 
 .participant {
@@ -43,6 +44,7 @@
     height: 120px;
     border-top: 1px solid grey;
     align-items: center;
+    padding-top: 24px;
 }
 
 .participant-add-btn:hover {

@@ -27,7 +27,7 @@ function Participants(props: TParticipantsProps) {
   return (
     <div className="participants">
       <div className="participants-title">
-        <h3>Participants:</h3>
+        <h3 className="title-workspace">Participants:</h3>
       </div>
       <div className="participants-group">
         {renderParticipant()}

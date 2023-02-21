@@ -1,11 +1,45 @@
 .workspaces-link {
   text-decoration: none;
   color: black;
+  position: relative;
+}
+
+.workspaces-link-add {
+  min-width: 360px;
+  height: 198px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  position: relative;
+  margin-right: 20px !important;
+}
+
+.workspaces-link-add:hover {
+  border: 2px solid #FF6E4F;
+  cursor: pointer;
+}
+
+.workspaces_img-add {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.workspaces-link:hover > .trashBin-icon {
+  display: block;
 }
 
 .workspaces-list {
   display: flex;
   gap: 36px;
+}
+
+.workspaces_title {
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 120%;
+  padding: 8px 0 7px 16px;
 }
 
 .workspace-card {
@@ -29,10 +63,26 @@
 
 .workspaces_info {
   color: white;
+  font-weight: 300;
+  font-size: 20px;
+  line-height: 100%;
 }
 
 .workspaces-container {
   display: flex;
   flex-direction: column;
   width: 70%;
+}
+
+.trashBin-icon {
+  border: 0;
+  background: 0;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: none;
+}
+
+.trashBin-img {
+  cursor: pointer;
 }

@@ -1,8 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
-import search_icon from "../../../assets/search_icon.svg";
-import logoUser from "../../../assets/usericon.png";
 import myAccount from "../../../assets/myaccount.svg";
 import settings from "../../../assets/settings.svg";
 import support from "../../../assets/support.svg";
@@ -12,7 +10,7 @@ import WorkSpaceModal from "../list/WorkSpaceModal";
 import USER_DEFAULT_DATA from "../../../lib/config";
 
 function Header(props: any) {
-  const { title, userWorkSpace, APP_CONTROLLER, setUserData } = props;
+  const { title, userWorkSpace, APP_CONTROLLER, setUserData, userLogo } = props;
   const [openDropDown, setOpenDropDown] = useState(false);
   const [openDropDownUser, setOpenDropDownUser] = useState(false);
   const [showNewWorkspaceModal, setShowNewWorkspaceModal] = useState(false);
@@ -67,12 +65,6 @@ function Header(props: any) {
             )}
           </div>
         </div>
-        <div className="header__search">
-          <input className="searchInput" type="text" />
-          <button className="btn__custom" type="submit">
-            <img src={search_icon} alt="" />
-          </button>
-        </div>
         <div className="header__right  user">
           <button
             className="btn__dropdown  userDrop  dropdownBtnUser"
@@ -80,9 +72,9 @@ function Header(props: any) {
             type="submit"
           >
             <div className="user__icon">
-              <img className="userIcon" src={logoUser} alt="" />
+              <img className="userIcon" src={userLogo} alt="322" />
             </div>
-            <div>{title}</div>
+            <div className="user__title">{title}</div>
             {openDropDownUser && (
               <ul className="dropdownBg  dropdownBgUser">
                 <li className="dropdownBgUserList">

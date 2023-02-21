@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import trashBin_icon from "../../assets/delete_icon.svg";
+import addIcon from "../../assets/add-icon.png";
 import "../../style/all-workspaces.css";
 import { TPropsAllWorkspaces } from "../../AppTypes";
 import WorkSpaceModal from "../widgets/list/WorkSpaceModal";
@@ -31,12 +33,13 @@ export default function AllWorkspaces(props: TPropsAllWorkspaces) {
           <button
             onClick={(e) => {
               APP_CONTROLLER.deleteWorkSpace({
-                WORKSPACE_ID: space.WORKSPACE_ID
+                WORKSPACE_ID: space.WORKSPACE_ID,
               });
               setUserData(structuredClone(APP_CONTROLLER.loadData()));
             }}
+            className="trashBin-icon"
           >
-            delete
+            <img className="trashBin-img" src={trashBin_icon} alt="" />
           </button>
         </div>
       );
@@ -48,18 +51,14 @@ export default function AllWorkspaces(props: TPropsAllWorkspaces) {
       <h3 className="h3-heading">Workspaces ({allWorkSpaces.length})</h3>
       <div className="workspaces-list">
         {renderWorkspaces()}
-        <div className="workspaces-link">
-          <div className="workspace-card">
-            <div className="workspace_cover">
-              <div
-                onClick={(e) => {
-                  setShowNewWorkspaceModal(true);
-                }}
-                className="workspaces_info"
-              >
-                Add WorkSpace(+)
-              </div>
-            </div>
+        <div
+          onClick={(e) => {
+            setShowNewWorkspaceModal(true);
+          }}
+          className="workspaces-link-add"
+        >
+          <div className="workspaces_img-add">
+            <img className="workspaces-add" src={addIcon} alt="" />
           </div>
         </div>
       </div>

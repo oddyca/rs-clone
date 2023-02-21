@@ -25,7 +25,6 @@ function App() {
   const [currentWorkspaceId, setCurrentWorkspaceId] = useState("");
   const [viewPartModal, setViewPartModal] = useState(false);
   const navigate = useNavigate();
-  // localStorage.clear();
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const loggedUserID = localStorage.getItem("userID") as string;
 
@@ -140,6 +139,7 @@ function App() {
           userWorkSpace={userData.USER_WORKSPACES}
           title={userData.USER_NAME}
           setUserData={setUserData}
+          userLogo={userData.USER_SETTINGS.USER_LOGO}
         />
       )}
       <Routes>

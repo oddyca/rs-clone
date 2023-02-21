@@ -6,13 +6,26 @@
 }
 
 .board-window {
+    width: 70%;
+}
+
+.board__title {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 120%;
+    border-bottom: 1px solid gray;
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+    margin-top: 38px;
+}
+
+.board-inner {
     display: flex;
-    flex-direction: row;
     gap: 36px;
 }
 
 .list {
-    width: 284px;
+    min-width: 284px;
     height: fit-content;
     background-color: var(--background);
     padding: 8px;
