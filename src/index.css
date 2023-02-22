@@ -41,6 +41,7 @@ code {
 
 .workspaces-container,
 .workspace-window,
-.board-window {
+.board-window,
+.account-settings-page {
   padding-top: 45px;
 }
