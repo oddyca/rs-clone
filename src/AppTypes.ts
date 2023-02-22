@@ -134,3 +134,11 @@ export type TTaskModalProps = {
   APP_CONTROLLER: Controller;
   setUserData: Function;
 }
+
+export type TAddNewTaskProps = {
+  APP_CONTROLLER: Controller;
+  setUserData: Function;
+  WORKSPACE_ID: string;
+  BOARD_ID: string;
+  list: TBoardLists
+}
