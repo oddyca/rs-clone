@@ -419,7 +419,7 @@ export default class Controller {
   pushNewTask(workspaceID: string, boardID: string, incomingList: TBoardLists, newTaskTitle: string) {
     const currentListID = incomingList.LIST_ID;
     const lastTaskID = incomingList.LIST_CARDS.length + 1;
-    const newTask: /* TCard */any = {
+    const newTask: TCard = {
       CARD_ID: `${lastTaskID}`,
       CARD_DATA: newTaskTitle ? newTaskTitle : "New Task"
     };

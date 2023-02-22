@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import trashBin_icon from "../../assets/delete_icon.svg";
 import addIcon from "../../assets/add-icon.png";
 import "../../style/all-workspaces.css";
-import { TPropsAllWorkspaces } from "../../AppTypes";
+import { TPropsAllWorkspaces, TUserWorkspace } from "../../AppTypes";
 import WorkSpaceModal from "../widgets/list/WorkSpaceModal";
 
 export default function AllWorkspaces(props: TPropsAllWorkspaces) {
@@ -12,7 +12,7 @@ export default function AllWorkspaces(props: TPropsAllWorkspaces) {
   const [showNewWorkspaceModal, setShowNewWorkspaceModal] = useState(false);
 
   function renderWorkspaces() {
-    return allWorkSpaces.map((space: any) => {
+    return allWorkSpaces.map((space: TUserWorkspace) => {
       return (
         <div className="workspaces-link">
           <Link

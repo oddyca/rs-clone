@@ -27,6 +27,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100dvh;
 }
 
 code {
@@ -44,4 +45,8 @@ code {
 .board-window,
 .account-settings-page {
   padding-top: 45px;
+}
+
+#root {
+  height: 100%;
 }
