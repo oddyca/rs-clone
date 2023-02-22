@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import USER_DEFAULT_DATA from "./config";
-import { TUser, TUserWorkspace, TListModalProps, TCard, TBoardLists } from "../AppTypes";
+import { TUser, TUserWorkspace, TListModalProps, TCard, TBoardLists, TStringArguments } from "../AppTypes";
 
 export default class Controller {
   public currentUser: TUser;
@@ -322,7 +322,7 @@ export default class Controller {
     }
   }
 
-  saveModalChanges(args: TListModalProps, whichModal: string, color?: string, list?: TBoardLists) {
+  saveModalChanges(args: TStringArguments, whichModal: string, color?: string, list?: TBoardLists) {
     const currentWS = args.currentWorkspace;
     const currB = args.currentBoard;
     const currL = args.currentList;
@@ -335,8 +335,8 @@ export default class Controller {
         this.getIndexBoard(currentWS, currB)
       ].BOARD_LISTS[this.getIndexList(currentWS, currB, currL)].LIST_CARDS[
         this.getIndexTask(currentWS, currB, currL, currT)
-      ] = <any>{
-        // doesnt accept types from AppTypes
+      ] = <any/* TCard */>{
+        // doesnt accept TCard type
         CARD_ID: currT,
         CARD_DATA: newTitle,
         CARD_DESCRIPTION: newDescription,

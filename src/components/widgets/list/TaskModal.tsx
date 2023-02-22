@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Button, Dialog, Classes } from "@blueprintjs/core";
-import { TBoardLists, TCard, TListModalProps} from "../../../AppTypes";
+import { TBoardLists, TCard, TListModalProps, TTaskModalProps, TStringArguments, TListCards} from "../../../AppTypes";
 import "../../../style/task-modal.css";
 import delete_icon from "../../../assets/delete_icon.svg";
 
-function TaskModal(props: any) {
+function TaskModal(props: TTaskModalProps) {
   const { 
     showModal,
     setShowModal,
@@ -16,17 +16,18 @@ function TaskModal(props: any) {
     setUserData
     } = props;
 
-  const allLists = APP_CONTROLLER.getBoards(currentWorkspace, currentBoard);
-  const currentListObj = allLists.filter((list: TBoardLists) => list.LIST_ID === currentList)[0];
-  const currentTaskObj = currentListObj.LIST_CARDS.filter((task: TCard) => task.CARD_ID === currentTask)[0];
+  const allLists = APP_CONTROLLER.getBoards(currentWorkspace, currentBoard) as TBoardLists[];
+  const currentListObj = allLists.filter((list: TBoardLists) => list.LIST_ID === currentList)[0] as TBoardLists;
+  const allTasks = currentListObj.LIST_CARDS as TListCards;
+  const currentTaskObj = allTasks.filter((task: TCard) => task.CARD_ID === currentTask)[0] as TCard;
 
   // if title clicked change from readOnly=true to readOnly=false
   // default value of textarea (task title) = CARD_DATA
   const [titleToggle, setTitleToggle] = useState(true);
   const [titleChange, setTitleChange] = useState(currentTaskObj.CARD_DATA);
-  const [bodyChange, setBodyChange] = useState(currentTaskObj.CARD_DESCRITPTION ? currentTaskObj.CARD_DESCRITPTION : "Description text");
+  const [bodyChange, setBodyChange] = useState(currentTaskObj.CARD_DESCRIPTION ? currentTaskObj.CARD_DESCRIPTION : "Description text");
 
-  const saveChanges = (args: TListModalProps) => {
+  const saveChanges = (args: TStringArguments) => {
     APP_CONTROLLER.saveModalChanges(args, "task");
     setUserData(structuredClone(APP_CONTROLLER.loadData()));
   }

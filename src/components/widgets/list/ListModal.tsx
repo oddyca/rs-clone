@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Button, Dialog, Classes } from "@blueprintjs/core";
-import { TBoardLists, TCard, TListModalProps} from "../../../AppTypes";
+import { TBoardLists, TListModalProps, TStringArguments} from "../../../AppTypes";
 import "../../../style/task-modal.css";
 import delete_icon from "../../../assets/delete_icon.svg";
 
-export default function ListModal(props: any) {
+export default function ListModal(props: TListModalProps) {
   const { 
     showListModal,
     setShowListModal,
@@ -15,14 +15,14 @@ export default function ListModal(props: any) {
     setUserData
     } = props;
 
-    const allLists = APP_CONTROLLER.getBoards(currentWorkspace, currentBoard);
-    const currentListObj = allLists.filter((list: TBoardLists) => list.LIST_ID === currentList)[0];
+    const allLists = APP_CONTROLLER.getBoards(currentWorkspace, currentBoard) as TBoardLists[];
+    const currentListObj = allLists.filter((list: TBoardLists) => list.LIST_ID === currentList)[0] as TBoardLists;
   
     const [titleToggle, setTitleToggle] = useState(true);
     const [titleChange, setTitleChange] = useState(currentListObj.LIST_TITLE);
     const [colorPick, setColorPick] = useState(currentListObj.LIST_COLOR ? currentListObj.LIST_COLOR : "#FFFFFF");
 
-    const saveChanges = (args: TListModalProps, whichModal: string, color: string, currentListObj: TBoardLists) => {
+    const saveChanges = (args: TStringArguments, whichModal: string, color: string, currentListObj: TBoardLists) => {
       APP_CONTROLLER.saveModalChanges(args, whichModal, color, currentListObj);
       setUserData(structuredClone(APP_CONTROLLER.loadData()));
     }

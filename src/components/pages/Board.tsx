@@ -4,7 +4,9 @@ import ListModal from "../widgets/list/ListModal";
 import NewListModal from "../widgets/list/NewListModal";
 import AddNewTask from "../addNewTask";
 
-const Board = memo(function Board(props: any) {
+import { TBoardLists, TPropsBoard } from "../../AppTypes";
+
+const Board = memo(function Board(props: TPropsBoard) {
   const { BOARD, setUserData, WORKSPACE_ID, APP_CONTROLLER } = props;
   const [dragList, setDragList] = useState(null);
   const [dragTask, setDragTask] = useState(null);
@@ -15,10 +17,8 @@ const Board = memo(function Board(props: any) {
   const [boardID, setBoardID] = useState("");
   const [currentTask, setCurrentTask] = useState("");
   const [currentList, setCurrentList] = useState("");
-
-  console.log(BOARD);
   
-  function dragStartHandlerList(e: any, list: any) {
+  function dragStartHandlerList(e: React.DragEvent<HTMLElement>, list: any) {
     e.stopPropagation();
     setDragList(list);
     setCurrentObj("list");
@@ -127,7 +127,7 @@ const Board = memo(function Board(props: any) {
       const cards = list.LIST_CARDS.map((card: any) => {
         return (
           <div
-            onClick={(e) => {
+            onClick={() => {
               // show task modal
               // set current board id to pass it to ListModal component
               setShowModal(true);
@@ -135,11 +135,11 @@ const Board = memo(function Board(props: any) {
               setCurrentTask(card.CARD_ID);
               setCurrentList(list.LIST_ID)
             }}
-            onDragOver={(e) => dragOverHandlerTask(e)}
-            onDragLeave={(e) => dragLeaveHandlerTask(e)}
-            onDragStart={(e) => dragStartHandlerTask(e, list, card)}
-            onDragEnd={(e) => dragEndHandlerTask(e)}
-            onDrop={(e) => dropHandlerTask(e, list, card)}
+            onDragOver={(e: React.DragEvent<HTMLElement>) => dragOverHandlerTask(e)}
+            onDragLeave={(e: React.DragEvent<HTMLElement>) => dragLeaveHandlerTask(e)}
+            onDragStart={(e: React.DragEvent<HTMLElement>) => dragStartHandlerTask(e, list, card)}
+            onDragEnd={(e: React.DragEvent<HTMLElement>) => dragEndHandlerTask(e)}
+            onDrop={(e: React.DragEvent<HTMLElement>) => dropHandlerTask(e, list, card)}
             id={card.CARD_ID}
             className="list_card"
             draggable
@@ -153,11 +153,11 @@ const Board = memo(function Board(props: any) {
         <>
           <div
             className="list"
-            onDragStart={(e) => dragStartHandlerList(e, list)}
-            onDragLeave={(e) => dragEndHandlerList(e)}
-            onDragEnd={(e) => dragEndHandlerList(e)}
-            onDragOver={(e) => dragOverHandlerList(e)}
-            onDrop={(e) => dropHandlerList(e, list)}
+            onDragStart={(e: React.DragEvent<HTMLElement>) => dragStartHandlerList(e, list)}
+            onDragLeave={(e: React.DragEvent<HTMLElement>) => dragEndHandlerList(e)}
+            onDragEnd={(e: React.DragEvent<HTMLElement>) => dragEndHandlerList(e)}
+            onDragOver={(e: React.DragEvent<HTMLElement>) => dragOverHandlerList(e)}
+            onDrop={(e: React.DragEvent<HTMLElement>) => dropHandlerList(e, list)}
             draggable
             id={list.LIST_ID}
           >

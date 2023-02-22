@@ -83,7 +83,6 @@ function App() {
                 WORKSPACE_ID={workspace.WORKSPACE_ID}
                 APP_CONTROLLER={APP_CONTROLLER}
                 BOARD={workspace.WORKSPACE_BOARDS[ind]}
-                userData={userData}
               />
             }
           />

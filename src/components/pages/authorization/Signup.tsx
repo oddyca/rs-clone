@@ -59,7 +59,7 @@ export default function SignUp() {
             <h3 className="h3-heading">Sign up</h3>
             <form
               className="auth-form"
-              onSubmit={async (e) => {
+              onSubmit={async (e: React.FormEvent<HTMLFormElement>) => {
                 e.preventDefault();
                 await APP_CONTROLLER.signUpVerification(userInput.username, userInput.password);
                 const returnResponseCheck = APP_CONTROLLER.returnResponseCheck();
@@ -75,7 +75,7 @@ export default function SignUp() {
                   name="username"
                   className="form-input"
                   required
-                  onChange={(e) => onInputChange(e)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange(e)}
                 />
                 {responseMessages.errorMessage && responseMessages.errorType === "userSignUp" && (
                   <span className="error-message">{responseMessages.errorMessage}</span>
@@ -105,7 +105,7 @@ export default function SignUp() {
                   className="form-input"
                   min={4}
                   required
-                  onChange={(e) => onInputChange(e)}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => onInputChange(e)}
                 />
                 {userInput.repeatPassword && userInput.password !== userInput.repeatPassword && (
                   <span className="error-message">Passwords don't match</span>

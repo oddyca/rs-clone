@@ -3,6 +3,7 @@ import Controller from "./lib/Controller";
 export type TCard = {
   CARD_ID: string;
   CARD_DATA: string;
+  CARD_DESCRIPTION?: string
 };
 
 export type TListCards = TCard[];
@@ -11,7 +12,8 @@ export type TBoardLists = {
   LIST_ID: string;
   LIST_ORDER: number;
   LIST_TITLE: string;
-  LIST_CARDS: TListCards[];
+  LIST_COLOR?: string;
+  LIST_CARDS: TListCards;
 };
 
 export type TWorkspaceBoards = {
@@ -62,6 +64,13 @@ type TSetViewModal = (view: boolean) => void;
 
 export type TProps = {};
 
+export type TPropsBoard = {
+  setUserData: Function;
+  WORKSPACE_ID: string;
+  BOARD: TWorkspaceBoards;
+  APP_CONTROLLER: Controller;
+};
+
 export type TPropsAllWorkspaces = {
   user: TUser;
   setUserData: Function;
@@ -101,6 +110,27 @@ export type TParticipantProps = {
   userLogo: string;
 };
 
-export type TListModalProps = {
+export type TStringArguments = {
   [key: string]: string
+}
+
+export type TListModalProps = {
+  showListModal: boolean;
+  setShowListModal: Function;
+  currentWorkspace: string;
+  currentBoard: string;
+  currentList: string;
+  APP_CONTROLLER: Controller;
+  setUserData: Function;
+}
+
+export type TTaskModalProps = {
+  showModal: boolean;
+  setShowModal: Function;
+  currentWorkspace: string;
+  currentBoard: string;
+  currentList: string;
+  currentTask: string;
+  APP_CONTROLLER: Controller;
+  setUserData: Function;
 }
