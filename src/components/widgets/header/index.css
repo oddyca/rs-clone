@@ -78,6 +78,7 @@ header {
     z-index: 1;
     box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.05);
     border-radius: 4px;
+    top: 50px;
 }
 
 .dropdownList {

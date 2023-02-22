@@ -36,7 +36,6 @@ function Header(props: any) {
               <ul className="dropdownBg">
                 {userWorkSpace.map((d: any) => {
                   return (
-                    /* Сделал кнопки чтобы ES Lint не ругался */
                     <li className="dropdownList">
                       <button
                         type="submit"
@@ -50,17 +49,6 @@ function Header(props: any) {
                     </li>
                   );
                 })}
-                <li className="dropdownList">
-                  <button
-                    type="submit"
-                    className="header__dropdownChild  btn__dropdown  dropdownBtn"
-                    onClick={(e) => {
-                      setShowNewWorkspaceModal(true);
-                    }}
-                  >
-                    Add workspace
-                  </button>
-                </li>
               </ul>
             )}
           </div>
