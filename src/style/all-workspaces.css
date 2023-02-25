@@ -1,3 +1,12 @@
+.workspaces-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: 36px;
+}
+
 .workspaces-link {
   text-decoration: none;
   color: black;
@@ -66,12 +75,6 @@
   font-weight: 300;
   font-size: 20px;
   line-height: 100%;
-}
-
-.workspaces-container {
-  display: flex;
-  flex-direction: column;
-  width: 70%;
 }
 
 .trashBin-icon {

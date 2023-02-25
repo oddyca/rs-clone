@@ -175,7 +175,6 @@ const Board = memo(function Board(props: TPropsBoard) {
             <div className="list-cover" style={list.LIST_COLOR ? {backgroundColor: `${list.LIST_COLOR}`} : {backgroundColor: "#FFFFFF"}}/>
             {cards}
           </div>
-          
           <AddNewTask
             APP_CONTROLLER={APP_CONTROLLER}
             setUserData={setUserData}
@@ -183,7 +182,6 @@ const Board = memo(function Board(props: TPropsBoard) {
             BOARD_ID={BOARD.BOARD_ID}
             list={list}
           />
-
           </div>
         </>
       );
@@ -192,7 +190,7 @@ const Board = memo(function Board(props: TPropsBoard) {
 
   return <div className="board-window">
     {showListModal && 
-      <ListModal 
+      <ListModal
         showListModal={showListModal}
         setShowListModal={setShowListModal}
         currentWorkspace={WORKSPACE_ID}

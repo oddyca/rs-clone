@@ -2,6 +2,21 @@
 @import "~@blueprintjs/core/lib/css/blueprint.css";
 @import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
 @import "~@blueprintjs/select/lib/css/blueprint-select.css";
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --stroke: #F2F2F2;
+  --background: #FBFBFB;
+  --shadow: rgba(0, 0, 0, 0.05);
+  --focus: #FF6E4F;
+  --highilight: #FF6E4F;
+  --highlight-hover: #ff876d;
+  --highlight-active: #D84829;
+  --hints: #CFCFCF;
+  --error-red: #DF1B1B;
+  --error-red-hover: #a71818;
+}
 
 * {
   margin: 0;
@@ -35,6 +50,30 @@ code {
     monospace;
 }
 
+h1 {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 114px;
+  line-height: 80%;
+}
+
+h2 {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 120%;
+}
+
+h3 {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 130%;
+}
+
 .header {
   position: fixed;
   z-index: 100;
@@ -49,4 +88,15 @@ code {
 
 #root {
   height: 100%;
+  overflow-y: hidden;
+}
+
+.app_wrapper {
+  height: 100%;
+  width: 100%;
+  margin-top: 44px;
+  padding: 0 96px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

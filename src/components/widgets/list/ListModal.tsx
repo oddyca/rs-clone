@@ -108,6 +108,7 @@ export default function ListModal(props: TListModalProps) {
   
   return (
     <Dialog
+      className="task-modal"
       isOpen={showListModal}
       onClose={() => {
         setShowListModal(false);
