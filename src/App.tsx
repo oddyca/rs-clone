@@ -142,27 +142,29 @@ function App() {
           userLogo={userData.USER_SETTINGS.USER_LOGO}
         />
       )}
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <AllWorkspaces
-              APP_CONTROLLER={APP_CONTROLLER}
-              setUserData={setUserData}
-              user={userData}
-            />
-          }
-        />
-        {getWorkspaces()}
-        {getBoards()}
-        <Route path="/signin" element={<SignIn setUserData={setUserData} APP_CONTROLLER={APP_CONTROLLER} setViewErrorModal={setViewErrorModal} setErrorMessage={setErrorMessage}/>} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/404" element={<Page404 />} />
-        <Route path="/accountsettings" element={<AccountSettings userData={userData} APP_CONTROLLER={APP_CONTROLLER} setUserData={setUserData} />} />
-        <Route path="/appsettings" element={<AppSettings />} />
-        <Route path="/help" element={<HelpPage />} />
-        <Route path="*" element={<Navigate replace to="/404" />} />
-      </Routes>
+      <div className="app_wrapper">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <AllWorkspaces
+                APP_CONTROLLER={APP_CONTROLLER}
+                setUserData={setUserData}
+                user={userData}
+              />
+            }
+          />
+          {getWorkspaces()}
+          {getBoards()}
+          <Route path="/signin" element={<SignIn setUserData={setUserData} APP_CONTROLLER={APP_CONTROLLER} setViewErrorModal={setViewErrorModal} setErrorMessage={setErrorMessage}/>} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/404" element={<Page404 />} />
+          <Route path="/accountsettings" element={<AccountSettings userData={userData} APP_CONTROLLER={APP_CONTROLLER} setUserData={setUserData} />} />
+          <Route path="/appsettings" element={<AppSettings />} />
+          <Route path="/help" element={<HelpPage />} />
+          <Route path="*" element={<Navigate replace to="/404" />} />
+        </Routes>
+      </div>
     </div>
   );
 }
