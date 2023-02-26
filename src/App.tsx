@@ -16,6 +16,7 @@ import ErrorModal from "./components/widgets/error/ErrorModal";
 import AccountSettings from "./components/pages/AccountSettings";
 import AppSettings from "./components/pages/AppSettings";
 import HelpPage from "./components/pages/HelpPage";
+import Footer from "./components/widgets/footer/Footer";
 
 const APP_CONTROLLER = new Controller();
 
@@ -170,6 +171,9 @@ function App() {
           <Route path="*" element={<Navigate replace to="/404" />} />
         </Routes>
       </div>
+      {isLoggedIn === "true" && (
+        <Footer/>
+      )}
     </div>
   );
 }
