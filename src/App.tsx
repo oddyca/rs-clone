@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import { TUserWorkspace, TWorkspaceBoards } from "./AppTypes"
 
 import Board from "./components/pages/Board";
@@ -26,6 +26,7 @@ function App() {
   const [currentWorkspaceId, setCurrentWorkspaceId] = useState("");
   const [viewPartModal, setViewPartModal] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const loggedUserID = localStorage.getItem("userID") as string;
 
@@ -43,6 +44,10 @@ function App() {
     loggedUserID && getUser();
     isLoggedIn === "true" ? navigate("/") : navigate("/signin", { replace: true });
   }, []);
+
+  useEffect(() => {
+    !isLoggedIn && navigate("/signin");
+  }, [location.pathname])
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: TUserWorkspace, index: number) => {
@@ -161,7 +166,7 @@ function App() {
           <Route path="/404" element={<Page404 />} />
           <Route path="/accountsettings" element={<AccountSettings userData={userData} APP_CONTROLLER={APP_CONTROLLER} setUserData={setUserData} />} />
           <Route path="/appsettings" element={<AppSettings />} />
-          <Route path="/help" element={<HelpPage />} />
+          <Route path="/help" element={<HelpPage userName={userData.USER_NAME}/>} />
           <Route path="*" element={<Navigate replace to="/404" />} />
         </Routes>
       </div>

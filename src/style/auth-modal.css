@@ -136,7 +136,7 @@ h3 {
   text-decoration-line: underline;
 }
 
-.auth-button {
+.button, .auth-button {
   position: relative; 
   margin-left: auto; 
   right: 0;
