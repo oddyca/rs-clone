@@ -11,6 +11,7 @@ p {
 
 header {
     height: 44px;
+    width: 100%;
     background: #FF6E4F;
     font-family: 'Manrope';
 }
@@ -41,7 +42,7 @@ header {
 
 .header__logo {
     padding-left: 48px;
-    padding-right: 39px;
+    padding-right: 24px;
 }
 
 .header__dropdownTitle {

@@ -139,3 +139,17 @@ h3 {
     width: 100%;
   }
 }
+
+@media screen and (max-width: 500px){
+  html, body, #root, .App {
+    overflow-y: auto;
+  }
+  .app_wrapper {
+    padding: 44px 12px;
+    width: 100%;
+  }
+
+  .footer {
+    flex-direction: column;
+  }
+}

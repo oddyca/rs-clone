@@ -72,8 +72,8 @@ function App() {
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: TUserWorkspace, index: number) => {
       const getIndexBoard = workspace.WORKSPACE_BOARDS.map(
-        (board: TWorkspaceBoards, index: number) => {
-          return workspace.WORKSPACE_BOARDS[index];
+        (board: TWorkspaceBoards) => {
+          return board;
         },
       )[0];
       return (
