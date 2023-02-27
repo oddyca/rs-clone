@@ -87,3 +87,12 @@
 .task-modal {
   z-index: 100;
 }
+
+.modal_title-edit {
+  background: #FFFFFF;
+  border: 1px solid var(--highlight);
+  color: var(--highilight);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 4px 8px;
+}

@@ -19,6 +19,7 @@ export default function AllWorkspaces(props: TPropsAllWorkspaces) {
             id={space.WORKSPACE_ID}
             className="workspaces-link"
             to={`/workspace-${space.WORKSPACE_ID}`}
+            key={`key-${space.WORKSPACE_ID}`}
           >
             <div className="workspace-card">
               <p className="workspaces_title">{space.WORKSPACE_TITLE}</p>
@@ -31,7 +32,9 @@ export default function AllWorkspaces(props: TPropsAllWorkspaces) {
             </div>
           </Link>
           <button
-            onClick={(e) => {
+            key={`btn-key-${space.WORKSPACE_ID}`}
+            type="button"
+            onClick={() => {
               APP_CONTROLLER.deleteWorkSpace({
                 WORKSPACE_ID: space.WORKSPACE_ID,
               });
@@ -51,8 +54,9 @@ export default function AllWorkspaces(props: TPropsAllWorkspaces) {
       <h3 className="h3-heading">Workspaces ({allWorkSpaces.length})</h3>
       <div className="workspaces-list">
         {renderWorkspaces()}
-        <div
-          onClick={(e) => {
+        <button
+          type="button"
+          onClick={() => {
             setShowNewWorkspaceModal(true);
           }}
           className="workspaces-link-add"
@@ -60,7 +64,7 @@ export default function AllWorkspaces(props: TPropsAllWorkspaces) {
           <div className="workspaces_img-add">
             <img className="workspaces-add" src={addIcon} alt="" />
           </div>
-        </div>
+        </button>
       </div>
       {showNewWorkspaceModal && (
         <WorkSpaceModal
