@@ -117,7 +117,7 @@ h3 {
   border: solid 1px var(--stroke);
   outline: none;
   border-radius: 4px;
-  padding: 8px;
+  padding: 16px;
   background-color: var(--backgroiund);
   -webkit-animation: slide-in-right 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
   animation: slide-in-right 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
@@ -222,5 +222,11 @@ h3 {
     -webkit-transform: translateX(0);
     transform: translateX(0);
     opacity: 1;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .form-input {
+    padding: 8px;
   }
 }

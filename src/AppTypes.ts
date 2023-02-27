@@ -177,14 +177,13 @@ export type THeaderProps = {
   userWorkSpace: TUserWorkspace[];
 };
 
-
 export type TWProps = {
   APP_CONTROLLER: Controller;
   setUserData: Function;
   users: TUserParticipant[];
   userLogo: string;
   WORKSPACE: TUserWorkspace;
-  BOARD: TWorkspaceBoards[];
+  BOARD: TWorkspaceBoards;
   WORKSPACE_ID: string;
   setAddParticipantModal: TSetViewModal;
   setCurrentWorkspaceId: TSetStateWork;

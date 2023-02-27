@@ -75,7 +75,7 @@ function App() {
         (board: TWorkspaceBoards, index: number) => {
           return workspace.WORKSPACE_BOARDS[index];
         },
-      );
+      )[0];
       return (
         <Route
           path={`/workspace-${workspace.WORKSPACE_ID}/`}
