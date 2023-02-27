@@ -10,7 +10,7 @@
   --background: #FBFBFB;
   --shadow: rgba(0, 0, 0, 0.05);
   --focus: #FF6E4F;
-  --highilight: #FF6E4F;
+  --highlight: #FF6E4F;
   --highlight-hover: #ff876d;
   --highlight-active: #D84829;
   --hints: #CFCFCF;
@@ -101,8 +101,8 @@ h3 {
 }
 
 .app_wrapper {
-  min-height: 100%;
-  width: 100%;
+  height: fit-content;
+  max-width: 100%;
   top: 44px;
   bottom: 64px;
   padding: 64px 96px;
@@ -110,6 +110,7 @@ h3 {
   flex: 1 1 auto;
   justify-content: center;
   align-items: center;
+  overflow-x: auto;
 }
 
 .footer {
@@ -125,4 +126,17 @@ h3 {
   align-items: center;
   padding: 0 48px;
   margin-top: auto;
+}
+
+.bp4-dialog-body > div {
+  display: flex;
+  flex-direction: column;
+
+}
+
+@media screen and (max-width: 1440px){
+  .app_wrapper {
+    padding: 44px 64px;
+    width: 100%;
+  }
 }

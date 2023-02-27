@@ -33,67 +33,57 @@ const Board = memo(function Board(props: TPropsBoard) {
 
   function dragOverHandlerList(e: React.DragEvent<HTMLElement>) {
     e.preventDefault();
-    const { target } = e;
-    if (target instanceof HTMLElement) {
-      if (target.className === "list") {
-        target.style.boxShadow = "0 2px 3px gray";
-      }
-    }
-    
+    const target = e.target as HTMLElement;
+    if (target.className === "list") {
+      target.style.boxShadow = "0 2px 3px gray";
+    }    
   }
 
   function dropHandlerList(e: React.DragEvent<HTMLElement>, list: TBoardLists) {
     e.preventDefault();
-    const { target } = e;
-    if (target instanceof HTMLElement) {
-      if (target.className === "list") {
-        target.style.boxShadow = "0 0 0 0";
-        APP_CONTROLLER.sortList({
-          WORKSPACE_ID,
-          BOARD_ID: BOARD.BOARD_ID,
-          dropList: list,
-          dragList,
-        });
-        const newData = structuredClone(APP_CONTROLLER.loadData());
-        setUserData(newData);
-      }
-      if (currentObj === "list") {
-        return;
-      }
-      if (target.className === "list_work-area") {
-        APP_CONTROLLER.sortListCard({
-          WORKSPACE_ID,
-          BOARD_ID: BOARD.BOARD_ID,
-          dropList: list,
-          dragList,
-          dragTask,
-        });
-        const newData = structuredClone(APP_CONTROLLER.loadData());
-        setUserData(newData);
-      }
+    const target = e.target as HTMLElement;
+    if (target.className === "list") {
+      target.style.boxShadow = "0 0 0 0";
+      APP_CONTROLLER.sortList({
+        WORKSPACE_ID,
+        BOARD_ID: BOARD.BOARD_ID,
+        dropList: list,
+        dragList,
+      });
+      const newData = structuredClone(APP_CONTROLLER.loadData());
+      setUserData(newData);
     }
-    
+    if (currentObj === "list") {
+      return;
+    }
+    if (target.className === "list_work-area") {
+      APP_CONTROLLER.sortListCard({
+        WORKSPACE_ID,
+        BOARD_ID: BOARD.BOARD_ID,
+        dropList: list,
+        dragList,
+        dragTask,
+      });
+      const newData = structuredClone(APP_CONTROLLER.loadData());
+      setUserData(newData);
+    }
   }
 
   function dragOverHandlerTask(e: React.DragEvent<HTMLElement>) {
     e.preventDefault();
-    const { target } = e;
-    if (target instanceof HTMLElement) {
-      if (target.className === "list_card") {
-        target.style.boxShadow = "0 2px 3px gray";
-      }
-      if (currentObj === "list") {
-        target.style.boxShadow = "0 2px 3px red";
-      }
+    const target = e.target as HTMLElement;
+    if (target.className === "list_card") {
+      target.style.boxShadow = "0 2px 3px gray";
+    }
+    if (currentObj === "list") {
+      target.style.boxShadow = "0 2px 3px red";
     }
   }
 
   function dragLeaveHandlerTask(e: React.DragEvent<HTMLElement>) {
-    const { target } = e;
-    if (target instanceof HTMLElement) {
-      if (target.className === "list_card") {
-        target.style.boxShadow = "none";
-      }
+    const target = e.target as HTMLElement;
+    if (target.className === "list_card") {
+      target.style.boxShadow = "none";
     }
   }
 
@@ -105,36 +95,32 @@ const Board = memo(function Board(props: TPropsBoard) {
   }
 
   function dragEndHandlerTask(e: React.DragEvent<HTMLElement>) {
-    const { target } = e;
-    if (target instanceof HTMLElement) {
-      if (target.className === "list_card") {
-        target.style.boxShadow = "none";
-      }
+    const target = e.target as HTMLElement;
+    if (target.className === "list_card") {
+      target.style.boxShadow = "none";
     }
   }
 
   function dropHandlerTask(e: React.DragEvent<HTMLElement>, list: TBoardLists, card: TCard) {
     e.preventDefault();
     e.stopPropagation();
-    const { target } = e;
-    if (target instanceof HTMLElement) {
-      if (currentObj === "list") {
-        target.style.boxShadow = "0 0 0 0";
-        return;
-      }
+    const target = e.target as HTMLElement;
+    if (currentObj === "list") {
       target.style.boxShadow = "0 0 0 0";
-      if (target.className === "list_card") {
-        APP_CONTROLLER.sortCard({
-          WORKSPACE_ID,
-          BOARD_ID: BOARD.BOARD_ID,
-          dragList,
-          dropList: list,
-          dragCard: dragTask,
-          dropCard: card,
-        });
-        const newData = structuredClone(APP_CONTROLLER.loadData());
-        setUserData(newData);
-      }
+      return;
+    }
+    target.style.boxShadow = "0 0 0 0";
+    if (target.className === "list_card") {
+      APP_CONTROLLER.sortCard({
+        WORKSPACE_ID,
+        BOARD_ID: BOARD.BOARD_ID,
+        dragList,
+        dropList: list,
+        dragCard: dragTask,
+        dropCard: card,
+      });
+      const newData = structuredClone(APP_CONTROLLER.loadData());
+      setUserData(newData);
     }
   }
 
