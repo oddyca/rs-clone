@@ -61,7 +61,29 @@ function App() {
     document.addEventListener("mousedown", outsideClickHandler);
 
     return () => {
-      document.removeEventListener("mousedown", outsideClickHandler)
+      document.removeEventListener("mousedown", outsideClickHandler);
+      APP_CONTROLLER.setUserData().then(
+        async (result: Response) => {
+          console.log( await result.json());
+          APP_CONTROLLER.currentUser = {
+            USER_ID: "",
+            USER_NAME: "",
+            USER_PASSWORD: "",
+            USER_WORKSPACES: [],
+            USER_SETTINGS: {
+              USER_LOGO: "",
+              USER_BG: "",
+              USER_LANG: "",
+              USER_THEME: "",
+              USER_PARTICIPANTS: []
+            }
+          };
+          setUserData(structuredClone(APP_CONTROLLER.loadData()));
+        },
+        async (error: Response) => {
+          console.log(await error.json());
+        }
+      );
     }
   }, []);
 

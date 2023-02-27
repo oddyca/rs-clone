@@ -1,13 +1,25 @@
 import { nanoid } from "nanoid";
 import USER_DEFAULT_DATA from "./config";
-import { TUser, TUserWorkspace, TListModalProps, TCard, TBoardLists, TStringArguments } from "../AppTypes";
+import { TUser, TUserWorkspace, TListModalProps, TCard, TBoardLists, TStringArguments, TUserSettings } from "../AppTypes";
 
 export default class Controller {
   public currentUser: TUser;
   // public currentUser: any;
 
-  constructor(defaultUser = JSON.parse(JSON.stringify(USER_DEFAULT_DATA))) {
-    this.currentUser = defaultUser;
+  constructor() {
+    this.currentUser = {
+      USER_ID: "",
+      USER_NAME: "",
+      USER_PASSWORD: "",
+      USER_WORKSPACES: [],
+      USER_SETTINGS: {
+        USER_LOGO: "",
+        USER_BG: "",
+        USER_LANG: "",
+        USER_THEME: "",
+        USER_PARTICIPANTS: []
+      }
+    };
   }
 
   getIndexWorkspace(workspaceId: string): number {
