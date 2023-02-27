@@ -214,10 +214,10 @@ const Board = memo(function Board(props: TPropsBoard) {
     }
       <div className="board__title">{BOARD.BOARD_TITLE}</div>
       <div className="board-inner">
-        <div onClick={() => {setShowAddListModal(true); setBoardID(BOARD.BOARD_ID);}} className="list">
+        {getLists()}
+        <div onClick={() => {setShowAddListModal(true); setBoardID(BOARD.BOARD_ID);}} className="list add-list">
           Add List
         </div>
-        {getLists()}
       </div>
     {showAddListModal && <NewListModal
       showModal={showAddListModal}

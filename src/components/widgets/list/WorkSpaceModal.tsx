@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Dialog, Classes } from "@blueprintjs/core";
 import "../../../style/task-modal.css";
 
-function TaskModal(props: any) {
+function WorkSpaceModal(props: any) {
   const { showModal } = props;
   const { setShowModal } = props;
   const { APP_CONTROLLER } = props;
@@ -59,4 +59,4 @@ function TaskModal(props: any) {
   );
 }
 
-export default TaskModal;
+export default WorkSpaceModal;

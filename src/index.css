@@ -74,6 +74,13 @@ h3 {
   line-height: 130%;
 }
 
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--background);
+}
+
 .header {
   position: fixed;
   top: 0;
@@ -111,11 +118,11 @@ h3 {
   height: 64px;
   left: 0;
   bottom: 0;
-  background-color: var(--highilight);
-  color: white;
+  background-color: var(--stroke);
+  color: black;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 48px;
-
+  margin-top: auto;
 }

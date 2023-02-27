@@ -40,7 +40,7 @@ export default function Footer() {
                     className="github-logo"
                     style={{
                         width:"auto",
-                        height:"48px"
+                        height:"36px"
                     }}
                 />
                 <a 
@@ -64,7 +64,7 @@ export default function Footer() {
                     className="github-logo"
                     style={{
                         width:"auto",
-                        height:"48px"
+                        height:"36px"
                     }}
                 />
                 <a 
@@ -72,7 +72,7 @@ export default function Footer() {
                     href="https://github.com/mclakov"
                     target="_blank"
                 >
-                oddyca
+                mclakov
                 </a>
             </div>
             <div 
@@ -88,7 +88,7 @@ export default function Footer() {
                     className="github-logo"
                     style={{
                         width:"auto",
-                        height:"48px"
+                        height:"36px"
                     }}
                 />
                 <a 
@@ -96,7 +96,7 @@ export default function Footer() {
                     href="https://github.com/shzFas"
                     target="_blank"
                 >
-                oddyca
+                shzfas
                 </a>
             </div>
         </div>

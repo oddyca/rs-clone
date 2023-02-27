@@ -10,9 +10,18 @@ import WorkSpaceModal from "../list/WorkSpaceModal";
 import USER_DEFAULT_DATA from "../../../lib/config";
 
 function Header(props: any) {
-  const { title, userWorkSpace, APP_CONTROLLER, setUserData, userLogo } = props;
-  const [openDropDown, setOpenDropDown] = useState(false);
-  const [openDropDownUser, setOpenDropDownUser] = useState(false);
+  const { 
+    title,
+    userWorkSpace,
+    APP_CONTROLLER,
+    setUserData,
+    userLogo,
+    openDropDown,
+    setOpenDropDown,
+    openDropDownUser,
+    setOpenDropDownUser
+  } = props;
+
   const [showNewWorkspaceModal, setShowNewWorkspaceModal] = useState(false);
 
   return (
@@ -40,9 +49,9 @@ function Header(props: any) {
                       <button
                         type="submit"
                         onClick={() => setOpenDropDown(false)}
-                        className="header__dropdownChild  btn__dropdown  dropdownBtn"
+                        className="header__dropdownChild btn__dropdown dropdownBtn"
                       >
-                        <Link className="link  dropdownLink" to={`/workspace-${d.WORKSPACE_ID}`}>
+                        <Link className="link dropdownLink dd-link" to={`/workspace-${d.WORKSPACE_ID}`}>
                           {d.WORKSPACE_TITLE}
                         </Link>
                       </button>
@@ -53,9 +62,9 @@ function Header(props: any) {
             )}
           </div>
         </div>
-        <div className="header__right  user">
+        <div className="header__right user">
           <button
-            className="btn__dropdown  userDrop  dropdownBtnUser"
+            className="btn__dropdown userDrop dropdownBtnUser"
             onClick={() => setOpenDropDownUser(!openDropDownUser)}
             type="submit"
           >
@@ -64,46 +73,34 @@ function Header(props: any) {
             </div>
             <div className="user__title">{title}</div>
             {openDropDownUser && (
-              <ul className="dropdownBg  dropdownBgUser">
+              <ul className="dropdownBg dropdownBgUser">
                 <li className="dropdownBgUserList">
                   <button
                     type="submit"
                     onClick={() => setOpenDropDownUser(false)}
-                    className="header__dropdownChild  btn__dropdown  dropdownBtn  dropdownBtnUser"
+                    className="header__dropdownChild btn__dropdown dropdownBtn dropdownBtnUser dropdown"
                   >
                     <Link className="link" to="/accountsettings">
                       <div className="user__list-inner">
                         <img src={myAccount} alt="" />
-                        <div>My account</div>
+                        <div className="dd-link">My account</div>
                       </div>
                     </Link>
                   </button>
                 </li>
                 <div className="br_border" />
                 <li className="dropdownBgUserList">
-                  <button
-                    type="submit"
-                    onClick={() => setOpenDropDownUser(false)}
-                    className="header__dropdownChild  btn__dropdown  dropdownBtn  dropdownBtnUser"
-                  >
-                    <Link className="link" to="/appsettings">
-                      <div className="user__list-inner">
-                        <img src={settings} alt="" />
-                        <div>Settings</div>
-                      </div>
-                    </Link>
-                  </button>
                 </li>
                 <li className="dropdownBgUserList">
                   <button
                     type="submit"
                     onClick={() => setOpenDropDownUser(false)}
-                    className="header__dropdownChild  btn__dropdown  dropdownBtn  dropdownBtnUser"
+                    className="header__dropdownChild btn__dropdown dropdownBtn dropdown dropdownBtnUser"
                   >
                     <Link className="link" to="/help">
                       <div className="user__list-inner">
                         <img src={support} alt="" />
-                        <div>Support</div>
+                        <div className="dd-link">Support</div>
                       </div>
                     </Link>
                   </button>
@@ -113,12 +110,13 @@ function Header(props: any) {
                   <button
                     type="submit"
                     onClick={() => setOpenDropDownUser(false)}
-                    className="header__dropdownChild  btn__dropdown  dropdownBtn  dropdownBtnUser"
+                    className="header__dropdownChild dropdown btn__dropdown dropdownBtn dropdownBtnUser"
                   >
                     <Link className="link" to="/signin">
                       <div className="user__list-inner">
                         <img src={logout} alt="" />
                         <div
+                          className="dd-link"
                           onClick={() => {
                             localStorage.clear();
                             APP_CONTROLLER.currentUser = USER_DEFAULT_DATA
