@@ -6,7 +6,7 @@ import {
   TCard,
   TBoardLists,
   TStringArguments,
-  TWorkspaceBoards
+  TWorkspaceBoards,
 } from "../AppTypes";
 
 export default class Controller {
@@ -53,7 +53,7 @@ export default class Controller {
     return this.currentUser;
   }
 
-  deleteBoard(userData: {WORKSPACE_ID: string, BOARD_ID: string}) {
+  deleteBoard(userData: { WORKSPACE_ID: string; BOARD_ID: string }) {
     const workspaceId = userData.WORKSPACE_ID;
     const boardId = userData.BOARD_ID;
 
@@ -65,7 +65,12 @@ export default class Controller {
     );
   }
 
-  sortList(userData: {WORKSPACE_ID: string, BOARD_ID: string, dragList: TBoardLists | null, dropList: TBoardLists | null}) {
+  sortList(userData: {
+    WORKSPACE_ID: string;
+    BOARD_ID: string;
+    dragList: TBoardLists | null;
+    dropList: TBoardLists | null;
+  }) {
     const workspaceId = userData.WORKSPACE_ID;
     const boardId = userData.BOARD_ID;
     const { dragList } = userData;
@@ -88,7 +93,13 @@ export default class Controller {
     ].BOARD_LISTS = structuredClone(newListArr);
   }
 
-  sortListCard(userData: {WORKSPACE_ID: string, BOARD_ID: string, dragList: TBoardLists | null, dropList: TBoardLists | null, dragTask: TCard | null}) {
+  sortListCard(userData: {
+    WORKSPACE_ID: string;
+    BOARD_ID: string;
+    dragList: TBoardLists | null;
+    dropList: TBoardLists | null;
+    dragTask: TCard | null;
+  }) {
     const workspaceId = userData.WORKSPACE_ID;
     const boardId = userData.BOARD_ID;
     const { dragList } = userData;
@@ -110,11 +121,18 @@ export default class Controller {
       });
       this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[
         this.getIndexBoard(workspaceId, boardId)
-        ].BOARD_LISTS = structuredClone(newListEmpty);
+      ].BOARD_LISTS = structuredClone(newListEmpty);
     }
   }
 
-  sortCard(userData: {WORKSPACE_ID: string, BOARD_ID: string, dragList: TBoardLists | null, dropList: TBoardLists | null, dragCard: TCard | null, dropCard: TCard | null}) {
+  sortCard(userData: {
+    WORKSPACE_ID: string;
+    BOARD_ID: string;
+    dragList: TBoardLists | null;
+    dropList: TBoardLists | null;
+    dragCard: TCard | null;
+    dropCard: TCard | null;
+  }) {
     const workspaceId = userData.WORKSPACE_ID;
     const boardId = userData.BOARD_ID;
     const { dragList } = userData;
@@ -136,7 +154,7 @@ export default class Controller {
       });
       this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceId)].WORKSPACE_BOARDS[
         this.getIndexBoard(workspaceId, boardId)
-        ].BOARD_LISTS = structuredClone(newListArr);
+      ].BOARD_LISTS = structuredClone(newListArr);
     }
   }
 
@@ -186,7 +204,7 @@ export default class Controller {
     const newUser = {
       id: this.currentUser.USER_ID,
       newUserData: this.currentUser.USER_WORKSPACES,
-      newUserSett: this.currentUser.USER_SETTINGS
+      newUserSett: this.currentUser.USER_SETTINGS,
     };
     return fetch(`http://localhost:3008/api/userdata`, {
       method: "PUT",
@@ -263,13 +281,13 @@ export default class Controller {
         ...this.responseCheck,
         errorType: "userSignUp",
         errorMessage: "User already exists!",
-      }
+      };
     } else if (data.includes("error")) {
       this.responseCheck = {
         isValid: false,
         errorType: "server",
         errorMessage: "Server error",
-      }
+      };
     }
   }
 
@@ -277,7 +295,7 @@ export default class Controller {
     const newParticipant = {
       idWorkspace: currentWorkspaceId,
       nameParticipant: participant,
-      act: act,
+      act,
     };
     const response = await fetch("http://localhost:3008/api/userdata", {
       method: "PATCH",
@@ -289,9 +307,8 @@ export default class Controller {
     });
     if (response.ok) {
       return response.json();
-    } else {
-      return `Ошибка:  ${response.status}`;
     }
+    return `Ошибка:  ${response.status}`;
   }
 
   addParticipant(participant: string, currentWorkspaceId: string) {
@@ -327,7 +344,7 @@ export default class Controller {
   async setCurrentUser(id: string) {
     try {
       const loggedUserRequest = await this.getUserData(id);
-      let parsedUserData = await loggedUserRequest.json();
+      const parsedUserData = await loggedUserRequest.json();
       if (!loggedUserRequest.ok) {
         const responseMessage = Object.values(parsedUserData)[0] as string;
         this.responseMessageHandler(responseMessage);
@@ -352,7 +369,7 @@ export default class Controller {
     const newTitle = args.titleChange;
     const newDescription = args.bodyChange;
 
-    if (whichModal === "task"){
+    if (whichModal === "task") {
       this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(currentWS)].WORKSPACE_BOARDS[
         this.getIndexBoard(currentWS, currB)
       ].BOARD_LISTS[this.getIndexList(currentWS, currB, currL)].LIST_CARDS[
@@ -411,7 +428,7 @@ export default class Controller {
     });
   }
 
-  deleteList(userData: {currentWorkspace: string, BOARD_ID: string, CURRENTLIST: string}) {
+  deleteList(userData: { currentWorkspace: string; BOARD_ID: string; CURRENTLIST: string }) {
     const workspaceId = userData.currentWorkspace;
     const boardId = userData.BOARD_ID;
     const listId = userData.CURRENTLIST;
@@ -426,25 +443,31 @@ export default class Controller {
 
     this.currentUser.USER_WORKSPACES.splice(this.getIndexWorkspace(workspaceId), 1);
   }
-  pushNewTask(workspaceID: string, boardID: string, incomingList: TBoardLists, newTaskTitle: string) {
+
+  pushNewTask(
+    workspaceID: string,
+    boardID: string,
+    incomingList: TBoardLists,
+    newTaskTitle: string,
+  ) {
     const currentListID = incomingList.LIST_ID;
     const lastTaskID = incomingList.LIST_CARDS.length + 1;
     const newTask: TCard = {
       CARD_ID: `${lastTaskID}`,
-      CARD_DATA: newTaskTitle ? newTaskTitle : "New Task"
+      CARD_DATA: newTaskTitle || "New Task",
     };
 
-    this.currentUser
-      .USER_WORKSPACES[this.getIndexWorkspace(workspaceID)]
-      .WORKSPACE_BOARDS[this.getIndexBoard(workspaceID, boardID)]
-      .BOARD_LISTS[this.getIndexList(workspaceID, boardID, currentListID)]
-      .LIST_CARDS.push(newTask);
+    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceID)].WORKSPACE_BOARDS[
+      this.getIndexBoard(workspaceID, boardID)
+    ].BOARD_LISTS[this.getIndexList(workspaceID, boardID, currentListID)].LIST_CARDS.push(newTask);
   }
+
   deleteTask(workspaceID: string, currentBoardIDntBoard: string, listID: string, taskID: string) {
-    this.currentUser
-      .USER_WORKSPACES[this.getIndexWorkspace(workspaceID)]
-      .WORKSPACE_BOARDS[this.getIndexBoard(workspaceID, currentBoardIDntBoard)]
-      .BOARD_LISTS[this.getIndexList(workspaceID, currentBoardIDntBoard, listID)]
-      .LIST_CARDS.splice(this.getIndexTask(workspaceID, currentBoardIDntBoard, listID, taskID), 1);
+    this.currentUser.USER_WORKSPACES[this.getIndexWorkspace(workspaceID)].WORKSPACE_BOARDS[
+      this.getIndexBoard(workspaceID, currentBoardIDntBoard)
+    ].BOARD_LISTS[this.getIndexList(workspaceID, currentBoardIDntBoard, listID)].LIST_CARDS.splice(
+      this.getIndexTask(workspaceID, currentBoardIDntBoard, listID, taskID),
+      1,
+    );
   }
 }

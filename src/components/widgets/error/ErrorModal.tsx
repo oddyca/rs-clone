@@ -7,7 +7,6 @@ function ErrorModal(props: TPropsErrorModal) {
   const { viewErrorModal } = props;
   const { setViewErrorModal } = props;
 
-
   const DIALOG_FOOTER = (
     <Button
       onClick={() => {
@@ -18,11 +17,7 @@ function ErrorModal(props: TPropsErrorModal) {
     </Button>
   );
 
-  const DIALOG_BODY = (
-    <div>
-      {errorMessage}
-    </div>
-  );
+  const DIALOG_BODY = <div>{errorMessage}</div>;
 
   return (
     <Dialog

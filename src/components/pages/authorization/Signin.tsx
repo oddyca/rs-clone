@@ -4,10 +4,10 @@ import { ISignIn } from "../../../AppTypes";
 
 import "../../../style/auth-modal.css";
 import logo_ellipse from "../../../assets/logo_ellipse.svg";
-import hero_logo from "../../../assets/hero_logo.svg"
+import hero_logo from "../../../assets/hero_logo.svg";
 
 export default function SignIn(props: ISignIn) {
-  const { setUserData, APP_CONTROLLER, setViewErrorModal, setErrorMessage } = props
+  const { setUserData, APP_CONTROLLER, setViewErrorModal, setErrorMessage } = props;
   const [userName, setName] = useState("");
   const [userPassword, setPassword] = useState("");
   const [responseMessages, setResponseMessages] = useState({
@@ -32,7 +32,9 @@ export default function SignIn(props: ISignIn) {
           </div>
           <div className="hero-mid">
             <h4 className="hero_subtitle">Bring all your tasks, teammates, and tools together</h4>
-            <p className="hero_paragraph">Keep everything in the same place—even if your team isn&apos;t.</p>
+            <p className="hero_paragraph">
+              Keep everything in the same place—even if your team isn&apos;t.
+            </p>
           </div>
         </div>
         <div className="auth-block">
@@ -47,9 +49,9 @@ export default function SignIn(props: ISignIn) {
                 setResponseMessages(returnResponseCheck);
                 if (returnResponseCheck.isValid) {
                   setUserData(structuredClone(APP_CONTROLLER.loadData()));
-                  navigate("/")
+                  navigate("/");
                 } else {
-                  console.log(returnResponseCheck)
+                  console.log(returnResponseCheck);
                   setViewErrorModal(true);
                   setErrorMessage(returnResponseCheck.errorMessage);
                 }
@@ -85,10 +87,7 @@ export default function SignIn(props: ISignIn) {
             </form>
             <p>
               Or&nbsp;
-              <button
-                className="signup-link"
-                onClick={() => navigate("/signup")}
-              >
+              <button className="signup-link" onClick={() => navigate("/signup")}>
                 create new account
               </button>
             </p>

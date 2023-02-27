@@ -1,6 +1,6 @@
 import "../../style/help-page.css";
 
-function HelpPage(props: {userName: string}) {
+function HelpPage(props: { userName: string }) {
   const { userName } = props;
 
   return (

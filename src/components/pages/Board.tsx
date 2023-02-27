@@ -45,7 +45,7 @@ const Board = memo(function Board(props: TPropsBoard) {
         WORKSPACE_ID,
         BOARD_ID: BOARD.BOARD_ID,
         dropList: list,
-        dragList
+        dragList,
       });
       const newData = structuredClone(APP_CONTROLLER.loadData());
       setUserData(newData);
@@ -59,7 +59,7 @@ const Board = memo(function Board(props: TPropsBoard) {
         BOARD_ID: BOARD.BOARD_ID,
         dropList: list,
         dragList,
-        dragTask
+        dragTask,
       });
       const newData = structuredClone(APP_CONTROLLER.loadData());
       setUserData(newData);
@@ -114,7 +114,7 @@ const Board = memo(function Board(props: TPropsBoard) {
         dragList,
         dropList: list,
         dragCard: dragTask,
-        dropCard: card
+        dropCard: card,
       });
       const newData = structuredClone(APP_CONTROLLER.loadData());
       setUserData(newData);
@@ -154,88 +154,99 @@ const sortCards = (a: TBoardLists, b: TBoardLists) => {
       });
 
       return (
-        <>
+        <div
+          className="list"
+          onDragStart={(e: React.DragEvent<HTMLElement>) => dragStartHandlerList(e, list)}
+          onDragLeave={(e: React.DragEvent<HTMLElement>) => dragEndHandlerList(e)}
+          onDragEnd={(e: React.DragEvent<HTMLElement>) => dragEndHandlerList(e)}
+          onDragOver={(e: React.DragEvent<HTMLElement>) => dragOverHandlerList(e)}
+          onDrop={(e: React.DragEvent<HTMLElement>) => dropHandlerList(e, list)}
+          draggable
+          id={list.LIST_ID}
+        >
           <div
-            className="list"
-            onDragStart={(e: React.DragEvent<HTMLElement>) => dragStartHandlerList(e, list)}
-            onDragLeave={(e: React.DragEvent<HTMLElement>) => dragEndHandlerList(e)}
-            onDragEnd={(e: React.DragEvent<HTMLElement>) => dragEndHandlerList(e)}
-            onDragOver={(e: React.DragEvent<HTMLElement>) => dragOverHandlerList(e)}
-            onDrop={(e: React.DragEvent<HTMLElement>) => dropHandlerList(e, list)}
-            draggable
-            id={list.LIST_ID}
+            className="list-title"
+            onClick={() => {
+              setShowListModal(true);
+              setBoardID(BOARD.BOARD_ID);
+              setCurrentList(list.LIST_ID);
+            }}
           >
-            <div
-              className="list-title"
-              onClick={() => {
-                setShowListModal(true);
-                setBoardID(BOARD.BOARD_ID);
-                setCurrentList(list.LIST_ID);
-              }}
-            >{list.LIST_TITLE}</div>
-            <div
-              className="list_work-area"
-            >
-              <div className="list-cover"
-                   style={list.LIST_COLOR ? { backgroundColor: `${list.LIST_COLOR}` } : { backgroundColor: "#FFFFFF" }} />
-              {cards}
-            </div>
-            <AddNewTask
-              APP_CONTROLLER={APP_CONTROLLER}
-              setUserData={setUserData}
-              WORKSPACE_ID={WORKSPACE_ID}
-              BOARD_ID={BOARD.BOARD_ID}
-              list={list}
-            />
+            {list.LIST_TITLE}
           </div>
-        </>
+          <div className="list_work-area">
+            <div
+              className="list-cover"
+              style={
+                list.LIST_COLOR
+                  ? { backgroundColor: `${list.LIST_COLOR}` }
+                  : { backgroundColor: "#FFFFFF" }
+              }
+            />
+            {cards}
+          </div>
+          <AddNewTask
+            APP_CONTROLLER={APP_CONTROLLER}
+            setUserData={setUserData}
+            WORKSPACE_ID={WORKSPACE_ID}
+            BOARD_ID={BOARD.BOARD_ID}
+            list={list}
+          />
+        </div>
       );
     });
   };
 
-  return <div className="board-window">
-    {showListModal &&
-      <ListModal
-        showListModal={showListModal}
-        setShowListModal={setShowListModal}
-        currentWorkspace={WORKSPACE_ID}
-        currentBoard={boardID}
-        currentList={currentList}
-        APP_CONTROLLER={APP_CONTROLLER}
-        setUserData={setUserData}
-      />
-    }
-    {showModal &&
-      <TaskModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        currentWorkspace={WORKSPACE_ID}
-        currentBoard={boardID}
-        currentList={currentList}
-        currentTask={currentTask}
-        APP_CONTROLLER={APP_CONTROLLER}
-        setUserData={setUserData}
-      />
-    }
-    <div className="board__title">{BOARD.BOARD_TITLE}</div>
-    <div className="board-inner">
-      {getLists()}
-      <div onClick={() => {
-        setShowAddListModal(true);
-        setBoardID(BOARD.BOARD_ID);
-      }} className="list add-list">
-        Add List
+  return (
+    <div className="board-window">
+      {showListModal && (
+        <ListModal
+          showListModal={showListModal}
+          setShowListModal={setShowListModal}
+          currentWorkspace={WORKSPACE_ID}
+          currentBoard={boardID}
+          currentList={currentList}
+          APP_CONTROLLER={APP_CONTROLLER}
+          setUserData={setUserData}
+        />
+      )}
+      {showModal && (
+        <TaskModal
+          showModal={showModal}
+          setShowModal={setShowModal}
+          currentWorkspace={WORKSPACE_ID}
+          currentBoard={boardID}
+          currentList={currentList}
+          currentTask={currentTask}
+          APP_CONTROLLER={APP_CONTROLLER}
+          setUserData={setUserData}
+        />
+      )}
+      <div className="board__title">{BOARD.BOARD_TITLE}</div>
+      <div className="board-inner">
+        {getLists()}
+        <div
+          onClick={() => {
+            setShowAddListModal(true);
+            setBoardID(BOARD.BOARD_ID);
+          }}
+          className="list add-list"
+        >
+          Add List
+        </div>
       </div>
+      {showAddListModal && (
+        <NewListModal
+          showModal={showAddListModal}
+          setShowModal={setShowAddListModal}
+          WORKSPACE_ID={WORKSPACE_ID}
+          APP_CONTROLLER={APP_CONTROLLER}
+          currentBoard={boardID}
+          setUserData={setUserData}
+        />
+      )}
     </div>
-    {showAddListModal && <NewListModal
-      showModal={showAddListModal}
-      setShowModal={setShowAddListModal}
-      WORKSPACE_ID={WORKSPACE_ID}
-      APP_CONTROLLER={APP_CONTROLLER}
-      currentBoard={boardID}
-      setUserData={setUserData}
-    />}
-  </div>;
+  );
 });
 
 export default Board;

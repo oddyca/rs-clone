@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Controller from "../../../lib/Controller";
-import {  } from "../../../AppTypes";
+import {} from "../../../AppTypes";
 
 import "../../../style/auth-modal.css";
 import logo_ellipse from "../../../assets/logo_ellipse.svg";
-import hero_logo from "../../../assets/hero_logo.svg"
-
+import hero_logo from "../../../assets/hero_logo.svg";
 
 export default function SignUp() {
   const APP_CONTROLLER = new Controller();
@@ -51,7 +50,9 @@ export default function SignUp() {
           </div>
           <div className="hero-mid">
             <h4 className="hero_subtitle">Bring all your tasks, teammates, and tools together</h4>
-            <p className="hero_paragraph">Keep everything in the same place—even if your team isn&apos;t.</p>
+            <p className="hero_paragraph">
+              Keep everything in the same place—even if your team isn&apos;t.
+            </p>
           </div>
         </div>
         <div className="auth-block">

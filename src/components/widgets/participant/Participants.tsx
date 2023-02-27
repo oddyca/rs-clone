@@ -13,14 +13,16 @@ function Participants(props: TParticipantsProps) {
 
   const renderParticipant = () => {
     return participantsArr.map((par: string) => {
-      return (<Participant
-        participant={par}
-        setCurrentWorkspaceId={setCurrentWorkspaceId}
-        WORKSPACE_ID={WORKSPACE_ID}
-        setParticipant={setParticipant}
-        partObj={users.find(user => user.PARTICIPANT_NAME === par)}
-        userLogo={userLogo}
-      />);
+      return (
+        <Participant
+          participant={par}
+          setCurrentWorkspaceId={setCurrentWorkspaceId}
+          WORKSPACE_ID={WORKSPACE_ID}
+          setParticipant={setParticipant}
+          partObj={users.find((user) => user.PARTICIPANT_NAME === par)}
+          userLogo={userLogo}
+        />
+      );
     });
   };
 
