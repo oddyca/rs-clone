@@ -119,8 +119,16 @@ function Header(props: any) {
                           className="dd-link"
                           onClick={() => {
                             localStorage.clear();
-                            APP_CONTROLLER.currentUser = USER_DEFAULT_DATA
-                            setUserData(structuredClone(APP_CONTROLLER.loadData()));
+                            APP_CONTROLLER.setUserData().then(
+                              async (result: Response) => {
+                                console.log( await result.json());
+                                APP_CONTROLLER.currentUser = USER_DEFAULT_DATA;
+                                setUserData(structuredClone(APP_CONTROLLER.loadData()));
+                              },
+                              async (error: Response) => {
+                                console.log(await error.json());
+                              }
+                            );
                           }}
                         >
                           Log out

@@ -25,7 +25,8 @@ function AccountSettings(props: TAccountSettingsProps) {
         if (typeof reader.result === "string") {
           const newUser = userData;
           newUser.USER_SETTINGS.USER_LOGO = reader.result;
-          setUserData(structuredClone(newUser));
+          APP_CONTROLLER.setData(newUser);
+          setUserData(structuredClone(APP_CONTROLLER.loadData()));
         }
       };
     }
