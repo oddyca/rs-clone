@@ -44,7 +44,7 @@ function HelpPage(props: {userName: string}) {
               </div>
               <div className="form_line form_button-line">
                 <input 
-                  className="button"
+                  className="button submit"
                   type="submit"
                   value="Submit"
                   onClick={(e) => e.preventDefault()}

@@ -44,6 +44,7 @@
     flex-direction: column;
     width: 100%;
     height: 100%;
+    overflow-x: scroll;
 }
 
 .boards-group {
@@ -92,4 +93,9 @@
 
 .board-item:hover > .boards_trashBin-icon {
     display: block;
+}
+
+.participant_pfp {
+  width: 100%;
+  height: auto;
 }

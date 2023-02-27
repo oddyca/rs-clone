@@ -17,8 +17,6 @@ const Board = memo(function Board(props: TPropsBoard) {
   const [boardID, setBoardID] = useState("");
   const [currentTask, setCurrentTask] = useState("");
   const [currentList, setCurrentList] = useState("");
-
-
   function dragStartHandlerList(e: React.DragEvent<HTMLElement>, list: TBoardLists | null) {
     e.stopPropagation();
     setDragList(list);
@@ -123,7 +121,7 @@ const Board = memo(function Board(props: TPropsBoard) {
     }
   }
 
-  const sortCards = (a: TBoardLists, b: TBoardLists) => {
+const sortCards = (a: TBoardLists, b: TBoardLists) => {
     if (a.LIST_ORDER > b.LIST_ORDER) {
       return 1;
     }
