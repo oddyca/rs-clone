@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
-import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import { TUserWorkspace, TWorkspaceBoards } from "./AppTypes"
 
 import Board from "./components/pages/Board";
@@ -14,8 +14,8 @@ import AllWorkspaces from "./components/pages/AllWorkspaces";
 import PartModal from "./components/widgets/participant/PartModal";
 import ErrorModal from "./components/widgets/error/ErrorModal";
 import AccountSettings from "./components/pages/AccountSettings";
-import AppSettings from "./components/pages/AppSettings";
 import HelpPage from "./components/pages/HelpPage";
+import Footer from "./components/widgets/footer/Footer";
 
 const APP_CONTROLLER = new Controller();
 
@@ -25,7 +25,11 @@ function App() {
   const [viewErrorModal, setViewErrorModal] = useState(false);
   const [currentWorkspaceId, setCurrentWorkspaceId] = useState("");
   const [viewPartModal, setViewPartModal] = useState(false);
+  const [openDropDown, setOpenDropDown] = useState(false);
+  const [openDropDownUser, setOpenDropDownUser] = useState(false);
+
   const navigate = useNavigate();
+  const location = useLocation();
   const isLoggedIn = localStorage.getItem("isLoggedIn");
   const loggedUserID = localStorage.getItem("userID") as string;
 
@@ -42,7 +46,28 @@ function App() {
 
     loggedUserID && getUser();
     isLoggedIn === "true" ? navigate("/") : navigate("/signin", { replace: true });
+
+    const outsideClickHandler = (e: MouseEvent) => {
+      const { target } = e;
+      if (target instanceof HTMLElement) {
+        const className = target.className;
+        if (!className.includes("dd-link")) {
+          setOpenDropDown(false);
+          setOpenDropDownUser(false);
+        }
+      }
+    }
+    
+    document.addEventListener("mousedown", outsideClickHandler);
+
+    return () => {
+      document.removeEventListener("mousedown", outsideClickHandler)
+    }
   }, []);
+
+  useEffect(() => {
+    !isLoggedIn && navigate("/signin");
+  }, [location.pathname]);
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: TUserWorkspace, index: number) => {
@@ -140,29 +165,37 @@ function App() {
           title={userData.USER_NAME}
           setUserData={setUserData}
           userLogo={userData.USER_SETTINGS.USER_LOGO}
+          openDropDown={openDropDown}
+          setOpenDropDown={setOpenDropDown}
+          openDropDownUser={openDropDownUser}
+          setOpenDropDownUser={setOpenDropDownUser}
         />
       )}
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <AllWorkspaces
-              APP_CONTROLLER={APP_CONTROLLER}
-              setUserData={setUserData}
-              user={userData}
-            />
-          }
-        />
-        {getWorkspaces()}
-        {getBoards()}
-        <Route path="/signin" element={<SignIn setUserData={setUserData} APP_CONTROLLER={APP_CONTROLLER} setViewErrorModal={setViewErrorModal} setErrorMessage={setErrorMessage}/>} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/404" element={<Page404 />} />
-        <Route path="/accountsettings" element={<AccountSettings userData={userData} APP_CONTROLLER={APP_CONTROLLER} setUserData={setUserData} />} />
-        <Route path="/appsettings" element={<AppSettings />} />
-        <Route path="/help" element={<HelpPage />} />
-        <Route path="*" element={<Navigate replace to="/404" />} />
-      </Routes>
+      <div className="app_wrapper">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <AllWorkspaces
+                APP_CONTROLLER={APP_CONTROLLER}
+                setUserData={setUserData}
+                user={userData}
+              />
+            }
+          />
+          {getWorkspaces()}
+          {getBoards()}
+          <Route path="/signin" element={<SignIn setUserData={setUserData} APP_CONTROLLER={APP_CONTROLLER} setViewErrorModal={setViewErrorModal} setErrorMessage={setErrorMessage}/>} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/404" element={<Page404 />} />
+          <Route path="/accountsettings" element={<AccountSettings userData={userData} APP_CONTROLLER={APP_CONTROLLER} setUserData={setUserData} />} />
+          <Route path="/help" element={<HelpPage userName={userData.USER_NAME}/>} />
+          <Route path="*" element={<Navigate replace to="/404" />} />
+        </Routes>
+      </div>
+      {isLoggedIn === "true" && (
+        <Footer/>
+      )}
     </div>
   );
 }

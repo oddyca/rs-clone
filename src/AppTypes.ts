@@ -142,3 +142,9 @@ export type TAddNewTaskProps = {
   BOARD_ID: string;
   list: TBoardLists
 }
+
+export type TAccountSettingsProps = {
+  userData: TUser;
+  setUserData: Function;
+  APP_CONTROLLER: Controller;
+}

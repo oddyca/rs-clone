@@ -1,19 +1,92 @@
-.user-logo-btn {
-    outline: 1px solid black;
-}
-
-.user-logo-btn:hover {
-    cursor: pointer;
-}
-
 #custom-file-upload {
     display: none;
 }
 
+.account-settings-page {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.account-settings_main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+}
+
+.page-title {
+    border-bottom: solid 1px var(--stroke);
+}
+
+.account-setting_window {
+    width: 422px;
+    height: fit-content;
+    background: #FFFFFF;
+    border: 1px solid var(--stroke);
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    padding: 36px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.user-logo_container {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: solid 1px var(--highilight);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.account-settings_settings {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 31px 93px;
+    border: 1px solid #F2F2F2;
+    border-radius: 4px;
+}
+
+.settings-btn {
+    padding: 12px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 256px;
+    height: 36px;
+    background: #FFFFFF;
+    border: 1px solid var(--highilight);
+    color: var(--highilight);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.settings-btn:hover{
+    background: var(--highilight);
+    color: white;
+}
+
 .user-del {
-    outline: 1px solid black;
+    background: var(--error-red);
+    color: white;
 }
 
 .user-del:hover {
-    cursor: pointer;
+    background: var(--error-red-hover);
 }
