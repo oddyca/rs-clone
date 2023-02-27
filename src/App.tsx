@@ -66,7 +66,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    !isLoggedIn && navigate("/signin");
+    !isLoggedIn && location.pathname !== "/signup" && navigate("/signin");
   }, [location.pathname]);
 
   const getWorkspaces = () => {

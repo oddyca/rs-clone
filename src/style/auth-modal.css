@@ -117,7 +117,7 @@ h3 {
   border: solid 1px var(--stroke);
   outline: none;
   border-radius: 4px;
-  padding: 16px;
+  padding: 8px;
   background-color: var(--backgroiund);
   -webkit-animation: slide-in-right 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
   animation: slide-in-right 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
@@ -128,7 +128,7 @@ h3 {
 }
 
 .form-input:focus {
-  border: solid 1px var(--highilight);
+  border: solid 1px var(--highlight);
 }
 
 .forgot-password {
@@ -144,13 +144,14 @@ h3 {
   padding: 10px 24px;
   cursor: pointer;
   border: none;
-  background-color: var(--highilight);
+  background-color: var(--highlight);
   color: white;
   border-radius: 4px;
   font-family: 'Space Grotesk', sans-serif;
+  outline: none;
 }
 
-.auth-button:hover {
+.button, .auth-button:hover {
   background-color: var(--highlight-hover);
 }
 
@@ -167,7 +168,7 @@ h3 {
   display: block;
   width: fit-content;
   cursor: pointer;
-  color: var(--highilight);
+  color: var(--highlight);
   text-decoration-line: underline;
   display: inline;
   background: none;
@@ -175,7 +176,7 @@ h3 {
 }
 
 .signup-link:hover {
-color: var(--highlight-hover);
+  color: var(--highlight-hover);
 }
 
 .auth-wrapper > p {
