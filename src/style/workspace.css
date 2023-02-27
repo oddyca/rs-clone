@@ -93,3 +93,8 @@
 .board-item:hover > .boards_trashBin-icon {
     display: block;
 }
+
+.participant_pfp {
+  width: 100%;
+  height: auto;
+}

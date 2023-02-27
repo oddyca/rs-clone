@@ -4,12 +4,12 @@ import ListModal from "../widgets/list/ListModal";
 import NewListModal from "../widgets/list/NewListModal";
 import AddNewTask from "../addNewTask";
 
-import { TBoardLists, TPropsBoard } from "../../AppTypes";
+import { TBoardLists, TCard, TPropsBoard } from "../../AppTypes";
 
 const Board = memo(function Board(props: TPropsBoard) {
   const { BOARD, setUserData, WORKSPACE_ID, APP_CONTROLLER } = props;
-  const [dragList, setDragList] = useState(null);
-  const [dragTask, setDragTask] = useState(null);
+  const [dragList, setDragList] = useState({});
+  const [dragTask, setDragTask] = useState({});
   const [currentObj, setCurrentObj] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showAddListModal, setShowAddListModal] = useState(false);
@@ -18,112 +18,135 @@ const Board = memo(function Board(props: TPropsBoard) {
   const [currentTask, setCurrentTask] = useState("");
   const [currentList, setCurrentList] = useState("");
   
-  function dragStartHandlerList(e: React.DragEvent<HTMLElement>, list: any) {
+  function dragStartHandlerList(e: React.DragEvent<HTMLElement>, list: TBoardLists) {
     e.stopPropagation();
     setDragList(list);
     setCurrentObj("list");
   }
 
-  function dragEndHandlerList(e: any) {
-    e.target.style.boxShadow = "0 0 0 0";
+  function dragEndHandlerList(e: React.DragEvent<HTMLElement>) {
+    const { target } = e;
+    if (target instanceof HTMLElement) {
+      target.style.boxShadow = "0 0 0 0";
+    }
   }
 
-  function dragOverHandlerList(e: any) {
+  function dragOverHandlerList(e: React.DragEvent<HTMLElement>) {
     e.preventDefault();
-    if (e.target.className === "list") {
-      e.target.style.boxShadow = "0 2px 3px gray";
+    const { target } = e;
+    if (target instanceof HTMLElement) {
+      if (target.className === "list") {
+        target.style.boxShadow = "0 2px 3px gray";
+      }
     }
+    
   }
 
-  function dropHandlerList(e: any, list: any) {
+  function dropHandlerList(e: React.DragEvent<HTMLElement>, list: TBoardLists) {
     e.preventDefault();
-    if (e.target.className === "list") {
-      e.target.style.boxShadow = "0 0 0 0";
-      APP_CONTROLLER.sortList({
-        WORKSPACE_ID,
-        BOARD_ID: BOARD.BOARD_ID,
-        dropList: list,
-        dragList,
-      });
-      const newData = structuredClone(APP_CONTROLLER.loadData());
-      setUserData(newData);
+    const { target } = e;
+    if (target instanceof HTMLElement) {
+      if (target.className === "list") {
+        target.style.boxShadow = "0 0 0 0";
+        APP_CONTROLLER.sortList({
+          WORKSPACE_ID,
+          BOARD_ID: BOARD.BOARD_ID,
+          dropList: list,
+          dragList,
+        });
+        const newData = structuredClone(APP_CONTROLLER.loadData());
+        setUserData(newData);
+      }
+      if (currentObj === "list") {
+        return;
+      }
+      if (target.className === "list_work-area") {
+        APP_CONTROLLER.sortListCard({
+          WORKSPACE_ID,
+          BOARD_ID: BOARD.BOARD_ID,
+          dropList: list,
+          dragList,
+          dragTask,
+        });
+        const newData = structuredClone(APP_CONTROLLER.loadData());
+        setUserData(newData);
+      }
     }
-    if (currentObj === "list") {
-      return;
-    }
-    if (e.target.className === "list_work-area") {
-      APP_CONTROLLER.sortListCard({
-        WORKSPACE_ID,
-        BOARD_ID: BOARD.BOARD_ID,
-        dropList: list,
-        dragList,
-        dragTask,
-      });
-      const newData = structuredClone(APP_CONTROLLER.loadData());
-      setUserData(newData);
-    }
+    
   }
 
-  function dragOverHandlerTask(e: any) {
+  function dragOverHandlerTask(e: React.DragEvent<HTMLElement>) {
     e.preventDefault();
-    if (e.target.className === "list_card") {
-      e.target.style.boxShadow = "0 2px 3px gray";
-    }
-    if (currentObj === "list") {
-      e.target.style.boxShadow = "0 2px 3px red";
-    }
-  }
-
-  function dragLeaveHandlerTask(e: any) {
-    if (e.target.className === "list_card") {
-      e.target.style.boxShadow = "none";
+    const { target } = e;
+    if (target instanceof HTMLElement) {
+      if (target.className === "list_card") {
+        target.style.boxShadow = "0 2px 3px gray";
+      }
+      if (currentObj === "list") {
+        target.style.boxShadow = "0 2px 3px red";
+      }
     }
   }
 
-  function dragStartHandlerTask(e: any, list: any, card: any) {
+  function dragLeaveHandlerTask(e: React.DragEvent<HTMLElement>) {
+    const { target } = e;
+    if (target instanceof HTMLElement) {
+      if (target.className === "list_card") {
+        target.style.boxShadow = "none";
+      }
+    }
+  }
+
+  function dragStartHandlerTask(e: React.DragEvent<HTMLElement>, list: TBoardLists, card: TCard) {
     e.stopPropagation();
     setDragList(list);
     setDragTask(card);
     setCurrentObj("card");
   }
 
-  function dragEndHandlerTask(e: any) {
-    if (e.target.className === "list_card") {
-      e.target.style.boxShadow = "none";
+  function dragEndHandlerTask(e: React.DragEvent<HTMLElement>) {
+    const { target } = e;
+    if (target instanceof HTMLElement) {
+      if (target.className === "list_card") {
+        target.style.boxShadow = "none";
+      }
     }
   }
 
-  function dropHandlerTask(e: any, list: any, card: any) {
+  function dropHandlerTask(e: React.DragEvent<HTMLElement>, list: TBoardLists, card: TCard) {
     e.preventDefault();
     e.stopPropagation();
-    if (currentObj === "list") {
-      e.target.style.boxShadow = "0 0 0 0";
-      return;
-    }
-    e.target.style.boxShadow = "0 0 0 0";
-    if (e.target.className === "list_card") {
-      APP_CONTROLLER.sortCard({
-        WORKSPACE_ID,
-        BOARD_ID: BOARD.BOARD_ID,
-        dragList,
-        dropList: list,
-        dragCard: dragTask,
-        dropCard: card,
-      });
-      const newData = structuredClone(APP_CONTROLLER.loadData());
-      setUserData(newData);
+    const { target } = e;
+    if (target instanceof HTMLElement) {
+      if (currentObj === "list") {
+        target.style.boxShadow = "0 0 0 0";
+        return;
+      }
+      target.style.boxShadow = "0 0 0 0";
+      if (target.className === "list_card") {
+        APP_CONTROLLER.sortCard({
+          WORKSPACE_ID,
+          BOARD_ID: BOARD.BOARD_ID,
+          dragList,
+          dropList: list,
+          dragCard: dragTask,
+          dropCard: card,
+        });
+        const newData = structuredClone(APP_CONTROLLER.loadData());
+        setUserData(newData);
+      }
     }
   }
 
-  const sortCards = (a: any, b: any) => {
-    if (a.LIST_ORDER > b.LIST_ORDER) {
+  const sortCards = (a: TCard | TBoardLists, b: TCard | TBoardLists) => {
+    if (a.LIST_ORDER! > b.LIST_ORDER!) {
       return 1;
     }
     return -1;
   };
 
   const getLists = () => {
-    return BOARD.BOARD_LISTS.sort(sortCards).map((list: any) => {
+    return BOARD.BOARD_LISTS.sort(sortCards).map((list: TBoardLists) => {
       const cards = list.LIST_CARDS.map((card: any) => {
         return (
           <div

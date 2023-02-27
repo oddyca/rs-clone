@@ -3,7 +3,8 @@ import Controller from "./lib/Controller";
 export type TCard = {
   CARD_ID: string;
   CARD_DATA: string;
-  CARD_DESCRIPTION?: string
+  CARD_DESCRIPTION?: string;
+  LIST_ORDER?: number
 };
 
 export type TListCards = TCard[];

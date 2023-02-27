@@ -17,7 +17,10 @@ function Participant(props: TParticipantProps) {
       onMouseLeave={() => setDisplayCloseBtn("none")}
     >
       <div className="participant-icon" >
-        <img src={partObj != undefined ? partObj.PARTICIPANT_LOGO : userLogo} />
+        <img
+          src={partObj != undefined ? partObj.PARTICIPANT_LOGO : userLogo}
+          className="participant_pfp"
+        />
       </div>
       <div className="participant-title">{participant}</div>
       <div
