@@ -176,9 +176,25 @@ export default class Controller {
     });
   }
 
-  // async setUserData(id) {
-  //
-  // }
+  async setUserData() {
+    const newUser = {
+      id: this.currentUser.USER_ID,
+      newUserData: this.currentUser.USER_WORKSPACES,
+      newUserSett: this.currentUser.USER_SETTINGS
+    };
+    return fetch(`http://localhost:3008/api/userdata`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json;charset=utf-8",
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: JSON.stringify(newUser),
+    });
+  }
+
+  setData(newUser: TUser) {
+    this.currentUser = structuredClone(newUser);
+  }
 
   async signInVerification(username: string, password: string): Promise<Response> {
     try {
