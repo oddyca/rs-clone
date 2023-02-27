@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
-import { TUserWorkspace, TWorkspaceBoards } from "./AppTypes"
+import { TUserWorkspace, TWorkspaceBoards } from "./AppTypes";
 
 import Board from "./components/pages/Board";
 import Workspace from "./components/pages/Workspace";
@@ -50,19 +50,19 @@ function App() {
     const outsideClickHandler = (e: MouseEvent) => {
       const { target } = e;
       if (target instanceof HTMLElement) {
-        const className = target.className;
+        const { className } = target;
         if (!className.includes("dd-link")) {
           setOpenDropDown(false);
           setOpenDropDownUser(false);
         }
       }
-    }
-    
+    };
+
     document.addEventListener("mousedown", outsideClickHandler);
 
     return () => {
-      document.removeEventListener("mousedown", outsideClickHandler)
-    }
+      document.removeEventListener("mousedown", outsideClickHandler);
+    };
   }, []);
 
   useEffect(() => {
@@ -71,9 +71,11 @@ function App() {
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: TUserWorkspace, index: number) => {
-      const getIndexBoard = workspace.WORKSPACE_BOARDS.map((board: TWorkspaceBoards, index: number) => {
-        return workspace.WORKSPACE_BOARDS[index];
-      });
+      const getIndexBoard = workspace.WORKSPACE_BOARDS.map(
+        (board: TWorkspaceBoards, index: number) => {
+          return workspace.WORKSPACE_BOARDS[index];
+        },
+      );
       return (
         <Route
           path={`/workspace-${workspace.WORKSPACE_ID}/`}
@@ -129,7 +131,7 @@ function App() {
           APP_CONTROLLER.addParticipant(participant, currentWorkspaceId);
           setUserData(structuredClone(APP_CONTROLLER.loadData()));
         },
-        (error) => console.log(error)
+        (error) => console.log(error),
       );
     }
     if (act === "del") {
@@ -139,18 +141,20 @@ function App() {
           APP_CONTROLLER.delParticipant(participant, currentWorkspaceId);
           setUserData(structuredClone(APP_CONTROLLER.loadData()));
         },
-        (error) => console.log(error)
+        (error) => console.log(error),
       );
     }
   };
 
   return (
     <div className="App">
-      {errorMessage.includes("server") && <ErrorModal
-        errorMessage={errorMessage}
-        viewErrorModal={viewErrorModal}
-        setViewErrorModal={setViewErrorModal}
-      />}
+      {errorMessage.includes("server") && (
+        <ErrorModal
+          errorMessage={errorMessage}
+          viewErrorModal={viewErrorModal}
+          setViewErrorModal={setViewErrorModal}
+        />
+      )}
       <PartModal
         viewPartModal={viewPartModal}
         setViewPartModal={setViewPartModal}
@@ -185,17 +189,34 @@ function App() {
           />
           {getWorkspaces()}
           {getBoards()}
-          <Route path="/signin" element={<SignIn setUserData={setUserData} APP_CONTROLLER={APP_CONTROLLER} setViewErrorModal={setViewErrorModal} setErrorMessage={setErrorMessage}/>} />
+          <Route
+            path="/signin"
+            element={
+              <SignIn
+                setUserData={setUserData}
+                APP_CONTROLLER={APP_CONTROLLER}
+                setViewErrorModal={setViewErrorModal}
+                setErrorMessage={setErrorMessage}
+              />
+            }
+          />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/404" element={<Page404 />} />
-          <Route path="/accountsettings" element={<AccountSettings userData={userData} APP_CONTROLLER={APP_CONTROLLER} setUserData={setUserData} />} />
-          <Route path="/help" element={<HelpPage userName={userData.USER_NAME}/>} />
+          <Route
+            path="/accountsettings"
+            element={
+              <AccountSettings
+                userData={userData}
+                APP_CONTROLLER={APP_CONTROLLER}
+                setUserData={setUserData}
+              />
+            }
+          />
+          <Route path="/help" element={<HelpPage userName={userData.USER_NAME} />} />
           <Route path="*" element={<Navigate replace to="/404" />} />
         </Routes>
       </div>
-      {isLoggedIn === "true" && (
-        <Footer/>
-      )}
+      {isLoggedIn === "true" && <Footer />}
     </div>
   );
 }

@@ -15,7 +15,7 @@ function PartModal(props: TParticipantsModalProps) {
   const DIALOG_FOOTER = (
     <div className="">
       <Button
-        disabled={newParticipant === "Select participant" ? true : false}
+        disabled={newParticipant === "Select participant"}
         onClick={() => {
           setParticipant(currentWorkspaceId, newParticipant, "add");
           setViewPartModal(false);
@@ -54,8 +54,7 @@ function PartModal(props: TParticipantsModalProps) {
             />
           );
         }}
-        onItemSelect={() => {
-        }}
+        onItemSelect={() => {}}
       >
         <Button text={newParticipant} rightIcon="double-caret-vertical" />
       </Select2>

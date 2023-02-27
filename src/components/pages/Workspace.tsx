@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import Participants from "../widgets/participant/Participants";
 import trashBin_icon from "../../assets/delete_icon.svg";
 import addIcon from "../../assets/add-icon.png";
-import { TPropsAllWorkspaces, TWorkspaceBoards } from "../../AppTypes";
+import { TWorkspaceBoards, TWProps } from "../../AppTypes";
 import BoardModal from "../widgets/list/BoardModal";
 import "../../style/workspace.css";
 
-function Workspace(props: any) {
+function Workspace(props: TWProps) {
   const [showNewBoardModal, setShowNewBoardModal] = useState(false);
   const {
     users,

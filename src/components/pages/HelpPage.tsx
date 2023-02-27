@@ -1,6 +1,6 @@
 import "../../style/help-page.css";
 
-function HelpPage(props: {userName: string}) {
+function HelpPage(props: { userName: string }) {
   const { userName } = props;
 
   return (
@@ -43,7 +43,7 @@ function HelpPage(props: {userName: string}) {
                 />
               </div>
               <div className="form_line form_button-line">
-                <input 
+                <input
                   className="button"
                   type="submit"
                   value="Submit"
