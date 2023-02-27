@@ -1,0 +1,17 @@
+@import url("./style/workspace.css");
+@import url("./style/page404.css");
+@import url("./style/list.css");
+@import url("./style/board.css");
+@import url("./style/participants.css");
+@import url("./style/account-settings.css");
+
+.App {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+}
+
+.header {
+    width: 100%;
+}

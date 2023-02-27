@@ -1,0 +1,232 @@
+* {
+  font-family: 'Manrope', sans-serif;
+}
+
+h3 {
+  font-size: 36px;
+  line-height: 130%;
+}
+
+.auth-window {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.auth-modal {
+  width: 900px;
+  height: 722px;
+  background: #FFFFFF;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  display: flex;
+  overflow: hidden;
+}
+
+.hero-shot {
+  flex: 1;
+  height: 100%;
+  background: linear-gradient(180deg, #FF6E4F 0%, #CE2033 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 64px;
+  padding: 0 40px;
+}
+
+.hero-top {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.top-ellipse {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero_logo {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero_logo > p {
+  font-family: 'Space Grotesk', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 100%;
+}
+
+.hero_subtitle {
+  font-family: 'Space Grotesk', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 120%;
+  color: #FFFFFF;
+}
+
+.hero_paragraph {
+  font-family: 'Manrope', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 100%;
+  color: #FFFFFF;
+  margin-top: 18px;
+}
+
+.auth-block {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 31px;
+}
+
+.auth-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 58px;
+  width: 100%;
+}
+
+.auth-wrapper > h3 {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  gap: 30px;
+}
+
+.form-input {
+  width: 100%;
+  height: fit-content;
+  border: solid 1px var(--stroke);
+  outline: none;
+  border-radius: 4px;
+  padding: 16px;
+  background-color: var(--backgroiund);
+  -webkit-animation: slide-in-right 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+  animation: slide-in-right 0.3s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
+}
+
+.form-input::placeholder {
+  color: #CFCFCF;
+}
+
+.form-input:focus {
+  border: solid 1px var(--highlight);
+}
+
+.forgot-password {
+  color: var(--hints);
+  text-decoration-line: underline;
+}
+
+.button, .auth-button {
+  position: relative; 
+  margin-left: auto; 
+  right: 0;
+  width: fit-content !important;
+  padding: 10px 24px;
+  cursor: pointer;
+  border: none;
+  background-color: var(--highlight);
+  color: white;
+  border-radius: 4px;
+  font-family: 'Space Grotesk', sans-serif;
+  outline: none;
+}
+
+.button, .auth-button:hover {
+  background-color: var(--highlight-hover);
+}
+
+.auth-button:active {
+  background-color: var(--highlight-active);
+}
+
+.sign-up:disabled {
+  background-color: grey;
+  cursor: default;
+}
+
+.signup-link {
+  display: block;
+  width: fit-content;
+  cursor: pointer;
+  color: var(--highlight);
+  text-decoration-line: underline;
+  display: inline;
+  background: none;
+  border: none;
+}
+
+.signup-link:hover {
+  color: var(--highlight-hover);
+}
+
+.auth-wrapper > p {
+  margin: 0 auto;
+}
+
+#privacy {
+  margin-right: 4px;
+}
+
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.error-message {
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  color: red;
+  font-size: 12px;
+}
+
+@-webkit-keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes slide-in-right {
+  0% {
+    -webkit-transform: translateX(1000px);
+    transform: translateX(1000px);
+    opacity: 0;
+  }
+  100% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 1440px) {
+  .form-input {
+    padding: 8px;
+  }
+}

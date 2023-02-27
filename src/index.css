@@ -1,0 +1,155 @@
+@import "~normalize.css";
+@import "~@blueprintjs/core/lib/css/blueprint.css";
+@import "~@blueprintjs/icons/lib/css/blueprint-icons.css";
+@import "~@blueprintjs/select/lib/css/blueprint-select.css";
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  --stroke: #F2F2F2;
+  --background: #FBFBFB;
+  --shadow: rgba(0, 0, 0, 0.05);
+  --focus: #FF6E4F;
+  --highlight: #FF6E4F;
+  --highlight-hover: #ff876d;
+  --highlight-active: #D84829;
+  --hints: #CFCFCF;
+  --error-red: #DF1B1B;
+  --error-red-hover: #f14444;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+a,
+button {
+  outline: none !important;
+  text-decoration: none !important;
+}
+
+body, html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+h1 {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 114px;
+  line-height: 80%;
+}
+
+h2 {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 120%;
+}
+
+h3 {
+  font-family: 'Space Grotesk';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 130%;
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: var(--background);
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  z-index: 100;
+}
+
+.workspaces-container,
+.workspace-window,
+.board-window,
+.account-settings-page {
+  padding-top: 45px;
+}
+
+#root {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.app_wrapper {
+  height: fit-content;
+  width: 100%;
+  top: 44px;
+  bottom: 64px;
+  padding: 64px 96px;
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  position: fixed;
+  width: 100%;
+  height: 64px;
+  left: 0;
+  bottom: 0;
+  background-color: var(--stroke);
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 48px;
+  margin-top: auto;
+}
+
+.bp4-dialog-body > div {
+  display: flex;
+  flex-direction: column;
+
+}
+
+@media screen and (max-width: 1440px){
+  .app_wrapper {
+    padding: 44px 64px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 500px){
+  html, body, #root, .App {
+    overflow-y: auto;
+  }
+  .app_wrapper {
+    padding: 44px 12px;
+    width: 100%;
+  }
+
+  .footer {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,134 @@
+ul, li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    height: 44px;
+    width: 100%;
+    background: #FF6E4F;
+    font-family: 'Manrope';
+}
+
+.btn__custom {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    height: 28px;
+    width: 28px;
+    cursor: pointer;
+}
+
+.header__inner {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 10px;
+}
+
+.header__left, .header__right {
+    display: flex;
+}
+
+.header__right {
+    padding-right: 50px;
+}
+
+.header__logo {
+    padding-left: 48px;
+    padding-right: 24px;
+}
+
+.header__dropdownTitle {
+    color: #fff;
+    cursor: pointer;
+}
+
+.header__search {
+    display: flex;
+}
+
+.searchInput {
+    border: none;
+    height: 26px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 4px 0px 0px 4px;
+    outline: 0;
+    width: 358px;
+}
+
+.btn__dropdown {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font-family: 'Manrope';
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.dropdownBg {
+    background-color: #fff;
+    position: absolute;
+    z-index: 1;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    top: 50px;
+}
+
+.dropdownList {
+    padding: 10px 15px 10px 5px;
+    border-bottom: 1px solid #F2F2F2;;
+}
+.dropdownList:last-child {
+    border: none;
+}
+
+.userIcon {
+    margin-top: -5px;
+    width: 36px;
+    height: 36px;
+}
+
+.user__title {
+    margin-top: 5px;
+    color: white;
+}
+
+.userDrop {
+    display: flex;
+}
+
+.dropdownBgUser {
+    top: 50px;
+    right: 50px;
+    text-align: left;
+}
+
+.user__list-inner {
+    display: flex;
+    align-items: center;
+    padding: 14px;
+}
+
+.user__list-inner img {
+    padding-right: 10px;
+}
+
+.br_border {
+    margin-left: 12px;
+    margin-right: 12px;
+    width: 100px;
+    height: 1px;
+    background-color: #F2F2F2;
+}
+
+.dropdownBtnUser {
+    cursor: pointer;
+}
