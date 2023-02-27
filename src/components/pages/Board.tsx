@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import React, { useState, memo } from "react";
 import TaskModal from "../widgets/list/TaskModal";
 import ListModal from "../widgets/list/ListModal";
 import NewListModal from "../widgets/list/NewListModal";
@@ -8,8 +8,8 @@ import { TBoardLists, TCard, TPropsBoard } from "../../AppTypes";
 
 const Board = memo(function Board(props: TPropsBoard) {
   const { BOARD, setUserData, WORKSPACE_ID, APP_CONTROLLER } = props;
-  const [dragList, setDragList] = useState({});
-  const [dragTask, setDragTask] = useState({});
+  const [dragList, setDragList] = useState<null | TBoardLists>(null);
+  const [dragTask, setDragTask] = useState<null | TCard>(null);
   const [currentObj, setCurrentObj] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showAddListModal, setShowAddListModal] = useState(false);
@@ -17,18 +17,15 @@ const Board = memo(function Board(props: TPropsBoard) {
   const [boardID, setBoardID] = useState("");
   const [currentTask, setCurrentTask] = useState("");
   const [currentList, setCurrentList] = useState("");
-  
-  function dragStartHandlerList(e: React.DragEvent<HTMLElement>, list: TBoardLists) {
+  function dragStartHandlerList(e: React.DragEvent<HTMLElement>, list: TBoardLists | null) {
     e.stopPropagation();
     setDragList(list);
     setCurrentObj("list");
   }
 
   function dragEndHandlerList(e: React.DragEvent<HTMLElement>) {
-    const { target } = e;
-    if (target instanceof HTMLElement) {
-      target.style.boxShadow = "0 0 0 0";
-    }
+    const target = e.target as HTMLElement;
+    target.style.boxShadow = "0 0 0 0";
   }
 
   function dragOverHandlerList(e: React.DragEvent<HTMLElement>) {
@@ -36,10 +33,10 @@ const Board = memo(function Board(props: TPropsBoard) {
     const target = e.target as HTMLElement;
     if (target.className === "list") {
       target.style.boxShadow = "0 2px 3px gray";
-    }    
+    }
   }
 
-  function dropHandlerList(e: React.DragEvent<HTMLElement>, list: TBoardLists) {
+  function dropHandlerList(e: React.DragEvent<HTMLElement>, list: TBoardLists | null) {
     e.preventDefault();
     const target = e.target as HTMLElement;
     if (target.className === "list") {
@@ -48,7 +45,7 @@ const Board = memo(function Board(props: TPropsBoard) {
         WORKSPACE_ID,
         BOARD_ID: BOARD.BOARD_ID,
         dropList: list,
-        dragList,
+        dragList
       });
       const newData = structuredClone(APP_CONTROLLER.loadData());
       setUserData(newData);
@@ -62,7 +59,7 @@ const Board = memo(function Board(props: TPropsBoard) {
         BOARD_ID: BOARD.BOARD_ID,
         dropList: list,
         dragList,
-        dragTask,
+        dragTask
       });
       const newData = structuredClone(APP_CONTROLLER.loadData());
       setUserData(newData);
@@ -117,15 +114,15 @@ const Board = memo(function Board(props: TPropsBoard) {
         dragList,
         dropList: list,
         dragCard: dragTask,
-        dropCard: card,
+        dropCard: card
       });
       const newData = structuredClone(APP_CONTROLLER.loadData());
       setUserData(newData);
     }
   }
 
-  const sortCards = (a: TCard | TBoardLists, b: TCard | TBoardLists) => {
-    if (a.LIST_ORDER! > b.LIST_ORDER!) {
+const sortCards = (a: TBoardLists, b: TBoardLists) => {
+    if (a.LIST_ORDER > b.LIST_ORDER) {
       return 1;
     }
     return -1;
@@ -133,16 +130,14 @@ const Board = memo(function Board(props: TPropsBoard) {
 
   const getLists = () => {
     return BOARD.BOARD_LISTS.sort(sortCards).map((list: TBoardLists) => {
-      const cards = list.LIST_CARDS.map((card: any) => {
+      const cards = list.LIST_CARDS.map((card: TCard) => {
         return (
           <div
             onClick={() => {
-              // show task modal
-              // set current board id to pass it to ListModal component
               setShowModal(true);
               setBoardID(BOARD.BOARD_ID);
               setCurrentTask(card.CARD_ID);
-              setCurrentList(list.LIST_ID)
+              setCurrentList(list.LIST_ID);
             }}
             onDragOver={(e: React.DragEvent<HTMLElement>) => dragOverHandlerTask(e)}
             onDragLeave={(e: React.DragEvent<HTMLElement>) => dragLeaveHandlerTask(e)}
@@ -170,27 +165,28 @@ const Board = memo(function Board(props: TPropsBoard) {
             draggable
             id={list.LIST_ID}
           >
-          <div 
-            className="list-title"
-            onClick={() => {
-              setShowListModal(true);
-              setBoardID(BOARD.BOARD_ID);
-              setCurrentList(list.LIST_ID);
-            }}
-          >{list.LIST_TITLE}</div>
-          <div 
-            className="list_work-area"
-          >
-            <div className="list-cover" style={list.LIST_COLOR ? {backgroundColor: `${list.LIST_COLOR}`} : {backgroundColor: "#FFFFFF"}}/>
-            {cards}
-          </div>
-          <AddNewTask
-            APP_CONTROLLER={APP_CONTROLLER}
-            setUserData={setUserData}
-            WORKSPACE_ID={WORKSPACE_ID}
-            BOARD_ID={BOARD.BOARD_ID}
-            list={list}
-          />
+            <div
+              className="list-title"
+              onClick={() => {
+                setShowListModal(true);
+                setBoardID(BOARD.BOARD_ID);
+                setCurrentList(list.LIST_ID);
+              }}
+            >{list.LIST_TITLE}</div>
+            <div
+              className="list_work-area"
+            >
+              <div className="list-cover"
+                   style={list.LIST_COLOR ? { backgroundColor: `${list.LIST_COLOR}` } : { backgroundColor: "#FFFFFF" }} />
+              {cards}
+            </div>
+            <AddNewTask
+              APP_CONTROLLER={APP_CONTROLLER}
+              setUserData={setUserData}
+              WORKSPACE_ID={WORKSPACE_ID}
+              BOARD_ID={BOARD.BOARD_ID}
+              list={list}
+            />
           </div>
         </>
       );
@@ -198,7 +194,7 @@ const Board = memo(function Board(props: TPropsBoard) {
   };
 
   return <div className="board-window">
-    {showListModal && 
+    {showListModal &&
       <ListModal
         showListModal={showListModal}
         setShowListModal={setShowListModal}
@@ -209,8 +205,8 @@ const Board = memo(function Board(props: TPropsBoard) {
         setUserData={setUserData}
       />
     }
-    {showModal && 
-      <TaskModal 
+    {showModal &&
+      <TaskModal
         showModal={showModal}
         setShowModal={setShowModal}
         currentWorkspace={WORKSPACE_ID}
@@ -219,15 +215,18 @@ const Board = memo(function Board(props: TPropsBoard) {
         currentTask={currentTask}
         APP_CONTROLLER={APP_CONTROLLER}
         setUserData={setUserData}
-     />
+      />
     }
-      <div className="board__title">{BOARD.BOARD_TITLE}</div>
-      <div className="board-inner">
-        {getLists()}
-        <div onClick={() => {setShowAddListModal(true); setBoardID(BOARD.BOARD_ID);}} className="list add-list">
-          Add List
-        </div>
+    <div className="board__title">{BOARD.BOARD_TITLE}</div>
+    <div className="board-inner">
+      {getLists()}
+      <div onClick={() => {
+        setShowAddListModal(true);
+        setBoardID(BOARD.BOARD_ID);
+      }} className="list add-list">
+        Add List
       </div>
+    </div>
     {showAddListModal && <NewListModal
       showModal={showAddListModal}
       setShowModal={setShowAddListModal}
@@ -237,6 +236,6 @@ const Board = memo(function Board(props: TPropsBoard) {
       setUserData={setUserData}
     />}
   </div>;
-})
+});
 
 export default Board;

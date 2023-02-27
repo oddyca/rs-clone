@@ -2,15 +2,15 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/logo.svg";
 import myAccount from "../../../assets/myaccount.svg";
-import settings from "../../../assets/settings.svg";
 import support from "../../../assets/support.svg";
 import logout from "../../../assets/logout.svg";
 import "./index.css";
 import WorkSpaceModal from "../list/WorkSpaceModal";
 import USER_DEFAULT_DATA from "../../../lib/config";
+import { THeaderProps, TUserWorkspace } from "../../../AppTypes";
 
-function Header(props: any) {
-  const { 
+function Header(props: THeaderProps) {
+  const {
     title,
     userWorkSpace,
     APP_CONTROLLER,
@@ -19,7 +19,7 @@ function Header(props: any) {
     openDropDown,
     setOpenDropDown,
     openDropDownUser,
-    setOpenDropDownUser
+    setOpenDropDownUser,
   } = props;
 
   const [showNewWorkspaceModal, setShowNewWorkspaceModal] = useState(false);
@@ -43,7 +43,7 @@ function Header(props: any) {
             </button>
             {openDropDown && (
               <ul className="dropdownBg">
-                {userWorkSpace.map((d: any) => {
+                {userWorkSpace.map((d: TUserWorkspace) => {
                   return (
                     <li className="dropdownList">
                       <button
@@ -51,7 +51,10 @@ function Header(props: any) {
                         onClick={() => setOpenDropDown(false)}
                         className="header__dropdownChild btn__dropdown dropdownBtn"
                       >
-                        <Link className="link dropdownLink dd-link" to={`/workspace-${d.WORKSPACE_ID}`}>
+                        <Link
+                          className="link dropdownLink dd-link"
+                          to={`/workspace-${d.WORKSPACE_ID}`}
+                        >
                           {d.WORKSPACE_TITLE}
                         </Link>
                       </button>
@@ -89,8 +92,7 @@ function Header(props: any) {
                   </button>
                 </li>
                 <div className="br_border" />
-                <li className="dropdownBgUserList">
-                </li>
+                <li className="dropdownBgUserList" />
                 <li className="dropdownBgUserList">
                   <button
                     type="submit"
@@ -121,13 +123,13 @@ function Header(props: any) {
                             localStorage.clear();
                             APP_CONTROLLER.setUserData().then(
                               async (result: Response) => {
-                                console.log( await result.json());
+                                console.log(await result.json());
                                 APP_CONTROLLER.currentUser = USER_DEFAULT_DATA;
                                 setUserData(structuredClone(APP_CONTROLLER.loadData()));
                               },
                               async (error: Response) => {
                                 console.log(await error.json());
-                              }
+                              },
                             );
                           }}
                         >

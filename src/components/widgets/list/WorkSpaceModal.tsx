@@ -9,7 +9,7 @@ function WorkSpaceModal(props: any) {
   const { setUserData } = props;
   const [newWorkSpace, setNewWorkSpace] = useState("");
 
-  const saveChanges = (new_work_space: any) => {
+  const saveChanges = (new_work_space: string) => {
     APP_CONTROLLER.addWorkSpace(new_work_space);
   };
 

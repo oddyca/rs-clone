@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Button, Dialog, Classes } from "@blueprintjs/core";
 import "../../../style/task-modal.css";
+import { TTaskModal } from "../../../AppTypes";
 
-function TaskModal(props: any) {
+function TaskModal(props: TTaskModal) {
   const { showModal } = props;
   const { setShowModal } = props;
   const { APP_CONTROLLER } = props;
@@ -10,7 +11,7 @@ function TaskModal(props: any) {
   const { setUserData } = props;
   const [newBoard, setNewBoard] = useState("");
 
-  const saveChanges = (new_board: any, workspace_id: any) => {
+  const saveChanges = (new_board: string, workspace_id: string) => {
     APP_CONTROLLER.addBoard(new_board, workspace_id);
   };
 
