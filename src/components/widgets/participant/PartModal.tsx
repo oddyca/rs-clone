@@ -10,8 +10,7 @@ function PartModal(props: TParticipantsModalProps) {
   const { currentWorkspaceId } = props;
   const { users } = props;
 
-  const [newParticipant, setNewParticipant] = useState("Select participant");
-  const [serverResponse, setServerResponse] = useState("");
+  const [newParticipant, setNewParticipant] = useState<string>("Select participant");
 
   const DIALOG_FOOTER = (
     <div className="">
@@ -40,14 +39,17 @@ function PartModal(props: TParticipantsModalProps) {
     <div>
       <Select2
         filterable={false}
-        items={users.map((elem:TUserParticipant) => elem.PARTICIPANT_NAME)}
+        items={users.map((elem: TUserParticipant) => elem.PARTICIPANT_NAME)}
         itemRenderer={(val, itemProps) => {
           return (
             <MenuItem
               key={val}
               text={val}
-              onClick={(elm: any) => {
-                setNewParticipant(elm.target.textContent);
+              onClick={(elm) => {
+                const target = elm.target as HTMLElement;
+                if (target.textContent) {
+                  setNewParticipant(target.textContent);
+                }
               }}
             />
           );

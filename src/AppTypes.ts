@@ -3,7 +3,7 @@ import Controller from "./lib/Controller";
 export type TCard = {
   CARD_ID: string;
   CARD_DATA: string;
-  CARD_DESCRIPTION?: string
+  CARD_DESCRIPTION?: string;
 };
 
 export type TListCards = TCard[];
@@ -51,18 +51,16 @@ export type TUser = {
 };
 
 export interface ISignIn {
-  setUserData: Function,
-  APP_CONTROLLER: Controller,
-  setViewErrorModal: Function,
-  setErrorMessage: Function
+  setUserData: Function;
+  APP_CONTROLLER: Controller;
+  setViewErrorModal: Function;
+  setErrorMessage: Function;
 }
 
 type TSetState = (addParticipantModal: boolean) => void;
 type TSetStateWork = (addParticipantModal: string) => void;
 type TSetStatePart = (workspaceId: string, addParticipantModal: string, act: string) => void;
 type TSetViewModal = (view: boolean) => void;
-
-export type TProps = {};
 
 export type TPropsBoard = {
   setUserData: Function;
@@ -74,7 +72,7 @@ export type TPropsBoard = {
 export type TPropsAllWorkspaces = {
   user: TUser;
   setUserData: Function;
-  APP_CONTROLLER: Controller
+  APP_CONTROLLER: Controller;
 };
 
 export type TPropsErrorModal = {
@@ -111,8 +109,8 @@ export type TParticipantProps = {
 };
 
 export type TStringArguments = {
-  [key: string]: string
-}
+  [key: string]: string;
+};
 
 export type TListModalProps = {
   showListModal: boolean;
@@ -122,7 +120,7 @@ export type TListModalProps = {
   currentList: string;
   APP_CONTROLLER: Controller;
   setUserData: Function;
-}
+};
 
 export type TTaskModalProps = {
   showModal: boolean;
@@ -133,18 +131,47 @@ export type TTaskModalProps = {
   currentTask: string;
   APP_CONTROLLER: Controller;
   setUserData: Function;
-}
+};
 
 export type TAddNewTaskProps = {
   APP_CONTROLLER: Controller;
   setUserData: Function;
   WORKSPACE_ID: string;
   BOARD_ID: string;
-  list: TBoardLists
-}
+  list: TBoardLists;
+};
 
 export type TAccountSettingsProps = {
   userData: TUser;
   setUserData: Function;
   APP_CONTROLLER: Controller;
-}
+};
+
+export type TTaskModal = {
+  showModal: boolean;
+  setShowModal: Function;
+  APP_CONTROLLER: Controller;
+  setUserData: Function;
+  WORKSPACE_ID: string;
+};
+
+export type TTaskModalP = {
+  currentBoard: string;
+  showModal: boolean;
+  setShowModal: Function;
+  APP_CONTROLLER: Controller;
+  setUserData: Function;
+  WORKSPACE_ID: string;
+};
+
+export type THeaderProps = {
+  APP_CONTROLLER: Controller;
+  setUserData: Function;
+  userLogo: string;
+  openDropDown: boolean;
+  setOpenDropDown: TSetState;
+  openDropDownUser: boolean;
+  setOpenDropDownUser: TSetState;
+  title: string;
+  userWorkSpace: TUserWorkspace[];
+};

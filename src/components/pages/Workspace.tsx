@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Participants from "../widgets/participant/Participants";
 import trashBin_icon from "../../assets/delete_icon.svg";
 import addIcon from "../../assets/add-icon.png";
-import { TPropsAllWorkspaces } from "../../AppTypes";
+import { TPropsAllWorkspaces, TWorkspaceBoards } from "../../AppTypes";
 import BoardModal from "../widgets/list/BoardModal";
 import "../../style/workspace.css";
 
@@ -25,7 +25,7 @@ function Workspace(props: any) {
   const { WORKSPACE_BOARDS } = WORKSPACE;
 
   const getBoards = () => {
-    return WORKSPACE_BOARDS.map((board: any, index: number) => {
+    return WORKSPACE_BOARDS.map((board: TWorkspaceBoards) => {
       return (
         <div className="board-item link-board">
           <Link
