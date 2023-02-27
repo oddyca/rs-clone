@@ -16,14 +16,14 @@ export default function ListModal(props: TListModalProps) {
   } = props;
 
   const allLists = APP_CONTROLLER.getBoards(currentWorkspace, currentBoard) as TBoardLists[];
-  const currentListObj = allLists.filter(
+  const currentListObjV = allLists.filter(
     (list: TBoardLists) => list.LIST_ID === currentList,
   )[0] as TBoardLists;
 
   const [titleToggle, setTitleToggle] = useState(true);
-  const [titleChange, setTitleChange] = useState(currentListObj.LIST_TITLE);
+  const [titleChange, setTitleChange] = useState(currentListObjV.LIST_TITLE);
   const [colorPick, setColorPick] = useState(
-    currentListObj.LIST_COLOR ? currentListObj.LIST_COLOR : "#FFFFFF",
+    currentListObjV.LIST_COLOR ? currentListObjV.LIST_COLOR : "#FFFFFF",
   );
 
   const saveChanges = (
@@ -48,6 +48,7 @@ export default function ListModal(props: TListModalProps) {
         }}
       />
       <button
+        type="button"
         className="modal_title-edit"
         onClick={() => {
           setTitleToggle(!titleToggle);
@@ -73,6 +74,7 @@ export default function ListModal(props: TListModalProps) {
     <div className="modal-window_footer-container">
       <div className="modal-window_delete-task">
         <button
+          type="button"
           className="modal_delete-button"
           onClick={() => {
             setShowListModal(false);
@@ -95,7 +97,7 @@ export default function ListModal(props: TListModalProps) {
               { currentWorkspace, currentBoard, currentList, titleChange },
               "list",
               colorPick,
-              currentListObj,
+              currentListObjV,
             );
             setShowListModal(false);
             const newData = structuredClone(APP_CONTROLLER.loadData());

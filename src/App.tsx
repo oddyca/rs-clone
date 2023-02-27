@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Routes, Route, Navigate, useNavigate, useLocation } from "react-router-dom";
 import { TUserWorkspace, TWorkspaceBoards } from "./AppTypes";
@@ -44,8 +44,12 @@ function App() {
       }
     }
 
-    loggedUserID && getUser();
-    isLoggedIn === "true" ? navigate("/") : navigate("/signin", { replace: true });
+    if (loggedUserID) getUser();
+    if (isLoggedIn === "true") {
+      navigate("/");
+    } else {
+      navigate("/signin", { replace: true });
+    }
 
     const outsideClickHandler = (e: MouseEvent) => {
       const { target } = e;
@@ -66,16 +70,42 @@ function App() {
   }, []);
 
   useEffect(() => {
-    !isLoggedIn && location.pathname !== "/signup" && navigate("/signin");
+    if (!isLoggedIn && location.pathname !== "/signup") navigate("/signin");
   }, [location.pathname]);
+
+  const setParticipant = (workspaceId: string, participant: string, act: string) => {
+    if (act === "add") {
+      const indexWorkSpace = APP_CONTROLLER.getIndexWorkspace(workspaceId);
+      if (userData.USER_WORKSPACES[indexWorkSpace].WORKSPACE_PS.includes(participant)) {
+        setErrorMessage(`${participant} already was added!`);
+        setViewErrorModal(true);
+        return;
+      }
+      APP_CONTROLLER.setParticipant(currentWorkspaceId, participant, act).then(
+        () => {
+          APP_CONTROLLER.addParticipant(participant, currentWorkspaceId);
+          setUserData(structuredClone(APP_CONTROLLER.loadData()));
+        },
+        (error) => console.log(error),
+      );
+    }
+    if (act === "del") {
+      if (participant === userData.USER_NAME) return;
+      APP_CONTROLLER.setParticipant(workspaceId, participant, act).then(
+        () => {
+          APP_CONTROLLER.delParticipant(participant, currentWorkspaceId);
+          setUserData(structuredClone(APP_CONTROLLER.loadData()));
+        },
+        (error) => console.log(error),
+      );
+    }
+  };
 
   const getWorkspaces = () => {
     return userData.USER_WORKSPACES.map((workspace: TUserWorkspace, index: number) => {
-      const getIndexBoard = workspace.WORKSPACE_BOARDS.map(
-        (board: TWorkspaceBoards) => {
-          return board;
-        },
-      )[0];
+      const getIndexBoard = workspace.WORKSPACE_BOARDS.map((board: TWorkspaceBoards) => {
+        return board;
+      })[0];
       return (
         <Route
           path={`/workspace-${workspace.WORKSPACE_ID}/`}
@@ -99,7 +129,7 @@ function App() {
   };
 
   const getBoards = () => {
-    return userData.USER_WORKSPACES.map((workspace: TUserWorkspace, index: number) => {
+    return userData.USER_WORKSPACES.map((workspace: TUserWorkspace) => {
       return workspace.WORKSPACE_BOARDS.map((board: TWorkspaceBoards, ind: number) => {
         return (
           <Route
@@ -116,34 +146,6 @@ function App() {
         );
       });
     });
-  };
-
-  const setParticipant = (workspaceId: string, participant: string, act: string) => {
-    if (act === "add") {
-      const indexWorkSpace = APP_CONTROLLER.getIndexWorkspace(workspaceId);
-      if (userData.USER_WORKSPACES[indexWorkSpace].WORKSPACE_PS.includes(participant)) {
-        setErrorMessage(`${participant} already was added!`);
-        setViewErrorModal(true);
-        return;
-      }
-      APP_CONTROLLER.setParticipant(currentWorkspaceId, participant, act).then(
-        (result) => {
-          APP_CONTROLLER.addParticipant(participant, currentWorkspaceId);
-          setUserData(structuredClone(APP_CONTROLLER.loadData()));
-        },
-        (error) => console.log(error),
-      );
-    }
-    if (act === "del") {
-      if (participant === userData.USER_NAME) return;
-      APP_CONTROLLER.setParticipant(workspaceId, participant, act).then(
-        (result) => {
-          APP_CONTROLLER.delParticipant(participant, currentWorkspaceId);
-          setUserData(structuredClone(APP_CONTROLLER.loadData()));
-        },
-        (error) => console.log(error),
-      );
-    }
   };
 
   return (
