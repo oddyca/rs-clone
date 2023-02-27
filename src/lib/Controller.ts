@@ -12,6 +12,10 @@ import {
 export default class Controller {
   public currentUser: TUser;
 
+  addUser() {
+    cosole.log(addUder)
+  }
+
   constructor(defaultUser = JSON.parse(JSON.stringify(USER_DEFAULT_DATA))) {
     this.currentUser = defaultUser;
   }
